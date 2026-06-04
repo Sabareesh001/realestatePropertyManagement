@@ -1,0 +1,8 @@
+{
+    "editor.defaultFormatter": "ms-dotnettools.csharp",
+    "notebook.defaultFormatter": "ms-dotnettools.csharp",
+    "dotnet.formatting.organizeImportsOnFormat": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnType": true
+}

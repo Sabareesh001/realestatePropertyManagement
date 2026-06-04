@@ -1,0 +1,159 @@
+using propertyManagement.DTOs;
+using propertyManagement.Models;
+using propertyManagement.Repositories;
+
+namespace propertyManagement.Services;
+
+/// <summary>
+/// Service implementation for user-related operations.
+/// </summary>
+public class UserService : IUserService
+{
+    private readonly IUnitOfWork _unitOfWork;
+
+    /// <summary>
+    /// Initializes a new instance of the UserService class.
+    /// </summary>
+    /// <param name="unitOfWork">The unit of work for data access.</param>
+    public UserService(IUnitOfWork unitOfWork)
+    {
+        _unitOfWork = unitOfWork;
+    }
+
+    /// <summary>
+    /// Registers a new user account.
+    /// </summary>
+    /// <param name="registerDto">The registration data containing email, password, and user details.</param>
+    /// <returns>The created user response if successful.</returns>
+    public async Task<UserResponseDto> RegisterAsync(RegisterDto registerDto)
+    {
+        // Check if email already exists
+        var existingUser = await _unitOfWork.Users.GetByEmailAsync(registerDto.Email);
+        if (existingUser != null)
+        {
+            throw new InvalidOperationException("Email already exists");
+        }
+
+        var user = new User
+        {
+            Email = registerDto.Email,
+            FirstName = registerDto.FirstName,
+            LastName = registerDto.LastName,
+            Phone = registerDto.Phone,
+            DateOfBirth = registerDto.DateOfBirth,
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword(registerDto.Password)
+        };
+
+        var createdUser = await _unitOfWork.Users.CreateAsync(user);
+
+        return MapToUserResponseDto(createdUser);
+    }
+
+    /// <summary>
+    /// Authenticates a user with their email and password.
+    /// </summary>
+    /// <param name="loginDto">The login credentials containing email and password.</param>
+    /// <returns>The authenticated user response if successful.</returns>
+    public async Task<UserResponseDto> LoginAsync(LoginDto loginDto)
+    {
+        var user = await _unitOfWork.Users.GetByEmailAsync(loginDto.Email);
+        if (user == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, user.PasswordHash))
+        {
+            throw new InvalidOperationException("Invalid email or password");
+        }
+
+        return MapToUserResponseDto(user);
+    }
+
+    /// <summary>
+    /// Retrieves all users from the database.
+    /// </summary>
+    /// <returns>A list of all users.</returns>
+    public async Task<IEnumerable<UserResponseDto>> GetAllUsersAsync()
+    {
+        var users = await _unitOfWork.Users.GetAllAsync();
+        return users.Select(MapToUserResponseDto).ToList();
+    }
+
+    /// <summary>
+    /// Retrieves a user by their unique identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the user.</param>
+    /// <returns>The user details if found.</returns>
+    public async Task<UserResponseDto> GetUserByIdAsync(Guid id)
+    {
+        var user = await _unitOfWork.Users.GetByIdAsync(id);
+        if (user == null)
+        {
+            throw new InvalidOperationException("User not found");
+        }
+
+        return MapToUserResponseDto(user);
+    }
+
+    /// <summary>
+    /// Updates an existing user's information.
+    /// </summary>
+    /// <param name="id">The unique identifier of the user to update.</param>
+    /// <param name="updateUserDto">The updated user information.</param>
+    /// <returns>The updated user details.</returns>
+    public async Task<UserResponseDto> UpdateUserAsync(Guid id, UpdateUserDto updateUserDto)
+    {
+        var user = await _unitOfWork.Users.GetByIdAsync(id);
+        if (user == null)
+        {
+            throw new InvalidOperationException("User not found");
+        }
+
+        if (!string.IsNullOrEmpty(updateUserDto.FirstName))
+            user.FirstName = updateUserDto.FirstName;
+
+        if (!string.IsNullOrEmpty(updateUserDto.LastName))
+            user.LastName = updateUserDto.LastName;
+
+        if (!string.IsNullOrEmpty(updateUserDto.Phone))
+            user.Phone = updateUserDto.Phone;
+
+        if (updateUserDto.DateOfBirth.HasValue)
+            user.DateOfBirth = updateUserDto.DateOfBirth.Value;
+
+        await _unitOfWork.Users.UpdateAsync(user);
+
+        return MapToUserResponseDto(user);
+    }
+
+    /// <summary>
+    /// Deletes a user by their unique identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the user to delete.</param>
+    public async Task DeleteUserAsync(Guid id)
+    {
+        var user = await _unitOfWork.Users.GetByIdAsync(id);
+        if (user == null)
+        {
+            throw new InvalidOperationException("User not found");
+        }
+
+        await _unitOfWork.Users.DeleteAsync(id);
+    }
+
+    /// <summary>
+    /// Maps a User entity to a UserResponseDto.
+    /// </summary>
+    /// <param name="user">The user entity to map.</param>
+    /// <returns>The mapped UserResponseDto.</returns>
+    private static UserResponseDto MapToUserResponseDto(User user)
+    {
+        return new UserResponseDto
+        {
+            Id = user.Id,
+            Email = user.Email,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Phone = user.Phone,
+            DateOfBirth = user.DateOfBirth,
+            CreatedAt = user.CreatedAt,
+            UpdatedAt = user.UpdatedAt
+        };
+    }
+}
