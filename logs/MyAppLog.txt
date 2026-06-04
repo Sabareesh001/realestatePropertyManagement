@@ -1,0 +1,1210 @@
+2026-06-03 14:14:34.028 +05:30 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2026-06-03 14:14:34.091 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-03 14:14:34.092 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-03 14:14:34.092 +05:30 [INF] Hosting environment: Development
+2026-06-03 14:14:34.092 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/propertyManagement
+2026-06-03 14:14:42.309 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/hello - null null
+2026-06-03 14:14:42.320 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-06-03 14:14:42.324 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/hello - 404 0 null 16.399ms
+2026-06-03 14:14:42.326 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5104/hello, Response status code: 404
+2026-06-03 14:14:55.539 +05:30 [INF] Application is shutting down...
+2026-06-03 14:14:58.203 +05:30 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2026-06-03 14:14:58.264 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-03 14:14:58.265 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-03 14:14:58.265 +05:30 [INF] Hosting environment: Development
+2026-06-03 14:14:58.265 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/propertyManagement
+2026-06-03 14:20:47.728 +05:30 [INF] Application is shutting down...
+2026-06-03 14:20:54.109 +05:30 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2026-06-03 14:20:54.173 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-03 14:20:54.174 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-03 14:20:54.175 +05:30 [INF] Hosting environment: Development
+2026-06-03 14:20:54.175 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/propertyManagement
+2026-06-03 14:21:03.141 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/hello - null null
+2026-06-03 14:21:03.151 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-06-03 14:21:03.156 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/hello - 404 0 null 16.5659ms
+2026-06-03 14:21:03.158 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5104/hello, Response status code: 404
+2026-06-03 14:31:46.279 +05:30 [INF] Application is shutting down...
+2026-06-03 14:31:52.218 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-03 14:31:52.259 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-03 14:31:52.259 +05:30 [INF] Hosting environment: Development
+2026-06-03 14:31:52.259 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/propertyManagement
+2026-06-03 14:32:07.563 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/ - null null
+2026-06-03 14:32:07.591 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-06-03 14:32:07.605 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/ - 404 0 null 39.1643ms
+2026-06-03 14:32:07.611 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5104/, Response status code: 404
+2026-06-03 14:32:11.378 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger - null null
+2026-06-03 14:32:11.379 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger - 404 0 null 2.043ms
+2026-06-03 14:32:11.380 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5104/swagger, Response status code: 404
+2026-06-03 14:32:14.164 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger - null null
+2026-06-03 14:32:14.165 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger - 404 0 null 1.5932ms
+2026-06-03 14:32:14.166 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5104/swagger, Response status code: 404
+2026-06-03 14:49:04.612 +05:30 [INF] Application is shutting down...
+2026-06-03 14:49:10.624 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-03 14:49:10.668 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-03 14:49:10.668 +05:30 [INF] Hosting environment: Development
+2026-06-03 14:49:10.668 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/propertyManagement
+2026-06-03 14:49:36.336 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger - null null
+2026-06-03 14:49:36.349 +05:30 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Unable to resolve service for type 'Swashbuckle.AspNetCore.Swagger.ISwaggerProvider' while attempting to Invoke middleware 'Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware'.
+   at lambda_method1(Closure, Object, HttpContext, IServiceProvider)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-06-03 14:49:36.361 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger - 500 null text/html; charset=utf-8 26.1073ms
+2026-06-03 14:53:45.063 +05:30 [INF] Application is shutting down...
+2026-06-03 14:53:50.239 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-03 14:53:50.281 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-03 14:53:50.281 +05:30 [INF] Hosting environment: Development
+2026-06-03 14:53:50.281 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/propertyManagement
+2026-06-03 14:53:52.249 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger - null null
+2026-06-03 14:53:52.261 +05:30 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Unable to resolve service for type 'Swashbuckle.AspNetCore.Swagger.ISwaggerProvider' while attempting to Invoke middleware 'Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware'.
+   at lambda_method1(Closure, Object, HttpContext, IServiceProvider)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-06-03 14:53:52.272 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger - 500 null text/html; charset=utf-8 24.8278ms
+2026-06-03 14:55:01.566 +05:30 [INF] Application is shutting down...
+2026-06-03 14:55:07.025 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-03 14:55:07.069 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-03 14:55:07.069 +05:30 [INF] Hosting environment: Development
+2026-06-03 14:55:07.069 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/propertyManagement
+2026-06-03 14:55:19.006 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger - null null
+2026-06-03 14:55:19.021 +05:30 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Unable to resolve service for type 'Swashbuckle.AspNetCore.Swagger.ISwaggerProvider' while attempting to Invoke middleware 'Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware'.
+   at lambda_method1(Closure, Object, HttpContext, IServiceProvider)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-06-03 14:55:19.034 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger - 500 null text/html; charset=utf-8 28.9825ms
+2026-06-03 14:56:29.235 +05:30 [INF] Application is shutting down...
+2026-06-03 14:56:34.209 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-03 14:56:34.252 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-03 14:56:34.252 +05:30 [INF] Hosting environment: Development
+2026-06-03 14:56:34.253 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/propertyManagement
+2026-06-03 14:56:45.088 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger - null null
+2026-06-03 14:56:45.107 +05:30 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Unable to resolve service for type 'Swashbuckle.AspNetCore.Swagger.ISwaggerProvider' while attempting to Invoke middleware 'Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware'.
+   at lambda_method1(Closure, Object, HttpContext, IServiceProvider)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-06-03 14:56:45.122 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger - 500 null text/html; charset=utf-8 35.3025ms
+2026-06-03 14:56:48.233 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger - null null
+2026-06-03 14:56:48.236 +05:30 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Unable to resolve service for type 'Swashbuckle.AspNetCore.Swagger.ISwaggerProvider' while attempting to Invoke middleware 'Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware'.
+   at lambda_method1(Closure, Object, HttpContext, IServiceProvider)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-06-03 14:56:48.238 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger - 500 null text/html; charset=utf-8 4.7767ms
+2026-06-03 15:14:03.798 +05:30 [INF] Application is shutting down...
+2026-06-03 15:14:42.813 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-03 15:14:42.853 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-03 15:14:42.854 +05:30 [INF] Hosting environment: Development
+2026-06-03 15:14:42.854 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/propertyManagement
+2026-06-03 15:15:25.363 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger - null null
+2026-06-03 15:15:25.377 +05:30 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Unable to resolve service for type 'Swashbuckle.AspNetCore.Swagger.ISwaggerProvider' while attempting to Invoke middleware 'Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware'.
+   at lambda_method1(Closure, Object, HttpContext, IServiceProvider)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-06-03 15:15:25.390 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger - 500 null text/html; charset=utf-8 28.0698ms
+2026-06-03 15:16:19.271 +05:30 [INF] Application is shutting down...
+2026-06-03 15:16:24.750 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-03 15:16:24.790 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-03 15:16:24.790 +05:30 [INF] Hosting environment: Development
+2026-06-03 15:16:24.790 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/propertyManagement
+2026-06-03 15:16:25.609 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger - null null
+2026-06-03 15:16:25.619 +05:30 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Unable to resolve service for type 'Swashbuckle.AspNetCore.Swagger.ISwaggerProvider' while attempting to Invoke middleware 'Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware'.
+   at lambda_method1(Closure, Object, HttpContext, IServiceProvider)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-06-03 15:16:25.628 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger - 500 null text/html; charset=utf-8 19.3116ms
+2026-06-03 15:16:27.594 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger - null null
+2026-06-03 15:16:27.596 +05:30 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Unable to resolve service for type 'Swashbuckle.AspNetCore.Swagger.ISwaggerProvider' while attempting to Invoke middleware 'Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware'.
+   at lambda_method1(Closure, Object, HttpContext, IServiceProvider)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-06-03 15:16:27.598 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger - 500 null text/html; charset=utf-8 4.4027ms
+2026-06-03 15:17:53.282 +05:30 [INF] Application is shutting down...
+2026-06-03 15:17:58.174 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-03 15:17:58.217 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-03 15:17:58.217 +05:30 [INF] Hosting environment: Development
+2026-06-03 15:17:58.217 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/propertyManagement
+2026-06-03 15:18:11.714 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger - null null
+2026-06-03 15:18:11.741 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger - 301 0 null 28.6737ms
+2026-06-03 15:18:11.745 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/index.html - null null
+2026-06-03 15:18:11.773 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/index.html - 200 null text/html;charset=utf-8 28.7157ms
+2026-06-03 15:18:11.781 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/swagger-ui.css - null null
+2026-06-03 15:18:11.781 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/index.css - null null
+2026-06-03 15:18:11.781 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/swagger-ui-standalone-preset.js - null null
+2026-06-03 15:18:11.781 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/swagger-ui-bundle.js - null null
+2026-06-03 15:18:11.782 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/index.js - null null
+2026-06-03 15:18:11.784 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/index.js - 200 null application/javascript;charset=utf-8 2.2316ms
+2026-06-03 15:18:11.791 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/swagger-ui.css - 200 26499 text/css 10.3675ms
+2026-06-03 15:18:11.792 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/index.css - 200 152 text/css 10.2359ms
+2026-06-03 15:18:11.801 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/swagger-ui-bundle.js - 200 418599 text/javascript 19.5373ms
+2026-06-03 15:18:11.801 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/swagger-ui-standalone-preset.js - 200 76613 text/javascript 19.7119ms
+2026-06-03 15:18:11.960 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/favicon-16x16.png - null null
+2026-06-03 15:18:11.961 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/favicon-16x16.png - 200 665 image/png 0.815ms
+2026-06-03 15:18:11.967 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/v1/swagger.json - null null
+2026-06-03 15:18:12.005 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 37.4163ms
+2026-06-03 15:19:12.397 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/api/Sample - null null
+2026-06-03 15:19:12.399 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-06-03 15:19:12.401 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.SampleController.GetAllSamples (propertyManagement)'
+2026-06-03 15:19:12.405 +05:30 [INF] Route matched with {action = "GetAllSamples", controller = "Sample"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAllSamples() on controller propertyManagement.Controllers.SampleController (propertyManagement).
+2026-06-03 15:19:12.407 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-06-03 15:19:12.411 +05:30 [INF] Executed action propertyManagement.Controllers.SampleController.GetAllSamples (propertyManagement) in 4.5111ms
+2026-06-03 15:19:12.411 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.SampleController.GetAllSamples (propertyManagement)'
+2026-06-03 15:19:12.411 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/api/Sample - 200 null application/json; charset=utf-8 14.1383ms
+2026-06-03 15:20:50.495 +05:30 [INF] Application is shutting down...
+2026-06-03 15:20:56.143 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-03 15:20:56.183 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-03 15:20:56.183 +05:30 [INF] Hosting environment: Development
+2026-06-03 15:20:56.183 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/propertyManagement
+2026-06-03 15:21:00.172 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/api/Sample - null null
+2026-06-03 15:21:00.196 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-06-03 15:21:00.199 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.SampleController.GetAllSamples (propertyManagement)'
+2026-06-03 15:21:00.204 +05:30 [INF] Route matched with {action = "GetAllSamples", controller = "Sample"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAllSamples() on controller propertyManagement.Controllers.SampleController (propertyManagement).
+2026-06-03 15:21:00.206 +05:30 [INF] Executed action propertyManagement.Controllers.SampleController.GetAllSamples (propertyManagement) in 1.0384ms
+2026-06-03 15:21:00.207 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.SampleController.GetAllSamples (propertyManagement)'
+2026-06-03 15:21:00.207 +05:30 [ERR] An Idiot exception occurred while processing the request.
+propertyManagement.Exceptions.UnableToCreateEntityException: Custom message: Unable to create sample entity.
+   at propertyManagement.Controllers.SampleController.GetAllSamples() in /Users/sabareesht/Documents/genSpark/propertyManagement/Controllers/SampleController.cs:line 14
+   at lambda_method2(Closure, Object, Object[])
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at propertyManagement.Middlewares.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in /Users/sabareesht/Documents/genSpark/propertyManagement/Middlewares/ExceptionHandlingMiddleware.cs:line 21
+2026-06-03 15:21:00.220 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/api/Sample - 400 null application/json 48.9159ms
+2026-06-03 15:21:09.181 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/api/Sample - null null
+2026-06-03 15:21:09.184 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.SampleController.GetAllSamples (propertyManagement)'
+2026-06-03 15:21:09.184 +05:30 [INF] Route matched with {action = "GetAllSamples", controller = "Sample"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAllSamples() on controller propertyManagement.Controllers.SampleController (propertyManagement).
+2026-06-03 15:21:09.184 +05:30 [INF] Executed action propertyManagement.Controllers.SampleController.GetAllSamples (propertyManagement) in 0.2044ms
+2026-06-03 15:21:09.184 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.SampleController.GetAllSamples (propertyManagement)'
+2026-06-03 15:21:09.184 +05:30 [ERR] An Idiot exception occurred while processing the request.
+propertyManagement.Exceptions.UnableToCreateEntityException: Custom message: Unable to create sample entity.
+   at propertyManagement.Controllers.SampleController.GetAllSamples() in /Users/sabareesht/Documents/genSpark/propertyManagement/Controllers/SampleController.cs:line 14
+   at lambda_method2(Closure, Object, Object[])
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at propertyManagement.Middlewares.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in /Users/sabareesht/Documents/genSpark/propertyManagement/Middlewares/ExceptionHandlingMiddleware.cs:line 21
+2026-06-03 15:21:09.185 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/api/Sample - 400 null application/json 4.2844ms
+2026-06-03 16:56:03.860 +05:30 [INF] Application is shutting down...
+2026-06-03 16:56:09.881 +05:30 [FTL] Application startup exception
+System.InvalidOperationException: An error occurred when configuring the exception handler middleware. Either the 'ExceptionHandlingPath' or the 'ExceptionHandler' property must be set in 'UseExceptionHandler()'. Alternatively, set one of the aforementioned properties in 'Startup.ConfigureServices' as follows: 'services.AddExceptionHandler(options => { ... });' or configure to generate a 'ProblemDetails' response in 'service.AddProblemDetails()'.
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl..ctor(RequestDelegate next, ILoggerFactory loggerFactory, IOptions`1 options, DiagnosticListener diagnosticListener, IEnumerable`1 exceptionHandlers, IMeterFactory meterFactory, IProblemDetailsService problemDetailsService)
+   at Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.<>c__DisplayClass5_0.<SetExceptionHandlerMiddleware>b__0(RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+2026-06-03 16:56:09.921 +05:30 [ERR] Hosting failed to start
+System.InvalidOperationException: An error occurred when configuring the exception handler middleware. Either the 'ExceptionHandlingPath' or the 'ExceptionHandler' property must be set in 'UseExceptionHandler()'. Alternatively, set one of the aforementioned properties in 'Startup.ConfigureServices' as follows: 'services.AddExceptionHandler(options => { ... });' or configure to generate a 'ProblemDetails' response in 'service.AddProblemDetails()'.
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl..ctor(RequestDelegate next, ILoggerFactory loggerFactory, IOptions`1 options, DiagnosticListener diagnosticListener, IEnumerable`1 exceptionHandlers, IMeterFactory meterFactory, IProblemDetailsService problemDetailsService)
+   at Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.<>c__DisplayClass5_0.<SetExceptionHandlerMiddleware>b__0(RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-06-03 16:56:54.893 +05:30 [FTL] Application startup exception
+System.InvalidOperationException: An error occurred when configuring the exception handler middleware. Either the 'ExceptionHandlingPath' or the 'ExceptionHandler' property must be set in 'UseExceptionHandler()'. Alternatively, set one of the aforementioned properties in 'Startup.ConfigureServices' as follows: 'services.AddExceptionHandler(options => { ... });' or configure to generate a 'ProblemDetails' response in 'service.AddProblemDetails()'.
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl..ctor(RequestDelegate next, ILoggerFactory loggerFactory, IOptions`1 options, DiagnosticListener diagnosticListener, IEnumerable`1 exceptionHandlers, IMeterFactory meterFactory, IProblemDetailsService problemDetailsService)
+   at Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.<>c__DisplayClass5_0.<SetExceptionHandlerMiddleware>b__0(RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+2026-06-03 16:56:54.939 +05:30 [ERR] Hosting failed to start
+System.InvalidOperationException: An error occurred when configuring the exception handler middleware. Either the 'ExceptionHandlingPath' or the 'ExceptionHandler' property must be set in 'UseExceptionHandler()'. Alternatively, set one of the aforementioned properties in 'Startup.ConfigureServices' as follows: 'services.AddExceptionHandler(options => { ... });' or configure to generate a 'ProblemDetails' response in 'service.AddProblemDetails()'.
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl..ctor(RequestDelegate next, ILoggerFactory loggerFactory, IOptions`1 options, DiagnosticListener diagnosticListener, IEnumerable`1 exceptionHandlers, IMeterFactory meterFactory, IProblemDetailsService problemDetailsService)
+   at Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.<>c__DisplayClass5_0.<SetExceptionHandlerMiddleware>b__0(RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-06-03 17:03:49.603 +05:30 [FTL] Application startup exception
+System.InvalidOperationException: An error occurred when configuring the exception handler middleware. Either the 'ExceptionHandlingPath' or the 'ExceptionHandler' property must be set in 'UseExceptionHandler()'. Alternatively, set one of the aforementioned properties in 'Startup.ConfigureServices' as follows: 'services.AddExceptionHandler(options => { ... });' or configure to generate a 'ProblemDetails' response in 'service.AddProblemDetails()'.
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl..ctor(RequestDelegate next, ILoggerFactory loggerFactory, IOptions`1 options, DiagnosticListener diagnosticListener, IEnumerable`1 exceptionHandlers, IMeterFactory meterFactory, IProblemDetailsService problemDetailsService)
+   at Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.<>c__DisplayClass5_0.<SetExceptionHandlerMiddleware>b__0(RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+2026-06-03 17:03:49.648 +05:30 [ERR] Hosting failed to start
+System.InvalidOperationException: An error occurred when configuring the exception handler middleware. Either the 'ExceptionHandlingPath' or the 'ExceptionHandler' property must be set in 'UseExceptionHandler()'. Alternatively, set one of the aforementioned properties in 'Startup.ConfigureServices' as follows: 'services.AddExceptionHandler(options => { ... });' or configure to generate a 'ProblemDetails' response in 'service.AddProblemDetails()'.
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl..ctor(RequestDelegate next, ILoggerFactory loggerFactory, IOptions`1 options, DiagnosticListener diagnosticListener, IEnumerable`1 exceptionHandlers, IMeterFactory meterFactory, IProblemDetailsService problemDetailsService)
+   at Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.<>c__DisplayClass5_0.<SetExceptionHandlerMiddleware>b__0(RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-06-03 17:04:19.630 +05:30 [FTL] Application startup exception
+System.InvalidOperationException: An error occurred when configuring the exception handler middleware. Either the 'ExceptionHandlingPath' or the 'ExceptionHandler' property must be set in 'UseExceptionHandler()'. Alternatively, set one of the aforementioned properties in 'Startup.ConfigureServices' as follows: 'services.AddExceptionHandler(options => { ... });' or configure to generate a 'ProblemDetails' response in 'service.AddProblemDetails()'.
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl..ctor(RequestDelegate next, ILoggerFactory loggerFactory, IOptions`1 options, DiagnosticListener diagnosticListener, IEnumerable`1 exceptionHandlers, IMeterFactory meterFactory, IProblemDetailsService problemDetailsService)
+   at Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.<>c__DisplayClass5_0.<SetExceptionHandlerMiddleware>b__0(RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+2026-06-03 17:04:19.673 +05:30 [ERR] Hosting failed to start
+System.InvalidOperationException: An error occurred when configuring the exception handler middleware. Either the 'ExceptionHandlingPath' or the 'ExceptionHandler' property must be set in 'UseExceptionHandler()'. Alternatively, set one of the aforementioned properties in 'Startup.ConfigureServices' as follows: 'services.AddExceptionHandler(options => { ... });' or configure to generate a 'ProblemDetails' response in 'service.AddProblemDetails()'.
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl..ctor(RequestDelegate next, ILoggerFactory loggerFactory, IOptions`1 options, DiagnosticListener diagnosticListener, IEnumerable`1 exceptionHandlers, IMeterFactory meterFactory, IProblemDetailsService problemDetailsService)
+   at Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.<>c__DisplayClass5_0.<SetExceptionHandlerMiddleware>b__0(RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-06-03 17:05:10.773 +05:30 [FTL] Application startup exception
+System.InvalidOperationException: An error occurred when configuring the exception handler middleware. Either the 'ExceptionHandlingPath' or the 'ExceptionHandler' property must be set in 'UseExceptionHandler()'. Alternatively, set one of the aforementioned properties in 'Startup.ConfigureServices' as follows: 'services.AddExceptionHandler(options => { ... });' or configure to generate a 'ProblemDetails' response in 'service.AddProblemDetails()'.
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl..ctor(RequestDelegate next, ILoggerFactory loggerFactory, IOptions`1 options, DiagnosticListener diagnosticListener, IEnumerable`1 exceptionHandlers, IMeterFactory meterFactory, IProblemDetailsService problemDetailsService)
+   at Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.<>c__DisplayClass5_0.<SetExceptionHandlerMiddleware>b__0(RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+2026-06-03 17:05:10.819 +05:30 [ERR] Hosting failed to start
+System.InvalidOperationException: An error occurred when configuring the exception handler middleware. Either the 'ExceptionHandlingPath' or the 'ExceptionHandler' property must be set in 'UseExceptionHandler()'. Alternatively, set one of the aforementioned properties in 'Startup.ConfigureServices' as follows: 'services.AddExceptionHandler(options => { ... });' or configure to generate a 'ProblemDetails' response in 'service.AddProblemDetails()'.
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl..ctor(RequestDelegate next, ILoggerFactory loggerFactory, IOptions`1 options, DiagnosticListener diagnosticListener, IEnumerable`1 exceptionHandlers, IMeterFactory meterFactory, IProblemDetailsService problemDetailsService)
+   at Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.<>c__DisplayClass5_0.<SetExceptionHandlerMiddleware>b__0(RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-06-03 17:11:19.452 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-03 17:11:19.492 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-03 17:11:19.492 +05:30 [INF] Hosting environment: Development
+2026-06-03 17:11:19.492 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/propertyManagement
+2026-06-03 17:11:24.504 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/api/Sample - null null
+2026-06-03 17:11:24.528 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-06-03 17:11:24.529 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.SampleController.GetAllSamples (propertyManagement)'
+2026-06-03 17:11:24.534 +05:30 [INF] Route matched with {action = "GetAllSamples", controller = "Sample"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAllSamples() on controller propertyManagement.Controllers.SampleController (propertyManagement).
+2026-06-03 17:11:24.537 +05:30 [INF] Executed action propertyManagement.Controllers.SampleController.GetAllSamples (propertyManagement) in 1.1346ms
+2026-06-03 17:11:24.538 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.SampleController.GetAllSamples (propertyManagement)'
+2026-06-03 17:11:24.538 +05:30 [ERR] An unexpected exception occurred while processing the request.
+propertyManagement.Exceptions.UnableToCreateEntityException: Custom message: Unable to create sample entity.
+   at propertyManagement.Controllers.SampleController.GetAllSamples() in /Users/sabareesht/Documents/genSpark/propertyManagement/Controllers/SampleController.cs:line 14
+   at lambda_method2(Closure, Object, Object[])
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at propertyManagement.Middlewares.GlobalExceptionHandler.InvokeAsync(HttpContext context) in /Users/sabareesht/Documents/genSpark/propertyManagement/Middlewares/GlobalExceptionHandler.cs:line 23
+2026-06-03 17:11:24.550 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/api/Sample - 400 null application/json 47.8263ms
+2026-06-03 17:18:08.620 +05:30 [INF] Application is shutting down...
+2026-06-03 17:26:37.358 +05:30 [FTL] Application startup exception
+System.InvalidOperationException: A suitable constructor for type 'GlobalExceptionHandler' could not be located. Ensure the type is concrete and all parameters of a public constructor are either registered as services or passed as arguments. Also ensure no extraneous arguments are provided.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.FindApplicableConstructor(Type instanceType, Type[] argumentTypes, ConstructorInfoEx[] constructors, ConstructorInfo& matchingConstructor, Nullable`1[]& matchingParameterMap)
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateInstance(IServiceProvider provider, Type instanceType, Object[] parameters)
+   at Microsoft.AspNetCore.Builder.UseMiddlewareExtensions.ReflectionMiddlewareBinder.CreateMiddleware(RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+2026-06-03 17:26:37.405 +05:30 [ERR] Hosting failed to start
+System.InvalidOperationException: A suitable constructor for type 'GlobalExceptionHandler' could not be located. Ensure the type is concrete and all parameters of a public constructor are either registered as services or passed as arguments. Also ensure no extraneous arguments are provided.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.FindApplicableConstructor(Type instanceType, Type[] argumentTypes, ConstructorInfoEx[] constructors, ConstructorInfo& matchingConstructor, Nullable`1[]& matchingParameterMap)
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateInstance(IServiceProvider provider, Type instanceType, Object[] parameters)
+   at Microsoft.AspNetCore.Builder.UseMiddlewareExtensions.ReflectionMiddlewareBinder.CreateMiddleware(RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-06-03 17:27:23.485 +05:30 [FTL] Application startup exception
+System.InvalidOperationException: A suitable constructor for type 'GlobalExceptionHandler' could not be located. Ensure the type is concrete and all parameters of a public constructor are either registered as services or passed as arguments. Also ensure no extraneous arguments are provided.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.FindApplicableConstructor(Type instanceType, Type[] argumentTypes, ConstructorInfoEx[] constructors, ConstructorInfo& matchingConstructor, Nullable`1[]& matchingParameterMap)
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateInstance(IServiceProvider provider, Type instanceType, Object[] parameters)
+   at Microsoft.AspNetCore.Builder.UseMiddlewareExtensions.ReflectionMiddlewareBinder.CreateMiddleware(RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+2026-06-03 17:27:23.529 +05:30 [ERR] Hosting failed to start
+System.InvalidOperationException: A suitable constructor for type 'GlobalExceptionHandler' could not be located. Ensure the type is concrete and all parameters of a public constructor are either registered as services or passed as arguments. Also ensure no extraneous arguments are provided.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.FindApplicableConstructor(Type instanceType, Type[] argumentTypes, ConstructorInfoEx[] constructors, ConstructorInfo& matchingConstructor, Nullable`1[]& matchingParameterMap)
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateInstance(IServiceProvider provider, Type instanceType, Object[] parameters)
+   at Microsoft.AspNetCore.Builder.UseMiddlewareExtensions.ReflectionMiddlewareBinder.CreateMiddleware(RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-06-03 17:27:40.151 +05:30 [FTL] Application startup exception
+System.InvalidOperationException: A suitable constructor for type 'GlobalExceptionHandler' could not be located. Ensure the type is concrete and all parameters of a public constructor are either registered as services or passed as arguments. Also ensure no extraneous arguments are provided.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.FindApplicableConstructor(Type instanceType, Type[] argumentTypes, ConstructorInfoEx[] constructors, ConstructorInfo& matchingConstructor, Nullable`1[]& matchingParameterMap)
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateInstance(IServiceProvider provider, Type instanceType, Object[] parameters)
+   at Microsoft.AspNetCore.Builder.UseMiddlewareExtensions.ReflectionMiddlewareBinder.CreateMiddleware(RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+2026-06-03 17:27:40.195 +05:30 [ERR] Hosting failed to start
+System.InvalidOperationException: A suitable constructor for type 'GlobalExceptionHandler' could not be located. Ensure the type is concrete and all parameters of a public constructor are either registered as services or passed as arguments. Also ensure no extraneous arguments are provided.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.FindApplicableConstructor(Type instanceType, Type[] argumentTypes, ConstructorInfoEx[] constructors, ConstructorInfo& matchingConstructor, Nullable`1[]& matchingParameterMap)
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateInstance(IServiceProvider provider, Type instanceType, Object[] parameters)
+   at Microsoft.AspNetCore.Builder.UseMiddlewareExtensions.ReflectionMiddlewareBinder.CreateMiddleware(RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-06-03 17:31:08.442 +05:30 [FTL] Application startup exception
+System.InvalidOperationException: An error occurred when configuring the exception handler middleware. Either the 'ExceptionHandlingPath' or the 'ExceptionHandler' property must be set in 'UseExceptionHandler()'. Alternatively, set one of the aforementioned properties in 'Startup.ConfigureServices' as follows: 'services.AddExceptionHandler(options => { ... });' or configure to generate a 'ProblemDetails' response in 'service.AddProblemDetails()'.
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl..ctor(RequestDelegate next, ILoggerFactory loggerFactory, IOptions`1 options, DiagnosticListener diagnosticListener, IEnumerable`1 exceptionHandlers, IMeterFactory meterFactory, IProblemDetailsService problemDetailsService)
+   at Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.<>c__DisplayClass5_0.<SetExceptionHandlerMiddleware>b__0(RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+2026-06-03 17:31:08.484 +05:30 [ERR] Hosting failed to start
+System.InvalidOperationException: An error occurred when configuring the exception handler middleware. Either the 'ExceptionHandlingPath' or the 'ExceptionHandler' property must be set in 'UseExceptionHandler()'. Alternatively, set one of the aforementioned properties in 'Startup.ConfigureServices' as follows: 'services.AddExceptionHandler(options => { ... });' or configure to generate a 'ProblemDetails' response in 'service.AddProblemDetails()'.
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl..ctor(RequestDelegate next, ILoggerFactory loggerFactory, IOptions`1 options, DiagnosticListener diagnosticListener, IEnumerable`1 exceptionHandlers, IMeterFactory meterFactory, IProblemDetailsService problemDetailsService)
+   at Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.<>c__DisplayClass5_0.<SetExceptionHandlerMiddleware>b__0(RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-06-03 17:31:35.271 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-03 17:31:35.311 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-03 17:31:35.312 +05:30 [INF] Hosting environment: Development
+2026-06-03 17:31:35.312 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/propertyManagement
+2026-06-03 17:31:47.225 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/api/Sample - null null
+2026-06-03 17:31:47.246 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-06-03 17:31:47.248 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.SampleController.GetAllSamples (propertyManagement)'
+2026-06-03 17:31:47.252 +05:30 [INF] Route matched with {action = "GetAllSamples", controller = "Sample"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAllSamples() on controller propertyManagement.Controllers.SampleController (propertyManagement).
+2026-06-03 17:31:47.254 +05:30 [INF] Executed action propertyManagement.Controllers.SampleController.GetAllSamples (propertyManagement) in 0.8853ms
+2026-06-03 17:31:47.255 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.SampleController.GetAllSamples (propertyManagement)'
+2026-06-03 17:31:47.265 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/api/Sample - 400 null application/json; charset=utf-8 41.192ms
+2026-06-03 17:32:10.844 +05:30 [INF] Application is shutting down...
+2026-06-03 17:32:14.142 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-03 17:32:14.184 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-03 17:32:14.184 +05:30 [INF] Hosting environment: Development
+2026-06-03 17:32:14.184 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/propertyManagement
+2026-06-03 17:32:15.504 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/api/Sample - null null
+2026-06-03 17:32:15.526 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-06-03 17:32:15.528 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.SampleController.GetAllSamples (propertyManagement)'
+2026-06-03 17:32:15.533 +05:30 [INF] Route matched with {action = "GetAllSamples", controller = "Sample"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAllSamples() on controller propertyManagement.Controllers.SampleController (propertyManagement).
+2026-06-03 17:32:15.535 +05:30 [INF] Executed action propertyManagement.Controllers.SampleController.GetAllSamples (propertyManagement) in 0.8561ms
+2026-06-03 17:32:15.536 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.SampleController.GetAllSamples (propertyManagement)'
+2026-06-03 17:32:15.545 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/api/Sample - 400 null application/json; charset=utf-8 42.0065ms
+2026-06-04 10:20:58.510 +05:30 [INF] Application is shutting down...
+2026-06-04 10:21:02.247 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-04 10:21:02.287 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-04 10:21:02.287 +05:30 [INF] Hosting environment: Development
+2026-06-04 10:21:02.287 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/propertyManagement
+2026-06-04 10:21:05.295 +05:30 [INF] Application is shutting down...
+2026-06-04 10:32:49.189 +05:30 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2026-06-04 10:32:49.246 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-04 10:32:49.247 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-04 10:32:49.247 +05:30 [INF] Hosting environment: Development
+2026-06-04 10:32:49.247 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/propertyManagement
+2026-06-04 10:41:08.029 +05:30 [INF] Application is shutting down...
+2026-06-04 10:41:12.264 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-04 10:41:12.305 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-04 10:41:12.306 +05:30 [INF] Hosting environment: Development
+2026-06-04 10:41:12.306 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/propertyManagement
+2026-06-04 10:41:31.895 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/ - null null
+2026-06-04 10:41:31.919 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/ - 301 0 null 24.5442ms
+2026-06-04 10:41:31.942 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/index.html - null null
+2026-06-04 10:41:31.973 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/index.html - 200 null text/html;charset=utf-8 31.5076ms
+2026-06-04 10:41:31.979 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/swagger-ui.css - null null
+2026-06-04 10:41:31.982 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/index.css - null null
+2026-06-04 10:41:31.982 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/swagger-ui-bundle.js - null null
+2026-06-04 10:41:31.982 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/swagger-ui-standalone-preset.js - null null
+2026-06-04 10:41:31.982 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/index.js - null null
+2026-06-04 10:41:31.983 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/index.js - 200 null application/javascript;charset=utf-8 0.4452ms
+2026-06-04 10:41:31.985 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/index.css - 200 152 text/css 3.6528ms
+2026-06-04 10:41:31.985 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/swagger-ui.css - 200 26499 text/css 6.3687ms
+2026-06-04 10:41:31.990 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/swagger-ui-standalone-preset.js - 200 76613 text/javascript 7.3709ms
+2026-06-04 10:41:31.990 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/swagger-ui-bundle.js - 200 418599 text/javascript 7.979ms
+2026-06-04 10:41:32.083 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/favicon-32x32.png - null null
+2026-06-04 10:41:32.083 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/favicon-16x16.png - null null
+2026-06-04 10:41:32.083 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/favicon-32x32.png - 200 628 image/png 0.836ms
+2026-06-04 10:41:32.083 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/favicon-16x16.png - 200 665 image/png 0.5059ms
+2026-06-04 10:41:32.099 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/v1/swagger.json - null null
+2026-06-04 10:41:32.153 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 53.9161ms
+2026-06-04 10:42:01.111 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/api/User - null null
+2026-06-04 10:42:01.121 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-06-04 10:42:01.125 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.GetAllUsers (propertyManagement)'
+2026-06-04 10:42:01.139 +05:30 [INF] Route matched with {action = "GetAllUsers", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[propertyManagement.DTOs.UserResponseDto]]] GetAllUsers() on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-04 10:42:01.849 +05:30 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+FROM users AS u
+2026-06-04 10:42:01.859 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[propertyManagement.DTOs.UserResponseDto, propertyManagement, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-06-04 10:42:01.870 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.GetAllUsers (propertyManagement) in 728.8328ms
+2026-06-04 10:42:01.870 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.GetAllUsers (propertyManagement)'
+2026-06-04 10:42:01.873 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/api/User - 200 null application/json; charset=utf-8 761.5598ms
+2026-06-04 10:42:52.335 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/register - application/json 166
+2026-06-04 10:42:52.337 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-04 10:42:52.352 +05:30 [INF] Route matched with {action = "Register", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Register(propertyManagement.DTOs.RegisterDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-04 10:42:52.454 +05:30 [INF] Executed DbCommand (22ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+FROM users AS u
+WHERE u.email = @email
+LIMIT 1
+2026-06-04 10:42:52.757 +05:30 [ERR] Failed executing DbCommand (4ms) [Parameters=[@p0='?' (DbType = DateTime2), @p1='?' (DbType = Date), @p2='?' (DbType = DateTime2), @p3='?', @p4='?', @p5='?', @p6='?', @p7='?', @p8='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO users (created_at, date_of_birth, deleted_at, email, first_name, last_name, password_hash, phone, updated_at)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8)
+RETURNING id;
+2026-06-04 10:42:52.766 +05:30 [ERR] An exception occurred in the database while saving changes for context type 'propertyManagement.Data.PropertyManagementDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> System.ArgumentException: Cannot write DateTime with Kind=UTC to PostgreSQL type 'timestamp without time zone', consider using 'timestamp with time zone'. Note that it's not possible to mix DateTimes with different Kinds in an array, range, or multirange. (Parameter 'value')
+   at Npgsql.Internal.Converters.DateTimeConverterResolver`1.Get(DateTime value, Nullable`1 expectedPgTypeId, Boolean validateOnly)
+   at Npgsql.Internal.Converters.DateTimeConverterResolver.<>c.<CreateResolver>b__0_0(DateTimeConverterResolver`1 resolver, DateTime value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.Converters.DateTimeConverterResolver`1.Get(T value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.PgConverterResolver`1.GetAsObjectInternal(PgTypeInfo typeInfo, Object value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.PgResolverTypeInfo.GetResolutionAsObject(Object value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.PgTypeInfo.GetObjectResolution(Object value)
+   at Npgsql.NpgsqlParameter.ResolveConverter(PgTypeInfo typeInfo)
+   at Npgsql.NpgsqlParameter.ResolveTypeInfo(PgSerializerOptions options, IDbTypeResolver dbTypeResolver)
+   at Npgsql.NpgsqlParameterCollection.ProcessParameters(ReloadableState reloadableState, Boolean validateValues, CommandType commandType)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> System.ArgumentException: Cannot write DateTime with Kind=UTC to PostgreSQL type 'timestamp without time zone', consider using 'timestamp with time zone'. Note that it's not possible to mix DateTimes with different Kinds in an array, range, or multirange. (Parameter 'value')
+   at Npgsql.Internal.Converters.DateTimeConverterResolver`1.Get(DateTime value, Nullable`1 expectedPgTypeId, Boolean validateOnly)
+   at Npgsql.Internal.Converters.DateTimeConverterResolver.<>c.<CreateResolver>b__0_0(DateTimeConverterResolver`1 resolver, DateTime value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.Converters.DateTimeConverterResolver`1.Get(T value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.PgConverterResolver`1.GetAsObjectInternal(PgTypeInfo typeInfo, Object value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.PgResolverTypeInfo.GetResolutionAsObject(Object value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.PgTypeInfo.GetObjectResolution(Object value)
+   at Npgsql.NpgsqlParameter.ResolveConverter(PgTypeInfo typeInfo)
+   at Npgsql.NpgsqlParameter.ResolveTypeInfo(PgSerializerOptions options, IDbTypeResolver dbTypeResolver)
+   at Npgsql.NpgsqlParameterCollection.ProcessParameters(ReloadableState reloadableState, Boolean validateValues, CommandType commandType)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2026-06-04 10:42:52.767 +05:30 [INF] Executing ObjectResult, writing value of type '<>f__AnonymousType2`2[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-06-04 10:42:52.769 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Register (propertyManagement) in 416.251ms
+2026-06-04 10:42:52.769 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-04 10:42:52.769 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/register - 500 null application/json; charset=utf-8 434.2421ms
+2026-06-04 10:49:20.657 +05:30 [INF] Application is shutting down...
+2026-06-04 10:49:24.621 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-04 10:49:24.660 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-04 10:49:24.660 +05:30 [INF] Hosting environment: Development
+2026-06-04 10:49:24.660 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/propertyManagement
+2026-06-04 10:49:29.594 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/register - application/json 166
+2026-06-04 10:49:29.612 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-06-04 10:49:29.614 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-04 10:49:29.623 +05:30 [INF] Route matched with {action = "Register", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Register(propertyManagement.DTOs.RegisterDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-04 10:49:30.330 +05:30 [INF] Executed DbCommand (46ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+FROM users AS u
+WHERE u.email = @email
+LIMIT 1
+2026-06-04 10:49:30.646 +05:30 [INF] Executed DbCommand (8ms) [Parameters=[@p0='?' (DbType = DateTime2), @p1='?' (DbType = Date), @p2='?' (DbType = DateTime2), @p3='?', @p4='?', @p5='?', @p6='?', @p7='?', @p8='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO users (created_at, date_of_birth, deleted_at, email, first_name, last_name, password_hash, phone, updated_at)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8)
+RETURNING id;
+2026-06-04 10:49:30.660 +05:30 [INF] Executing CreatedAtActionResult, writing value of type 'propertyManagement.DTOs.UserResponseDto'.
+2026-06-04 10:49:30.672 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Register (propertyManagement) in 1047.9884ms
+2026-06-04 10:49:30.673 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-04 10:49:30.676 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/register - 201 null application/json; charset=utf-8 1083.2936ms
+2026-06-04 10:51:21.913 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/login - application/json 57
+2026-06-04 10:51:21.927 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Login (propertyManagement)'
+2026-06-04 10:51:21.935 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Login(propertyManagement.DTOs.LoginDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-04 10:51:21.954 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+FROM users AS u
+WHERE u.email = @email
+LIMIT 1
+2026-06-04 10:51:22.194 +05:30 [INF] Executing BadRequestObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-06-04 10:51:22.196 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Login (propertyManagement) in 260.358ms
+2026-06-04 10:51:22.196 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Login (propertyManagement)'
+2026-06-04 10:51:22.196 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/login - 400 null application/json; charset=utf-8 283.901ms
+2026-06-04 10:51:29.455 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/login - application/json 58
+2026-06-04 10:51:29.459 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Login (propertyManagement)'
+2026-06-04 10:51:29.459 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Login(propertyManagement.DTOs.LoginDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-04 10:51:29.505 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+FROM users AS u
+WHERE u.email = @email
+LIMIT 1
+2026-06-04 10:51:29.648 +05:30 [INF] Executing OkObjectResult, writing value of type 'propertyManagement.DTOs.UserResponseDto'.
+2026-06-04 10:51:29.648 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Login (propertyManagement) in 188.8736ms
+2026-06-04 10:51:29.648 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Login (propertyManagement)'
+2026-06-04 10:51:29.648 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/login - 200 null application/json; charset=utf-8 193.7917ms
+2026-06-04 10:51:56.929 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/api/User - null null
+2026-06-04 10:51:56.936 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.GetAllUsers (propertyManagement)'
+2026-06-04 10:51:56.941 +05:30 [INF] Route matched with {action = "GetAllUsers", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[propertyManagement.DTOs.UserResponseDto]]] GetAllUsers() on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-04 10:51:56.952 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+FROM users AS u
+2026-06-04 10:51:56.954 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[propertyManagement.DTOs.UserResponseDto, propertyManagement, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-06-04 10:51:56.958 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.GetAllUsers (propertyManagement) in 16.1296ms
+2026-06-04 10:51:56.958 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.GetAllUsers (propertyManagement)'
+2026-06-04 10:51:56.958 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/api/User - 200 null application/json; charset=utf-8 28.7961ms
+2026-06-04 10:52:12.532 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/api/User/91 - null null
+2026-06-04 10:52:12.534 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.GetUserById (propertyManagement)'
+2026-06-04 10:52:12.541 +05:30 [INF] Route matched with {action = "GetUserById", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] GetUserById(Int32) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-04 10:52:12.549 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+FROM users AS u
+WHERE u.id = @id
+LIMIT 1
+2026-06-04 10:52:12.550 +05:30 [INF] Executing NotFoundObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-06-04 10:52:12.550 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.GetUserById (propertyManagement) in 8.3732ms
+2026-06-04 10:52:12.550 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.GetUserById (propertyManagement)'
+2026-06-04 10:52:12.550 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/api/User/91 - 404 null application/json; charset=utf-8 18.3289ms
+2026-06-04 10:52:17.761 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/api/User/1 - null null
+2026-06-04 10:52:17.761 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.GetUserById (propertyManagement)'
+2026-06-04 10:52:17.762 +05:30 [INF] Route matched with {action = "GetUserById", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] GetUserById(Int32) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-04 10:52:17.765 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+FROM users AS u
+WHERE u.id = @id
+LIMIT 1
+2026-06-04 10:52:17.766 +05:30 [INF] Executing OkObjectResult, writing value of type 'propertyManagement.DTOs.UserResponseDto'.
+2026-06-04 10:52:17.766 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.GetUserById (propertyManagement) in 4.4997ms
+2026-06-04 10:52:17.767 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.GetUserById (propertyManagement)'
+2026-06-04 10:52:17.767 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/api/User/1 - 200 null application/json; charset=utf-8 6.0842ms
+2026-06-04 10:52:44.174 +05:30 [INF] Request starting HTTP/1.1 PUT http://localhost:5104/api/User/1 - application/json 25
+2026-06-04 10:52:44.175 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.UpdateUser (propertyManagement)'
+2026-06-04 10:52:44.184 +05:30 [INF] Route matched with {action = "UpdateUser", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] UpdateUser(Int32, propertyManagement.DTOs.UpdateUserDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-04 10:52:44.190 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+FROM users AS u
+WHERE u.id = @id
+LIMIT 1
+2026-06-04 10:52:44.203 +05:30 [INF] Executed DbCommand (6ms) [Parameters=[@p9='?' (DbType = Int32), @p0='?' (DbType = DateTime2), @p1='?' (DbType = Date), @p2='?' (DbType = DateTime2), @p3='?', @p4='?', @p5='?', @p6='?', @p7='?', @p8='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+UPDATE users SET created_at = @p0, date_of_birth = @p1, deleted_at = @p2, email = @p3, first_name = @p4, last_name = @p5, password_hash = @p6, phone = @p7, updated_at = @p8
+WHERE id = @p9;
+2026-06-04 10:52:44.204 +05:30 [INF] Executing OkObjectResult, writing value of type 'propertyManagement.DTOs.UserResponseDto'.
+2026-06-04 10:52:44.205 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.UpdateUser (propertyManagement) in 20.5415ms
+2026-06-04 10:52:44.205 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.UpdateUser (propertyManagement)'
+2026-06-04 10:52:44.205 +05:30 [INF] Request finished HTTP/1.1 PUT http://localhost:5104/api/User/1 - 200 null application/json; charset=utf-8 30.6862ms
+2026-06-04 10:52:56.416 +05:30 [INF] Request starting HTTP/1.1 DELETE http://localhost:5104/api/User/1 - null 0
+2026-06-04 10:52:56.418 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.DeleteUser (propertyManagement)'
+2026-06-04 10:52:56.425 +05:30 [INF] Route matched with {action = "DeleteUser", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult] DeleteUser(Int32) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-04 10:52:56.429 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+FROM users AS u
+WHERE u.id = @id
+LIMIT 1
+2026-06-04 10:52:56.447 +05:30 [INF] Executed DbCommand (14ms) [Parameters=[@p0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+DELETE FROM users
+WHERE id = @p0;
+2026-06-04 10:52:56.450 +05:30 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-06-04 10:52:56.450 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.DeleteUser (propertyManagement) in 24.8953ms
+2026-06-04 10:52:56.450 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.DeleteUser (propertyManagement)'
+2026-06-04 10:52:56.450 +05:30 [INF] Request finished HTTP/1.1 DELETE http://localhost:5104/api/User/1 - 200 null application/json; charset=utf-8 34.4509ms
+2026-06-04 10:53:04.083 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/api/User - null null
+2026-06-04 10:53:04.084 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.GetAllUsers (propertyManagement)'
+2026-06-04 10:53:04.084 +05:30 [INF] Route matched with {action = "GetAllUsers", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[propertyManagement.DTOs.UserResponseDto]]] GetAllUsers() on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-04 10:53:04.088 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+FROM users AS u
+2026-06-04 10:53:04.089 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[propertyManagement.DTOs.UserResponseDto, propertyManagement, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-06-04 10:53:04.089 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.GetAllUsers (propertyManagement) in 4.5562ms
+2026-06-04 10:53:04.089 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.GetAllUsers (propertyManagement)'
+2026-06-04 10:53:04.090 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/api/User - 200 null application/json; charset=utf-8 6.6482ms
+2026-06-04 10:53:18.606 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/api/User - null null
+2026-06-04 10:53:18.606 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.GetAllUsers (propertyManagement)'
+2026-06-04 10:53:18.607 +05:30 [INF] Route matched with {action = "GetAllUsers", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[propertyManagement.DTOs.UserResponseDto]]] GetAllUsers() on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-04 10:53:18.610 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+FROM users AS u
+2026-06-04 10:53:18.610 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[propertyManagement.DTOs.UserResponseDto, propertyManagement, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-06-04 10:53:18.610 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.GetAllUsers (propertyManagement) in 3.231ms
+2026-06-04 10:53:18.611 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.GetAllUsers (propertyManagement)'
+2026-06-04 10:53:18.611 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/api/User - 200 null application/json; charset=utf-8 5.4367ms
+2026-06-04 12:47:12.767 +05:30 [ERR] Failed executing DbCommand (15ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-06-04 12:47:12.949 +05:30 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2026-06-04 12:47:12.985 +05:30 [INF] Applying migration '20260604071654_ConvertIdFieldsToUuid'.
+2026-06-04 12:47:13.100 +05:30 [ERR] Failed executing DbCommand (84ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE charge_statuses (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    name character varying,
+    CONSTRAINT charge_statuses_pkey PRIMARY KEY (id)
+);
+2026-06-04 12:47:42.956 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-06-04 12:48:19.562 +05:30 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-06-04 12:48:20.111 +05:30 [INF] Executed DbCommand (461ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DROP DATABASE "propertyManagement" WITH (FORCE);
+2026-06-04 12:48:44.888 +05:30 [ERR] An error occurred using the connection to database 'propertyManagement' on server 'tcp://localhost:5432'.
+2026-06-04 12:48:45.358 +05:30 [INF] Executed DbCommand (303ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE DATABASE "propertyManagement";
+2026-06-04 12:48:45.393 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-06-04 12:48:45.424 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+    "MigrationId" character varying(150) NOT NULL,
+    "ProductVersion" character varying(32) NOT NULL,
+    CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY ("MigrationId")
+);
+2026-06-04 12:48:45.429 +05:30 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2026-06-04 12:48:45.430 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+LOCK TABLE "__EFMigrationsHistory" IN ACCESS EXCLUSIVE MODE
+2026-06-04 12:48:45.432 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-06-04 12:48:45.436 +05:30 [INF] Applying migration '20260604071833_InitialCreateWithUuid'.
+2026-06-04 12:48:45.477 +05:30 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE charge_statuses (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    name character varying,
+    CONSTRAINT charge_statuses_pkey PRIMARY KEY (id)
+);
+2026-06-04 12:48:45.480 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE charge_types (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    name character varying,
+    CONSTRAINT charge_types_pkey PRIMARY KEY (id)
+);
+2026-06-04 12:48:45.485 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE complaint_priorities (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    name character varying,
+    CONSTRAINT complaint_priorities_pkey PRIMARY KEY (id)
+);
+2026-06-04 12:48:45.488 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE complaint_statuses (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    name character varying,
+    CONSTRAINT complaint_statuses_pkey PRIMARY KEY (id)
+);
+2026-06-04 12:48:45.492 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE complaint_types (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    name character varying,
+    CONSTRAINT complaint_types_pkey PRIMARY KEY (id)
+);
+2026-06-04 12:48:45.496 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE countries (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    name character varying,
+    CONSTRAINT countries_pkey PRIMARY KEY (id)
+);
+2026-06-04 12:48:45.499 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE currencies (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    code character varying(10),
+    name character varying(50),
+    CONSTRAINT currencies_pkey PRIMARY KEY (id)
+);
+2026-06-04 12:48:45.502 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE document_types (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    name character varying(50),
+    CONSTRAINT document_types_pkey PRIMARY KEY (id)
+);
+2026-06-04 12:48:45.506 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE lease_statuses (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    name character varying,
+    CONSTRAINT lease_statuses_pkey PRIMARY KEY (id)
+);
+2026-06-04 12:48:45.510 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE lease_types (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    name character varying,
+    CONSTRAINT lease_types_pkey PRIMARY KEY (id)
+);
+2026-06-04 12:48:45.513 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE owner_types (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    name character varying(50),
+    CONSTRAINT owner_types_pkey PRIMARY KEY (id)
+);
+2026-06-04 12:48:45.520 +05:30 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE payment_methods (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    name character varying(50) NOT NULL,
+    category character varying(30) NOT NULL,
+    description text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    deleted_at timestamp without time zone,
+    CONSTRAINT payment_methods_pkey PRIMARY KEY (id)
+);
+2026-06-04 12:48:45.524 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE payment_statuses (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    name character varying,
+    CONSTRAINT payment_statuses_pkey PRIMARY KEY (id)
+);
+2026-06-04 12:48:45.528 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE profile_types (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    name character varying(50) NOT NULL,
+    description text,
+    CONSTRAINT profile_types_pkey PRIMARY KEY (id)
+);
+2026-06-04 12:48:45.536 +05:30 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE property_statuses (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    name character varying(30),
+    CONSTRAINT property_statuses_pkey PRIMARY KEY (id)
+);
+2026-06-04 12:48:45.539 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE proposal_statuses (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    name character varying,
+    CONSTRAINT proposal_statuses_pkey PRIMARY KEY (id)
+);
+2026-06-04 12:48:45.541 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE roles (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    name character varying(100) NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    deleted_at timestamp without time zone,
+    CONSTRAINT roles_pkey PRIMARY KEY (id)
+);
+2026-06-04 12:48:45.545 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE users (
+    id uuid NOT NULL,
+    first_name character varying(50) NOT NULL,
+    last_name character varying(50) NOT NULL,
+    email character varying(255) NOT NULL,
+    phone character varying(20) NOT NULL,
+    password_hash character varying(100) NOT NULL,
+    date_of_birth date NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    deleted_at timestamp without time zone,
+    CONSTRAINT users_pkey PRIMARY KEY (id)
+);
+2026-06-04 12:48:45.550 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE charges (
+    id uuid NOT NULL,
+    "desc" text,
+    charge_type_id integer,
+    amount numeric(12,2),
+    status_id integer,
+    due_date timestamp without time zone,
+    created_at timestamp without time zone,
+    CONSTRAINT charges_pkey PRIMARY KEY (id),
+    CONSTRAINT charges_charge_type_id_fkey FOREIGN KEY (charge_type_id) REFERENCES charge_types (id),
+    CONSTRAINT charges_status_id_fkey FOREIGN KEY (status_id) REFERENCES charge_statuses (id)
+);
+2026-06-04 12:48:45.554 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE states (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    country_id integer,
+    name character varying,
+    CONSTRAINT states_pkey PRIMARY KEY (id),
+    CONSTRAINT states_country_id_fkey FOREIGN KEY (country_id) REFERENCES countries (id)
+);
+2026-06-04 12:48:45.559 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE documents (
+    id uuid NOT NULL,
+    document_type_id integer,
+    document_number character varying(50),
+    document_url text,
+    created_at timestamp without time zone,
+    CONSTRAINT documents_pkey PRIMARY KEY (id),
+    CONSTRAINT documents_document_type_id_fkey FOREIGN KEY (document_type_id) REFERENCES document_types (id)
+);
+2026-06-04 12:48:45.564 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE payments (
+    id uuid NOT NULL,
+    transaction_ref character varying,
+    amount numeric(12,2),
+    currency_id integer,
+    paid_by uuid,
+    payment_method_id integer,
+    status_id integer,
+    paid_at timestamp without time zone,
+    created_at timestamp without time zone,
+    CONSTRAINT payments_pkey PRIMARY KEY (id),
+    CONSTRAINT payments_currency_id_fkey FOREIGN KEY (currency_id) REFERENCES currencies (id),
+    CONSTRAINT payments_paid_by_fkey FOREIGN KEY (paid_by) REFERENCES users (id),
+    CONSTRAINT payments_payment_method_id_fkey FOREIGN KEY (payment_method_id) REFERENCES payment_methods (id),
+    CONSTRAINT payments_status_id_fkey FOREIGN KEY (status_id) REFERENCES payment_statuses (id)
+);
+2026-06-04 12:48:45.566 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE user_profiles (
+    user_id uuid NOT NULL,
+    profile_type_id integer NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    CONSTRAINT user_profiles_pkey PRIMARY KEY (user_id),
+    CONSTRAINT user_profiles_profile_type_id_fkey FOREIGN KEY (profile_type_id) REFERENCES profile_types (id),
+    CONSTRAINT user_profiles_user_id_fkey FOREIGN KEY (user_id) REFERENCES users (id)
+);
+2026-06-04 12:48:45.570 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE user_roles (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    user_id uuid,
+    role_id integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    deleted_at timestamp without time zone,
+    CONSTRAINT user_roles_pkey PRIMARY KEY (id),
+    CONSTRAINT user_roles_role_id_fkey FOREIGN KEY (role_id) REFERENCES roles (id),
+    CONSTRAINT user_roles_user_id_fkey FOREIGN KEY (user_id) REFERENCES users (id)
+);
+2026-06-04 12:48:45.574 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE districts (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    state_id integer,
+    name character varying,
+    CONSTRAINT districts_pkey PRIMARY KEY (id),
+    CONSTRAINT districts_state_id_fkey FOREIGN KEY (state_id) REFERENCES states (id)
+);
+2026-06-04 12:48:45.577 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE user_documents (
+    user_id uuid NOT NULL,
+    document_id uuid NOT NULL,
+    CONSTRAINT user_documents_pkey PRIMARY KEY (user_id, document_id),
+    CONSTRAINT user_documents_document_id_fkey FOREIGN KEY (document_id) REFERENCES documents (id),
+    CONSTRAINT user_documents_user_id_fkey FOREIGN KEY (user_id) REFERENCES users (id)
+);
+2026-06-04 12:48:45.581 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE charge_payments (
+    charge_id uuid NOT NULL,
+    payment_id uuid NOT NULL,
+    amount_applied numeric(12,2),
+    CONSTRAINT charge_payments_pkey PRIMARY KEY (charge_id, payment_id),
+    CONSTRAINT charge_payments_charge_id_fkey FOREIGN KEY (charge_id) REFERENCES charges (id),
+    CONSTRAINT charge_payments_payment_id_fkey FOREIGN KEY (payment_id) REFERENCES payments (id)
+);
+2026-06-04 12:48:45.584 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE owner_profiles (
+    user_id uuid NOT NULL,
+    owner_type_id integer,
+    organization_name character varying(100),
+    gstin character varying(15),
+    CONSTRAINT owner_profiles_pkey PRIMARY KEY (user_id),
+    CONSTRAINT owner_profiles_owner_type_id_fkey FOREIGN KEY (owner_type_id) REFERENCES owner_types (id),
+    CONSTRAINT owner_profiles_user_id_fkey FOREIGN KEY (user_id) REFERENCES user_profiles (user_id)
+);
+2026-06-04 12:48:45.586 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE tenant_profiles (
+    user_id uuid NOT NULL,
+    monthly_income numeric(12,2),
+    occupation character varying(100),
+    emergency_contact_name character varying(100),
+    emergency_contact_number character varying(20),
+    CONSTRAINT tenant_profiles_pkey PRIMARY KEY (user_id),
+    CONSTRAINT tenant_profiles_user_id_fkey FOREIGN KEY (user_id) REFERENCES user_profiles (user_id)
+);
+2026-06-04 12:48:45.590 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE cities (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    district_id integer,
+    name character varying,
+    CONSTRAINT cities_pkey PRIMARY KEY (id),
+    CONSTRAINT cities_district_id_fkey FOREIGN KEY (district_id) REFERENCES districts (id)
+);
+2026-06-04 12:48:45.595 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE properties (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    owner_id uuid NOT NULL,
+    title character varying(200),
+    description text,
+    status_id integer,
+    city_id integer,
+    address_line character varying(255),
+    latitude numeric(10,7),
+    longitude numeric(10,7),
+    thumbnail_img_url character varying(255),
+    monthly_rent numeric(12,2) NOT NULL,
+    upfront_payment numeric(12,2) NOT NULL,
+    security_deposit numeric(12,2) NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    deleted_at timestamp without time zone,
+    CONSTRAINT properties_pkey PRIMARY KEY (id),
+    CONSTRAINT properties_city_id_fkey FOREIGN KEY (city_id) REFERENCES cities (id),
+    CONSTRAINT properties_owner_id_fkey FOREIGN KEY (owner_id) REFERENCES users (id),
+    CONSTRAINT properties_status_id_fkey FOREIGN KEY (status_id) REFERENCES property_statuses (id)
+);
+2026-06-04 12:48:45.601 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE complaints (
+    id uuid NOT NULL,
+    tenant_id uuid,
+    property_id integer,
+    complaint_type_id integer,
+    status_id integer,
+    priority_id integer,
+    title character varying(200),
+    description text,
+    resolved_at timestamp without time zone,
+    resolved_by uuid,
+    CONSTRAINT complaints_pkey PRIMARY KEY (id),
+    CONSTRAINT complaints_complaint_type_id_fkey FOREIGN KEY (complaint_type_id) REFERENCES complaint_types (id),
+    CONSTRAINT complaints_priority_id_fkey FOREIGN KEY (priority_id) REFERENCES complaint_priorities (id),
+    CONSTRAINT complaints_property_id_fkey FOREIGN KEY (property_id) REFERENCES properties (id),
+    CONSTRAINT complaints_resolved_by_fkey FOREIGN KEY (resolved_by) REFERENCES users (id),
+    CONSTRAINT complaints_status_id_fkey FOREIGN KEY (status_id) REFERENCES complaint_statuses (id),
+    CONSTRAINT complaints_tenant_id_fkey FOREIGN KEY (tenant_id) REFERENCES users (id)
+);
+2026-06-04 12:48:45.605 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE lease_proposals (
+    id uuid NOT NULL,
+    tenant_id uuid,
+    property_id integer,
+    start_date date,
+    end_date date,
+    monthly_rent numeric(12,2),
+    upfront_payment numeric(12,2),
+    security_deposit numeric(12,2),
+    lease_type_id integer,
+    status_id integer,
+    reviewed_by uuid,
+    reviewed_at timestamp without time zone,
+    created_at timestamp without time zone,
+    CONSTRAINT lease_proposals_pkey PRIMARY KEY (id),
+    CONSTRAINT lease_proposals_lease_type_id_fkey FOREIGN KEY (lease_type_id) REFERENCES lease_types (id),
+    CONSTRAINT lease_proposals_property_id_fkey FOREIGN KEY (property_id) REFERENCES properties (id),
+    CONSTRAINT lease_proposals_reviewed_by_fkey FOREIGN KEY (reviewed_by) REFERENCES users (id),
+    CONSTRAINT lease_proposals_status_id_fkey FOREIGN KEY (status_id) REFERENCES proposal_statuses (id),
+    CONSTRAINT lease_proposals_tenant_id_fkey FOREIGN KEY (tenant_id) REFERENCES users (id)
+);
+2026-06-04 12:48:45.610 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE property_documents (
+    property_id integer NOT NULL,
+    document_id uuid NOT NULL,
+    CONSTRAINT property_documents_pkey PRIMARY KEY (property_id, document_id),
+    CONSTRAINT property_documents_document_id_fkey FOREIGN KEY (document_id) REFERENCES documents (id),
+    CONSTRAINT property_documents_property_id_fkey FOREIGN KEY (property_id) REFERENCES properties (id)
+);
+2026-06-04 12:48:45.613 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE leases (
+    id uuid NOT NULL,
+    tenant_id uuid,
+    property_id integer,
+    proposal_id uuid,
+    start_date date,
+    end_date date,
+    monthly_rent numeric(12,2),
+    upfront_payment numeric(12,2),
+    security_deposit numeric(12,2),
+    lease_type_id integer,
+    status_id integer,
+    CONSTRAINT leases_pkey PRIMARY KEY (id),
+    CONSTRAINT leases_lease_type_id_fkey FOREIGN KEY (lease_type_id) REFERENCES lease_types (id),
+    CONSTRAINT leases_property_id_fkey FOREIGN KEY (property_id) REFERENCES properties (id),
+    CONSTRAINT leases_proposal_id_fkey FOREIGN KEY (proposal_id) REFERENCES lease_proposals (id),
+    CONSTRAINT leases_status_id_fkey FOREIGN KEY (status_id) REFERENCES lease_statuses (id),
+    CONSTRAINT leases_tenant_id_fkey FOREIGN KEY (tenant_id) REFERENCES users (id)
+);
+2026-06-04 12:48:45.615 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE lease_charges (
+    charge_id uuid NOT NULL,
+    lease_id uuid NOT NULL,
+    CONSTRAINT lease_charges_pkey PRIMARY KEY (charge_id, lease_id),
+    CONSTRAINT lease_charges_charge_id_fkey FOREIGN KEY (charge_id) REFERENCES charges (id),
+    CONSTRAINT lease_charges_lease_id_fkey FOREIGN KEY (lease_id) REFERENCES leases (id)
+);
+2026-06-04 12:48:45.618 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE lease_documents (
+    lease_id uuid NOT NULL,
+    document_id uuid NOT NULL,
+    CONSTRAINT lease_documents_pkey PRIMARY KEY (lease_id, document_id),
+    CONSTRAINT lease_documents_document_id_fkey FOREIGN KEY (document_id) REFERENCES documents (id),
+    CONSTRAINT lease_documents_lease_id_fkey FOREIGN KEY (lease_id) REFERENCES leases (id)
+);
+2026-06-04 12:48:45.621 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE user_charges (
+    charge_id uuid NOT NULL,
+    user_id uuid NOT NULL,
+    CONSTRAINT user_charges_pkey PRIMARY KEY (charge_id, user_id),
+    CONSTRAINT user_charges_charge_id_fkey FOREIGN KEY (charge_id) REFERENCES charges (id),
+    CONSTRAINT user_charges_user_id_fkey FOREIGN KEY (user_id) REFERENCES leases (id)
+);
+2026-06-04 12:48:45.623 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_charge_payments_payment_id" ON charge_payments (payment_id);
+2026-06-04 12:48:45.627 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX charge_statuses_name_key ON charge_statuses (name);
+2026-06-04 12:48:45.628 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX charge_types_name_key ON charge_types (name);
+2026-06-04 12:48:45.629 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_charges_charge_type_id" ON charges (charge_type_id);
+2026-06-04 12:48:45.630 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_charges_status_id" ON charges (status_id);
+2026-06-04 12:48:45.631 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_cities_district_id" ON cities (district_id);
+2026-06-04 12:48:45.633 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX complaint_priorities_name_key ON complaint_priorities (name);
+2026-06-04 12:48:45.634 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX complaint_statuses_name_key ON complaint_statuses (name);
+2026-06-04 12:48:45.636 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX complaint_types_name_key ON complaint_types (name);
+2026-06-04 12:48:45.638 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_complaints_complaint_type_id" ON complaints (complaint_type_id);
+2026-06-04 12:48:45.640 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_complaints_priority_id" ON complaints (priority_id);
+2026-06-04 12:48:45.642 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_complaints_property_id" ON complaints (property_id);
+2026-06-04 12:48:45.643 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_complaints_resolved_by" ON complaints (resolved_by);
+2026-06-04 12:48:45.644 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_complaints_status_id" ON complaints (status_id);
+2026-06-04 12:48:45.645 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_complaints_tenant_id" ON complaints (tenant_id);
+2026-06-04 12:48:45.646 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX countries_name_key ON countries (name);
+2026-06-04 12:48:45.647 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX currencies_code_key ON currencies (code);
+2026-06-04 12:48:45.647 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_districts_state_id" ON districts (state_id);
+2026-06-04 12:48:45.648 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX document_types_name_key ON document_types (name);
+2026-06-04 12:48:45.649 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_documents_document_type_id" ON documents (document_type_id);
+2026-06-04 12:48:45.650 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_lease_charges_lease_id" ON lease_charges (lease_id);
+2026-06-04 12:48:45.650 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_lease_documents_document_id" ON lease_documents (document_id);
+2026-06-04 12:48:45.651 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_lease_proposals_lease_type_id" ON lease_proposals (lease_type_id);
+2026-06-04 12:48:45.652 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_lease_proposals_property_id" ON lease_proposals (property_id);
+2026-06-04 12:48:45.653 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_lease_proposals_reviewed_by" ON lease_proposals (reviewed_by);
+2026-06-04 12:48:45.653 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_lease_proposals_status_id" ON lease_proposals (status_id);
+2026-06-04 12:48:45.654 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_lease_proposals_tenant_id" ON lease_proposals (tenant_id);
+2026-06-04 12:48:45.655 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX lease_statuses_name_key ON lease_statuses (name);
+2026-06-04 12:48:45.655 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX lease_types_name_key ON lease_types (name);
+2026-06-04 12:48:45.656 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_leases_lease_type_id" ON leases (lease_type_id);
+2026-06-04 12:48:45.657 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_leases_property_id" ON leases (property_id);
+2026-06-04 12:48:45.658 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_leases_proposal_id" ON leases (proposal_id);
+2026-06-04 12:48:45.659 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_leases_status_id" ON leases (status_id);
+2026-06-04 12:48:45.660 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_leases_tenant_id" ON leases (tenant_id);
+2026-06-04 12:48:45.660 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_owner_profiles_owner_type_id" ON owner_profiles (owner_type_id);
+2026-06-04 12:48:45.661 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX owner_types_name_key ON owner_types (name);
+2026-06-04 12:48:45.662 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX payment_methods_name_key ON payment_methods (name);
+2026-06-04 12:48:45.662 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX payment_statuses_name_key ON payment_statuses (name);
+2026-06-04 12:48:45.663 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_payments_currency_id" ON payments (currency_id);
+2026-06-04 12:48:45.664 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_payments_paid_by" ON payments (paid_by);
+2026-06-04 12:48:45.664 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_payments_payment_method_id" ON payments (payment_method_id);
+2026-06-04 12:48:45.665 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_payments_status_id" ON payments (status_id);
+2026-06-04 12:48:45.667 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX payments_transaction_ref_key ON payments (transaction_ref);
+2026-06-04 12:48:45.668 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX profile_types_name_key ON profile_types (name);
+2026-06-04 12:48:45.670 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_properties_city_id" ON properties (city_id);
+2026-06-04 12:48:45.671 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_properties_owner_id" ON properties (owner_id);
+2026-06-04 12:48:45.672 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_properties_status_id" ON properties (status_id);
+2026-06-04 12:48:45.673 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_property_documents_document_id" ON property_documents (document_id);
+2026-06-04 12:48:45.675 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX property_statuses_name_key ON property_statuses (name);
+2026-06-04 12:48:45.676 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX proposal_statuses_name_key ON proposal_statuses (name);
+2026-06-04 12:48:45.677 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX roles_name_key ON roles (name);
+2026-06-04 12:48:45.678 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_states_country_id" ON states (country_id);
+2026-06-04 12:48:45.680 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_user_charges_user_id" ON user_charges (user_id);
+2026-06-04 12:48:45.681 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_user_documents_document_id" ON user_documents (document_id);
+2026-06-04 12:48:45.681 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_user_profiles_profile_type_id" ON user_profiles (profile_type_id);
+2026-06-04 12:48:45.683 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_user_roles_role_id" ON user_roles (role_id);
+2026-06-04 12:48:45.684 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX user_roles_user_id_role_id_idx ON user_roles (user_id, role_id);
+2026-06-04 12:48:45.685 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX users_email_key ON users (email);
+2026-06-04 12:48:45.685 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
+VALUES ('20260604071833_InitialCreateWithUuid', '10.0.8');
+2026-06-04 12:49:08.625 +05:30 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-06-04 12:49:08.765 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-06-04 12:49:08.789 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+    "MigrationId" character varying(150) NOT NULL,
+    "ProductVersion" character varying(32) NOT NULL,
+    CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY ("MigrationId")
+);
+2026-06-04 12:49:08.792 +05:30 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2026-06-04 12:49:08.793 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+LOCK TABLE "__EFMigrationsHistory" IN ACCESS EXCLUSIVE MODE
+2026-06-04 12:49:08.793 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-06-04 12:49:08.795 +05:30 [INF] No migrations were applied. The database is already up to date.
