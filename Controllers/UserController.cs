@@ -37,7 +37,7 @@ public class UserController : ControllerBase
         {
             return BadRequest(ModelState);
         }
-
+        Console.WriteLine($"Registering user with email");
         var userResponseDto = await _userService.RegisterAsync(registerDto);
         return CreatedAtAction(nameof(GetUserById), new { id = userResponseDto.Id }, userResponseDto);
     }
@@ -107,6 +107,7 @@ public class UserController : ControllerBase
         {
             return BadRequest(ModelState);
         }
+
 
         var userResponseDto = await _userService.UpdateUserAsync(id, updateUserDto);
         return Ok(userResponseDto);

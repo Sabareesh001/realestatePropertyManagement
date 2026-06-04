@@ -58,7 +58,6 @@ public class UserRepository : IUserRepository
     {
         user.CreatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified);
         _context.Users.Add(user);
-        await _context.SaveChangesAsync();
         return user;
     }
 
@@ -70,7 +69,6 @@ public class UserRepository : IUserRepository
     {
         user.UpdatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified);
         _context.Users.Update(user);
-        await _context.SaveChangesAsync();
     }
 
     /// <summary>
@@ -83,7 +81,6 @@ public class UserRepository : IUserRepository
         if (user != null)
         {
             _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
         }
     }
 }
