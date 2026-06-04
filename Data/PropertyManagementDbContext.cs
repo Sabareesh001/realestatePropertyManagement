@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using propertyManagement.Models;
 
 namespace propertyManagement.Data;
-
 public partial class PropertyManagementDbContext : DbContext
 {
     public PropertyManagementDbContext()

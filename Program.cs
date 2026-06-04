@@ -23,11 +23,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 // Register User Service
 builder.Services.AddScoped<IUserService, UserService>();
 
-Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(builder.Configuration)
-.Enrich.FromLogContext()
-.WriteTo.Console()
-.WriteTo.File("logs/MyAppLog.txt")
-.CreateLogger();
+Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(builder.Configuration).CreateLogger();
 
 builder.Host.UseSerilog();
 

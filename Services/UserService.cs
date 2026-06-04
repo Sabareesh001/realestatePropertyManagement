@@ -45,6 +45,7 @@ public class UserService : IUserService
         };
 
         var createdUser = await _unitOfWork.Users.CreateAsync(user);
+        await _unitOfWork.SaveChangesAsync();
 
         return MapToUserResponseDto(createdUser);
     }
@@ -118,6 +119,7 @@ public class UserService : IUserService
             user.DateOfBirth = updateUserDto.DateOfBirth.Value;
 
         await _unitOfWork.Users.UpdateAsync(user);
+        await _unitOfWork.SaveChangesAsync();
 
         return MapToUserResponseDto(user);
     }
@@ -135,6 +137,7 @@ public class UserService : IUserService
         }
 
         await _unitOfWork.Users.DeleteAsync(id);
+        await _unitOfWork.SaveChangesAsync();
     }
 
     /// <summary>

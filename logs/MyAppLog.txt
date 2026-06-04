@@ -664,7 +664,8 @@ FROM users AS u
 2026-06-04 10:53:18.610 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.GetAllUsers (propertyManagement) in 3.231ms
 2026-06-04 10:53:18.611 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.GetAllUsers (propertyManagement)'
 2026-06-04 10:53:18.611 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/api/User - 200 null application/json; charset=utf-8 5.4367ms
-2026-06-04 12:47:12.767 +05:30 [ERR] Failed executing DbCommand (15ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+2026-06-04 15:29:37.770 +05:30 [INF] Application is shutting down...
+) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
 SELECT "MigrationId", "ProductVersion"
 FROM "__EFMigrationsHistory"
 ORDER BY "MigrationId";
@@ -1208,3 +1209,33 @@ SELECT "MigrationId", "ProductVersion"
 FROM "__EFMigrationsHistory"
 ORDER BY "MigrationId";
 2026-06-04 12:49:08.795 +05:30 [INF] No migrations were applied. The database is already up to date.
+2026-06-04 15:29:20.311 +05:30 [ERR] Hosting failed to start
+System.IO.IOException: Failed to bind to address http://127.0.0.1:5104: address already in use.
+ ---> Microsoft.AspNetCore.Connections.AddressInUseException: Address already in use
+ ---> System.Net.Sockets.SocketException (48): Address already in use
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-06-04 15:29:40.380 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-04 15:29:40.430 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-04 15:29:40.430 +05:30 [INF] Hosting environment: Development
+2026-06-04 15:29:40.430 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/propertyManagement
+2026-06-04 15:37:07.709 +05:30 [INF] Application is shutting down...
