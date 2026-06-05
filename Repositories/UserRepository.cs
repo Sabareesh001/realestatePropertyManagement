@@ -27,7 +27,10 @@ public class UserRepository : IUserRepository
     /// <returns>The user entity if found; otherwise null.</returns>
     public async Task<User?> GetByIdAsync(Guid id)
     {
-        return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+        return await _context.Users
+            .Include(u => u.UserRoles)
+                .ThenInclude(ur => ur.Role)
+            .FirstOrDefaultAsync(u => u.Id == id);
     }
 
     /// <summary>
@@ -36,7 +39,10 @@ public class UserRepository : IUserRepository
     /// <returns>An enumerable collection of all users.</returns>
     public async Task<IEnumerable<User>> GetAllAsync()
     {
-        return await _context.Users.ToListAsync();
+        return await _context.Users
+            .Include(u => u.UserRoles)
+                .ThenInclude(ur => ur.Role)
+            .ToListAsync();
     }
 
     /// <summary>
@@ -46,7 +52,10 @@ public class UserRepository : IUserRepository
     /// <returns>The user entity if found; otherwise null.</returns>
     public async Task<User?> GetByEmailAsync(string email)
     {
-        return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        return await _context.Users
+            .Include(u => u.UserRoles)
+                .ThenInclude(ur => ur.Role)
+            .FirstOrDefaultAsync(u => u.Email == email);
     }
 
     /// <summary>

@@ -34,6 +34,8 @@ public class UserService : IUserService
             throw new InvalidOperationException("Email already exists");
         }
 
+        var role = await _unitOfWork.Roles.GetByIdAsync(registerDto.RoleId);
+
         var user = new User
         {
             Email = registerDto.Email,
@@ -41,7 +43,16 @@ public class UserService : IUserService
             LastName = registerDto.LastName,
             Phone = registerDto.Phone,
             DateOfBirth = registerDto.DateOfBirth,
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword(registerDto.Password)
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword(registerDto.Password),
+            UserRoles = new List<UserRole>
+            {
+                new UserRole
+                {
+                    RoleId = registerDto.RoleId,
+                    Role = role,
+                    CreatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified)
+                }
+            }
         };
 
         var createdUser = await _unitOfWork.Users.CreateAsync(user);
@@ -147,6 +158,8 @@ public class UserService : IUserService
     /// <returns>The mapped UserResponseDto.</returns>
     private static UserResponseDto MapToUserResponseDto(User user)
     {
+        var userRole = user.UserRoles?.FirstOrDefault(ur => ur.Role != null);
+
         return new UserResponseDto
         {
             Id = user.Id,
@@ -156,7 +169,12 @@ public class UserService : IUserService
             Phone = user.Phone,
             DateOfBirth = user.DateOfBirth,
             CreatedAt = user.CreatedAt,
-            UpdatedAt = user.UpdatedAt
+            UpdatedAt = user.UpdatedAt,
+            Role = userRole != null ? new RoleResponseDto
+            {
+                Id = userRole.Role!.Id,
+                Name = userRole.Role.Name
+            } : null
         };
     }
 }

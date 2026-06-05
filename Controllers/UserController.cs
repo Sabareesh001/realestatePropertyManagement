@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using propertyManagement.DTOs;
 using propertyManagement.Services;
@@ -12,14 +14,17 @@ namespace propertyManagement.Controllers;
 public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
+    private readonly IJwtService _jwtService;
 
     /// <summary>
     /// Initializes a new instance of the UserController class.
     /// </summary>
     /// <param name="userService">The user service for handling user operations.</param>
-    public UserController(IUserService userService)
+    /// <param name="jwtService">The JWT service for generating authentication tokens.</param>
+    public UserController(IUserService userService, IJwtService jwtService)
     {
         _userService = userService;
+        _jwtService = jwtService;
     }
 
     /// <summary>
@@ -33,10 +38,6 @@ public class UserController : ControllerBase
     [HttpPost("register")]
     public async Task<ActionResult<UserResponseDto>> Register([FromBody] RegisterDto registerDto)
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
         Console.WriteLine($"Registering user with email");
         var userResponseDto = await _userService.RegisterAsync(registerDto);
         return CreatedAtAction(nameof(GetUserById), new { id = userResponseDto.Id }, userResponseDto);
@@ -53,12 +54,19 @@ public class UserController : ControllerBase
     [HttpPost("login")]
     public async Task<ActionResult<UserResponseDto>> Login([FromBody] LoginDto loginDto)
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-
         var userResponseDto = await _userService.LoginAsync(loginDto);
+        var token = _jwtService.GenerateToken(userResponseDto);
+
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.Strict,
+            Expires = DateTime.UtcNow.AddHours(1)
+        };
+        Console.WriteLine("token generated: " + token);
+        Response.Cookies.Append("jwt_token", token, cookieOptions);
+
         return Ok(userResponseDto);
     }
 
@@ -68,6 +76,7 @@ public class UserController : ControllerBase
     /// <returns>A list of all users.</returns>
     /// <response code="200">Users retrieved successfully.</response>
     /// <response code="500">An error occurred while processing the request.</response>
+    [Authorize]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<UserResponseDto>>> GetAllUsers()
     {
@@ -103,12 +112,6 @@ public class UserController : ControllerBase
     [HttpPut("{id}")]
     public async Task<ActionResult<UserResponseDto>> UpdateUser(Guid id, [FromBody] UpdateUserDto updateUserDto)
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-
-
         var userResponseDto = await _userService.UpdateUserAsync(id, updateUserDto);
         return Ok(userResponseDto);
     }
