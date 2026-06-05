@@ -1,0 +1,584 @@
+2026-06-05 10:39:45.669 +05:30 [ERR] Hosting failed to start
+System.IO.IOException: Failed to bind to address http://127.0.0.1:5104: address already in use.
+ ---> Microsoft.AspNetCore.Connections.AddressInUseException: Address already in use
+ ---> System.Net.Sockets.SocketException (48): Address already in use
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-06-05 10:39:55.938 +05:30 [INF] Application is shutting down...
+2026-06-05 10:39:58.688 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-05 10:39:58.739 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-05 10:39:58.739 +05:30 [INF] Hosting environment: Development
+2026-06-05 10:39:58.739 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/propertyManagement
+2026-06-05 10:40:03.839 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/register - application/json 147
+2026-06-05 10:40:03.864 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-06-05 10:40:03.866 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 10:40:03.879 +05:30 [INF] Route matched with {action = "Register", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Register(propertyManagement.DTOs.RegisterDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-05 10:40:03.976 +05:30 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.SerializableError'.
+2026-06-05 10:40:03.981 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Register (propertyManagement) in 101.201ms
+2026-06-05 10:40:03.982 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 10:40:03.983 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/register - 400 null application/json; charset=utf-8 144.4421ms
+2026-06-05 10:55:12.728 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/register - application/json 162
+2026-06-05 10:55:12.736 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 10:55:12.740 +05:30 [INF] Route matched with {action = "Register", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Register(propertyManagement.DTOs.RegisterDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-05 10:55:13.654 +05:30 [INF] Executed DbCommand (48ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+FROM users AS u
+WHERE u.email = @email
+LIMIT 1
+2026-06-05 10:55:13.970 +05:30 [INF] Executed DbCommand (7ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (DbType = Date), @p3='?' (DbType = DateTime2), @p4='?', @p5='?', @p6='?', @p7='?', @p8='?', @p9='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO users (id, created_at, date_of_birth, deleted_at, email, first_name, last_name, password_hash, phone, updated_at)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9);
+2026-06-05 10:55:13.976 +05:30 [INF] Executing CreatedAtActionResult, writing value of type 'propertyManagement.DTOs.UserResponseDto'.
+2026-06-05 10:55:13.989 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Register (propertyManagement) in 1248.4258ms
+2026-06-05 10:55:13.989 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 10:55:13.991 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/register - 201 null application/json; charset=utf-8 1264.706ms
+2026-06-05 10:57:33.429 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/register - application/json 162
+2026-06-05 10:57:33.436 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 10:57:33.437 +05:30 [INF] Route matched with {action = "Register", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Register(propertyManagement.DTOs.RegisterDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-05 10:57:33.465 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+FROM users AS u
+WHERE u.email = @email
+LIMIT 1
+2026-06-05 10:57:33.474 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Register (propertyManagement) in 37.1542ms
+2026-06-05 10:57:33.474 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 10:57:33.484 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/register - 400 null application/json; charset=utf-8 56.051ms
+2026-06-05 10:57:40.548 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/register - application/json 161
+2026-06-05 10:57:40.549 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 10:57:40.549 +05:30 [INF] Route matched with {action = "Register", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Register(propertyManagement.DTOs.RegisterDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-05 10:57:40.588 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+FROM users AS u
+WHERE u.email = @email
+LIMIT 1
+2026-06-05 10:57:40.812 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (DbType = Date), @p3='?' (DbType = DateTime2), @p4='?', @p5='?', @p6='?', @p7='?', @p8='?', @p9='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO users (id, created_at, date_of_birth, deleted_at, email, first_name, last_name, password_hash, phone, updated_at)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9);
+2026-06-05 10:57:40.812 +05:30 [INF] Executing CreatedAtActionResult, writing value of type 'propertyManagement.DTOs.UserResponseDto'.
+2026-06-05 10:57:40.813 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Register (propertyManagement) in 263.6264ms
+2026-06-05 10:57:40.813 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 10:57:40.813 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/register - 201 null application/json; charset=utf-8 265.6839ms
+2026-06-05 10:57:54.987 +05:30 [INF] Application is shutting down...
+2026-06-05 10:57:58.370 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-05 10:57:58.417 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-05 10:57:58.418 +05:30 [INF] Hosting environment: Development
+2026-06-05 10:57:58.418 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/propertyManagement
+2026-06-05 10:58:02.996 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/register - application/json 161
+2026-06-05 10:58:03.019 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-06-05 10:58:03.021 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 10:58:03.033 +05:30 [INF] Route matched with {action = "Register", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Register(propertyManagement.DTOs.RegisterDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-05 10:58:03.114 +05:30 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2026-06-05 10:58:03.124 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Register (propertyManagement) in 90.4114ms
+2026-06-05 10:58:03.125 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 10:58:03.126 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/register - 400 null application/problem+json; charset=utf-8 130.8547ms
+2026-06-05 11:31:17.793 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/index.html - null null
+2026-06-05 11:31:17.830 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/index.html - 200 null text/html;charset=utf-8 37.5109ms
+2026-06-05 11:31:18.232 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/index.css - null null
+2026-06-05 11:31:18.234 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/swagger-ui.css - null null
+2026-06-05 11:31:18.234 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/index.js - null null
+2026-06-05 11:31:18.235 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/swagger-ui-bundle.js - null null
+2026-06-05 11:31:18.235 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/index.js - 304 null null 0.4179ms
+2026-06-05 11:31:18.235 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/swagger-ui-standalone-preset.js - null null
+2026-06-05 11:31:18.240 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/index.css - 304 null null 7.702ms
+2026-06-05 11:31:18.240 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/swagger-ui-standalone-preset.js - 304 null null 4.6642ms
+2026-06-05 11:31:18.240 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/swagger-ui.css - 304 null null 5.5978ms
+2026-06-05 11:31:18.244 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/swagger-ui-bundle.js - 304 null null 9.3745ms
+2026-06-05 11:31:18.368 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/v1/swagger.json - null null
+2026-06-05 11:31:18.437 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 68.1217ms
+2026-06-05 11:31:26.126 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/register - application/json 163
+2026-06-05 11:31:26.129 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 11:31:26.130 +05:30 [INF] Route matched with {action = "Register", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Register(propertyManagement.DTOs.RegisterDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-05 11:31:26.797 +05:30 [INF] Executed DbCommand (27ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT r.id, r.created_at, r.deleted_at, r.name, r.updated_at
+FROM roles AS r
+WHERE r.id = @id
+LIMIT 1
+2026-06-05 11:31:26.806 +05:30 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.SerializableError'.
+2026-06-05 11:31:26.807 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Register (propertyManagement) in 676.8146ms
+2026-06-05 11:31:26.808 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 11:31:26.809 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/register - 400 null application/json; charset=utf-8 683.3532ms
+2026-06-05 11:31:58.536 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/register - application/json 179
+2026-06-05 11:31:58.538 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 11:31:58.539 +05:30 [INF] Route matched with {action = "Register", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Register(propertyManagement.DTOs.RegisterDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-05 11:31:58.582 +05:30 [INF] Executed DbCommand (21ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT r.id, r.created_at, r.deleted_at, r.name, r.updated_at
+FROM roles AS r
+WHERE r.id = @id
+LIMIT 1
+2026-06-05 11:31:58.583 +05:30 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.SerializableError'.
+2026-06-05 11:31:58.583 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Register (propertyManagement) in 44.1636ms
+2026-06-05 11:31:58.583 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 11:31:58.584 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/register - 400 null application/json; charset=utf-8 48.1024ms
+2026-06-05 11:32:03.350 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/register - application/json 179
+2026-06-05 11:32:03.350 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 11:32:03.351 +05:30 [INF] Route matched with {action = "Register", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Register(propertyManagement.DTOs.RegisterDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-05 11:32:03.397 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT r.id, r.created_at, r.deleted_at, r.name, r.updated_at
+FROM roles AS r
+WHERE r.id = @id
+LIMIT 1
+2026-06-05 11:32:03.397 +05:30 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.SerializableError'.
+2026-06-05 11:32:03.397 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Register (propertyManagement) in 46.2012ms
+2026-06-05 11:32:03.397 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 11:32:03.398 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/register - 400 null application/json; charset=utf-8 48.0948ms
+2026-06-05 11:34:22.176 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/register - application/json 179
+2026-06-05 11:34:22.178 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 11:34:22.179 +05:30 [INF] Route matched with {action = "Register", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Register(propertyManagement.DTOs.RegisterDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-05 11:34:22.200 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT r.id, r.created_at, r.deleted_at, r.name, r.updated_at
+FROM roles AS r
+WHERE r.id = @id
+LIMIT 1
+2026-06-05 11:34:22.259 +05:30 [INF] Executed DbCommand (7ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+FROM users AS u
+WHERE u.email = @email
+LIMIT 1
+2026-06-05 11:34:22.583 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (DbType = Date), @p3='?' (DbType = DateTime2), @p4='?', @p5='?', @p6='?', @p7='?', @p8='?', @p9='?' (DbType = DateTime2), @p10='?' (DbType = DateTime2), @p11='?' (DbType = DateTime2), @p12='?' (DbType = Int32), @p13='?' (DbType = DateTime2), @p14='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO users (id, created_at, date_of_birth, deleted_at, email, first_name, last_name, password_hash, phone, updated_at)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9);
+INSERT INTO user_roles (created_at, deleted_at, role_id, updated_at, user_id)
+VALUES (@p10, @p11, @p12, @p13, @p14)
+RETURNING id;
+2026-06-05 11:34:22.596 +05:30 [INF] Executing CreatedAtActionResult, writing value of type 'propertyManagement.DTOs.UserResponseDto'.
+2026-06-05 11:34:22.606 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Register (propertyManagement) in 426.9133ms
+2026-06-05 11:34:22.606 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 11:34:22.606 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/register - 201 null application/json; charset=utf-8 430.5936ms
+2026-06-05 11:52:11.619 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/register - application/json 179
+2026-06-05 11:52:11.622 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 11:52:11.623 +05:30 [INF] Route matched with {action = "Register", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Register(propertyManagement.DTOs.RegisterDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-05 11:52:11.826 +05:30 [INF] Executed DbCommand (7ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT r.id, r.created_at, r.deleted_at, r.name, r.updated_at
+FROM roles AS r
+WHERE r.id = @id
+LIMIT 1
+2026-06-05 11:52:11.840 +05:30 [INF] Executed DbCommand (6ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+FROM users AS u
+WHERE u.email = @email
+LIMIT 1
+2026-06-05 11:52:11.852 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Register (propertyManagement) in 228.852ms
+2026-06-05 11:52:11.853 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 11:52:11.867 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/register - 400 null application/json; charset=utf-8 248.1157ms
+2026-06-05 11:52:17.253 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/register - application/json 178
+2026-06-05 11:52:17.254 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 11:52:17.255 +05:30 [INF] Route matched with {action = "Register", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Register(propertyManagement.DTOs.RegisterDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-05 11:52:17.263 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT r.id, r.created_at, r.deleted_at, r.name, r.updated_at
+FROM roles AS r
+WHERE r.id = @id
+LIMIT 1
+2026-06-05 11:52:17.266 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+FROM users AS u
+WHERE u.email = @email
+LIMIT 1
+2026-06-05 11:52:17.429 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (DbType = Date), @p3='?' (DbType = DateTime2), @p4='?', @p5='?', @p6='?', @p7='?', @p8='?', @p9='?' (DbType = DateTime2), @p10='?' (DbType = DateTime2), @p11='?' (DbType = DateTime2), @p12='?' (DbType = Int32), @p13='?' (DbType = DateTime2), @p14='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO users (id, created_at, date_of_birth, deleted_at, email, first_name, last_name, password_hash, phone, updated_at)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9);
+INSERT INTO user_roles (created_at, deleted_at, role_id, updated_at, user_id)
+VALUES (@p10, @p11, @p12, @p13, @p14)
+RETURNING id;
+2026-06-05 11:52:17.431 +05:30 [INF] Executing CreatedAtActionResult, writing value of type 'propertyManagement.DTOs.UserResponseDto'.
+2026-06-05 11:52:17.432 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Register (propertyManagement) in 176.9431ms
+2026-06-05 11:52:17.432 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 11:52:17.432 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/register - 201 null application/json; charset=utf-8 179.5873ms
+2026-06-05 11:52:28.404 +05:30 [INF] Application is shutting down...
+2026-06-05 11:52:34.953 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-05 11:52:35.002 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-05 11:52:35.002 +05:30 [INF] Hosting environment: Development
+2026-06-05 11:52:35.002 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/propertyManagement
+2026-06-05 11:52:40.022 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/register - application/json 178
+2026-06-05 11:52:40.046 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-06-05 11:52:40.048 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 11:52:40.058 +05:30 [INF] Route matched with {action = "Register", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Register(propertyManagement.DTOs.RegisterDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-05 11:52:40.812 +05:30 [INF] Executed DbCommand (25ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT r.id, r.created_at, r.deleted_at, r.name, r.updated_at
+FROM roles AS r
+WHERE r.id = @id
+LIMIT 1
+2026-06-05 11:52:40.856 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+FROM users AS u
+WHERE u.email = @email
+LIMIT 1
+2026-06-05 11:52:40.881 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Register (propertyManagement) in 821.3389ms
+2026-06-05 11:52:40.882 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 11:52:40.891 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/register - 400 null application/json; charset=utf-8 870.4679ms
+2026-06-05 11:52:45.393 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/register - application/json 177
+2026-06-05 11:52:45.397 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 11:52:45.398 +05:30 [INF] Route matched with {action = "Register", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Register(propertyManagement.DTOs.RegisterDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-05 11:52:45.420 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT r.id, r.created_at, r.deleted_at, r.name, r.updated_at
+FROM roles AS r
+WHERE r.id = @id
+LIMIT 1
+2026-06-05 11:52:45.423 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+FROM users AS u
+WHERE u.email = @email
+LIMIT 1
+2026-06-05 11:52:45.732 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (DbType = Date), @p3='?' (DbType = DateTime2), @p4='?', @p5='?', @p6='?', @p7='?', @p8='?', @p9='?' (DbType = DateTime2), @p10='?' (DbType = DateTime2), @p11='?' (DbType = DateTime2), @p12='?' (DbType = Int32), @p13='?' (DbType = DateTime2), @p14='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO users (id, created_at, date_of_birth, deleted_at, email, first_name, last_name, password_hash, phone, updated_at)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9);
+INSERT INTO user_roles (created_at, deleted_at, role_id, updated_at, user_id)
+VALUES (@p10, @p11, @p12, @p13, @p14)
+RETURNING id;
+2026-06-05 11:52:45.746 +05:30 [INF] Executing CreatedAtActionResult, writing value of type 'propertyManagement.DTOs.UserResponseDto'.
+2026-06-05 11:52:45.756 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Register (propertyManagement) in 358.0337ms
+2026-06-05 11:52:45.757 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 11:52:45.757 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/register - 201 null application/json; charset=utf-8 364.1712ms
+2026-06-05 11:52:55.197 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/register - application/json 177
+2026-06-05 11:52:55.201 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 11:52:55.202 +05:30 [INF] Route matched with {action = "Register", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Register(propertyManagement.DTOs.RegisterDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-05 11:52:55.247 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT r.id, r.created_at, r.deleted_at, r.name, r.updated_at
+FROM roles AS r
+WHERE r.id = @id
+LIMIT 1
+2026-06-05 11:52:55.249 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+FROM users AS u
+WHERE u.email = @email
+LIMIT 1
+2026-06-05 11:52:55.249 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Register (propertyManagement) in 45.9492ms
+2026-06-05 11:52:55.249 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 11:52:55.250 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/register - 400 null application/json; charset=utf-8 52.4413ms
+2026-06-05 11:54:18.841 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/register - application/json 177
+2026-06-05 11:54:18.848 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 11:54:18.850 +05:30 [INF] Route matched with {action = "Register", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Register(propertyManagement.DTOs.RegisterDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-05 11:54:18.884 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT r.id, r.created_at, r.deleted_at, r.name, r.updated_at
+FROM roles AS r
+WHERE r.id = @id
+LIMIT 1
+2026-06-05 11:54:18.887 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+FROM users AS u
+WHERE u.email = @email
+LIMIT 1
+2026-06-05 11:54:18.893 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Register (propertyManagement) in 42.2727ms
+2026-06-05 11:54:18.893 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 11:54:18.893 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/register - 400 null application/json; charset=utf-8 53.6536ms
+2026-06-05 11:54:23.002 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/register - application/json 180
+2026-06-05 11:54:23.003 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 11:54:23.003 +05:30 [INF] Route matched with {action = "Register", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Register(propertyManagement.DTOs.RegisterDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-05 11:54:23.010 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT r.id, r.created_at, r.deleted_at, r.name, r.updated_at
+FROM roles AS r
+WHERE r.id = @id
+LIMIT 1
+2026-06-05 11:54:23.011 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+FROM users AS u
+WHERE u.email = @email
+LIMIT 1
+2026-06-05 11:54:23.263 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (DbType = Date), @p3='?' (DbType = DateTime2), @p4='?', @p5='?', @p6='?', @p7='?', @p8='?', @p9='?' (DbType = DateTime2), @p10='?' (DbType = DateTime2), @p11='?' (DbType = DateTime2), @p12='?' (DbType = Int32), @p13='?' (DbType = DateTime2), @p14='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO users (id, created_at, date_of_birth, deleted_at, email, first_name, last_name, password_hash, phone, updated_at)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9);
+INSERT INTO user_roles (created_at, deleted_at, role_id, updated_at, user_id)
+VALUES (@p10, @p11, @p12, @p13, @p14)
+RETURNING id;
+2026-06-05 11:54:23.265 +05:30 [INF] Executing CreatedAtActionResult, writing value of type 'propertyManagement.DTOs.UserResponseDto'.
+2026-06-05 11:54:23.266 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Register (propertyManagement) in 262.0007ms
+2026-06-05 11:54:23.266 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 11:54:23.266 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/register - 201 null application/json; charset=utf-8 264.0862ms
+2026-06-05 11:56:18.005 +05:30 [INF] Application is shutting down...
+2026-06-05 11:56:21.970 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-05 11:56:22.020 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-05 11:56:22.020 +05:30 [INF] Hosting environment: Development
+2026-06-05 11:56:22.020 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/propertyManagement
+2026-06-05 11:56:31.288 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/register - application/json 180
+2026-06-05 11:56:31.312 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-06-05 11:56:31.314 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 11:56:31.326 +05:30 [INF] Route matched with {action = "Register", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Register(propertyManagement.DTOs.RegisterDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-05 11:56:32.084 +05:30 [INF] Executed DbCommand (26ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT r.id, r.created_at, r.deleted_at, r.name, r.updated_at
+FROM roles AS r
+WHERE r.id = @id
+LIMIT 1
+2026-06-05 11:56:32.170 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u1.id, u1.created_at, u1.date_of_birth, u1.deleted_at, u1.email, u1.first_name, u1.last_name, u1.password_hash, u1.phone, u1.updated_at, s.id, s.created_at, s.deleted_at, s.role_id, s.updated_at, s.user_id, s.id0, s.created_at0, s.deleted_at0, s.name, s.updated_at0
+FROM (
+    SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+    FROM users AS u
+    WHERE u.email = @email
+    LIMIT 1
+) AS u1
+LEFT JOIN (
+    SELECT u0.id, u0.created_at, u0.deleted_at, u0.role_id, u0.updated_at, u0.user_id, r.id AS id0, r.created_at AS created_at0, r.deleted_at AS deleted_at0, r.name, r.updated_at AS updated_at0
+    FROM user_roles AS u0
+    LEFT JOIN roles AS r ON u0.role_id = r.id
+) AS s ON u1.id = s.user_id
+ORDER BY u1.id, s.id
+2026-06-05 11:56:32.210 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Register (propertyManagement) in 881.9993ms
+2026-06-05 11:56:32.210 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 11:56:32.220 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/register - 400 null application/json; charset=utf-8 932.3323ms
+2026-06-05 11:56:37.783 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/register - application/json 183
+2026-06-05 11:56:37.786 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 11:56:37.787 +05:30 [INF] Route matched with {action = "Register", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Register(propertyManagement.DTOs.RegisterDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-05 11:56:37.803 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT r.id, r.created_at, r.deleted_at, r.name, r.updated_at
+FROM roles AS r
+WHERE r.id = @id
+LIMIT 1
+2026-06-05 11:56:37.805 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u1.id, u1.created_at, u1.date_of_birth, u1.deleted_at, u1.email, u1.first_name, u1.last_name, u1.password_hash, u1.phone, u1.updated_at, s.id, s.created_at, s.deleted_at, s.role_id, s.updated_at, s.user_id, s.id0, s.created_at0, s.deleted_at0, s.name, s.updated_at0
+FROM (
+    SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+    FROM users AS u
+    WHERE u.email = @email
+    LIMIT 1
+) AS u1
+LEFT JOIN (
+    SELECT u0.id, u0.created_at, u0.deleted_at, u0.role_id, u0.updated_at, u0.user_id, r.id AS id0, r.created_at AS created_at0, r.deleted_at AS deleted_at0, r.name, r.updated_at AS updated_at0
+    FROM user_roles AS u0
+    LEFT JOIN roles AS r ON u0.role_id = r.id
+) AS s ON u1.id = s.user_id
+ORDER BY u1.id, s.id
+2026-06-05 11:56:37.806 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT r.id, r.created_at, r.deleted_at, r.name, r.updated_at
+FROM roles AS r
+WHERE r.id = @id
+LIMIT 1
+2026-06-05 11:56:38.111 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (DbType = Date), @p3='?' (DbType = DateTime2), @p4='?', @p5='?', @p6='?', @p7='?', @p8='?', @p9='?' (DbType = DateTime2), @p10='?' (DbType = DateTime2), @p11='?' (DbType = DateTime2), @p12='?' (DbType = Int32), @p13='?' (DbType = DateTime2), @p14='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO users (id, created_at, date_of_birth, deleted_at, email, first_name, last_name, password_hash, phone, updated_at)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9);
+INSERT INTO user_roles (created_at, deleted_at, role_id, updated_at, user_id)
+VALUES (@p10, @p11, @p12, @p13, @p14)
+RETURNING id;
+2026-06-05 11:56:38.128 +05:30 [INF] Executing CreatedAtActionResult, writing value of type 'propertyManagement.DTOs.UserResponseDto'.
+2026-06-05 11:56:38.138 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Register (propertyManagement) in 350.9238ms
+2026-06-05 11:56:38.138 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 11:56:38.139 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/register - 201 null application/json; charset=utf-8 356.0117ms
+2026-06-05 12:19:28.137 +05:30 [INF] Application is shutting down...
+2026-06-05 12:19:32.082 +05:30 [INF] User profile is available. Using '/Users/sabareesht/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-06-05 12:19:32.166 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-05 12:19:32.167 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-05 12:19:32.167 +05:30 [INF] Hosting environment: Development
+2026-06-05 12:19:32.167 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/propertyManagement
+2026-06-05 12:20:08.175 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/register - application/json 176
+2026-06-05 12:20:08.202 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-06-05 12:20:08.221 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 12:20:08.232 +05:30 [INF] Route matched with {action = "Register", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Register(propertyManagement.DTOs.RegisterDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-05 12:20:09.497 +05:30 [INF] Executed DbCommand (29ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT r.id, r.created_at, r.deleted_at, r.name, r.updated_at
+FROM roles AS r
+WHERE r.id = @id
+LIMIT 1
+2026-06-05 12:20:09.584 +05:30 [INF] Executed DbCommand (8ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u1.id, u1.created_at, u1.date_of_birth, u1.deleted_at, u1.email, u1.first_name, u1.last_name, u1.password_hash, u1.phone, u1.updated_at, s.id, s.created_at, s.deleted_at, s.role_id, s.updated_at, s.user_id, s.id0, s.created_at0, s.deleted_at0, s.name, s.updated_at0
+FROM (
+    SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+    FROM users AS u
+    WHERE u.email = @email
+    LIMIT 1
+) AS u1
+LEFT JOIN (
+    SELECT u0.id, u0.created_at, u0.deleted_at, u0.role_id, u0.updated_at, u0.user_id, r.id AS id0, r.created_at AS created_at0, r.deleted_at AS deleted_at0, r.name, r.updated_at AS updated_at0
+    FROM user_roles AS u0
+    LEFT JOIN roles AS r ON u0.role_id = r.id
+) AS s ON u1.id = s.user_id
+ORDER BY u1.id, s.id
+2026-06-05 12:20:09.587 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT r.id, r.created_at, r.deleted_at, r.name, r.updated_at
+FROM roles AS r
+WHERE r.id = @id
+LIMIT 1
+2026-06-05 12:20:09.902 +05:30 [INF] Executed DbCommand (7ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (DbType = Date), @p3='?' (DbType = DateTime2), @p4='?', @p5='?', @p6='?', @p7='?', @p8='?', @p9='?' (DbType = DateTime2), @p10='?' (DbType = DateTime2), @p11='?' (DbType = DateTime2), @p12='?' (DbType = Int32), @p13='?' (DbType = DateTime2), @p14='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO users (id, created_at, date_of_birth, deleted_at, email, first_name, last_name, password_hash, phone, updated_at)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9);
+INSERT INTO user_roles (created_at, deleted_at, role_id, updated_at, user_id)
+VALUES (@p10, @p11, @p12, @p13, @p14)
+RETURNING id;
+2026-06-05 12:20:09.920 +05:30 [INF] Executing CreatedAtActionResult, writing value of type 'propertyManagement.DTOs.UserResponseDto'.
+2026-06-05 12:20:09.932 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Register (propertyManagement) in 1699.2628ms
+2026-06-05 12:20:09.933 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Register (propertyManagement)'
+2026-06-05 12:20:09.935 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/register - 201 null application/json; charset=utf-8 1761.3467ms
+2026-06-05 12:20:28.009 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/login - application/json 54
+2026-06-05 12:20:28.025 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Login (propertyManagement)'
+2026-06-05 12:20:28.035 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Login(propertyManagement.DTOs.LoginDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-05 12:20:28.046 +05:30 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.SerializableError'.
+2026-06-05 12:20:28.051 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Login (propertyManagement) in 15.8745ms
+2026-06-05 12:20:28.051 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Login (propertyManagement)'
+2026-06-05 12:20:28.051 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/login - 400 null application/json; charset=utf-8 42.3464ms
+2026-06-05 12:20:37.768 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/login - application/json 59
+2026-06-05 12:20:37.777 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Login (propertyManagement)'
+2026-06-05 12:20:37.779 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Login(propertyManagement.DTOs.LoginDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-05 12:20:37.797 +05:30 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.SerializableError'.
+2026-06-05 12:20:37.800 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Login (propertyManagement) in 21.0136ms
+2026-06-05 12:20:37.800 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Login (propertyManagement)'
+2026-06-05 12:20:37.801 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/login - 400 null application/json; charset=utf-8 33.342ms
+2026-06-05 12:20:44.567 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/login - application/json 60
+2026-06-05 12:20:44.568 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Login (propertyManagement)'
+2026-06-05 12:20:44.569 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Login(propertyManagement.DTOs.LoginDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-05 12:20:44.589 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u1.id, u1.created_at, u1.date_of_birth, u1.deleted_at, u1.email, u1.first_name, u1.last_name, u1.password_hash, u1.phone, u1.updated_at, s.id, s.created_at, s.deleted_at, s.role_id, s.updated_at, s.user_id, s.id0, s.created_at0, s.deleted_at0, s.name, s.updated_at0
+FROM (
+    SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+    FROM users AS u
+    WHERE u.email = @email
+    LIMIT 1
+) AS u1
+LEFT JOIN (
+    SELECT u0.id, u0.created_at, u0.deleted_at, u0.role_id, u0.updated_at, u0.user_id, r.id AS id0, r.created_at AS created_at0, r.deleted_at AS deleted_at0, r.name, r.updated_at AS updated_at0
+    FROM user_roles AS u0
+    LEFT JOIN roles AS r ON u0.role_id = r.id
+) AS s ON u1.id = s.user_id
+ORDER BY u1.id, s.id
+2026-06-05 12:20:44.843 +05:30 [INF] Executing OkObjectResult, writing value of type 'propertyManagement.DTOs.UserResponseDto'.
+2026-06-05 12:20:44.844 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Login (propertyManagement) in 274.9698ms
+2026-06-05 12:20:44.844 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Login (propertyManagement)'
+2026-06-05 12:20:44.844 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/login - 200 null application/json; charset=utf-8 276.6886ms
+2026-06-05 12:20:57.424 +05:30 [INF] Application is shutting down...
+2026-06-05 12:21:01.064 +05:30 [INF] User profile is available. Using '/Users/sabareesht/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-06-05 12:21:01.145 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-05 12:21:01.146 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-05 12:21:01.146 +05:30 [INF] Hosting environment: Development
+2026-06-05 12:21:01.146 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/propertyManagement
+2026-06-05 12:21:09.841 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/login - application/json 60
+2026-06-05 12:21:09.867 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-06-05 12:21:09.883 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Login (propertyManagement)'
+2026-06-05 12:21:09.893 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Login(propertyManagement.DTOs.LoginDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-05 12:21:10.625 +05:30 [INF] Executed DbCommand (31ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u1.id, u1.created_at, u1.date_of_birth, u1.deleted_at, u1.email, u1.first_name, u1.last_name, u1.password_hash, u1.phone, u1.updated_at, s.id, s.created_at, s.deleted_at, s.role_id, s.updated_at, s.user_id, s.id0, s.created_at0, s.deleted_at0, s.name, s.updated_at0
+FROM (
+    SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+    FROM users AS u
+    WHERE u.email = @email
+    LIMIT 1
+) AS u1
+LEFT JOIN (
+    SELECT u0.id, u0.created_at, u0.deleted_at, u0.role_id, u0.updated_at, u0.user_id, r.id AS id0, r.created_at AS created_at0, r.deleted_at AS deleted_at0, r.name, r.updated_at AS updated_at0
+    FROM user_roles AS u0
+    LEFT JOIN roles AS r ON u0.role_id = r.id
+) AS s ON u1.id = s.user_id
+ORDER BY u1.id, s.id
+2026-06-05 12:21:10.934 +05:30 [INF] Executing OkObjectResult, writing value of type 'propertyManagement.DTOs.UserResponseDto'.
+2026-06-05 12:21:10.942 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Login (propertyManagement) in 1047.7669ms
+2026-06-05 12:21:10.943 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Login (propertyManagement)'
+2026-06-05 12:21:10.946 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/login - 200 null application/json; charset=utf-8 1106.4619ms
+2026-06-05 12:21:48.718 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/index.html - null null
+2026-06-05 12:21:48.750 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/index.html - 200 null text/html;charset=utf-8 32.6263ms
+2026-06-05 12:21:49.092 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/index.css - null null
+2026-06-05 12:21:49.094 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/index.js - null null
+2026-06-05 12:21:49.094 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/swagger-ui-standalone-preset.js - null null
+2026-06-05 12:21:49.094 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/index.js - 304 null null 0.6012ms
+2026-06-05 12:21:49.095 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/swagger-ui-bundle.js - null null
+2026-06-05 12:21:49.095 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/swagger-ui.css - null null
+2026-06-05 12:21:49.097 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/index.css - 304 null null 5.2899ms
+2026-06-05 12:21:49.097 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/swagger-ui.css - 304 null null 2.1836ms
+2026-06-05 12:21:49.097 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/swagger-ui-standalone-preset.js - 304 null null 3.1544ms
+2026-06-05 12:21:49.101 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/swagger-ui-bundle.js - 304 null null 6.3806ms
+2026-06-05 12:21:49.173 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/v1/swagger.json - null null
+2026-06-05 12:21:49.221 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 47.9057ms
+2026-06-05 12:21:59.879 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/login - application/json 60
+2026-06-05 12:21:59.884 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Login (propertyManagement)'
+2026-06-05 12:21:59.885 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Login(propertyManagement.DTOs.LoginDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-05 12:21:59.909 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u1.id, u1.created_at, u1.date_of_birth, u1.deleted_at, u1.email, u1.first_name, u1.last_name, u1.password_hash, u1.phone, u1.updated_at, s.id, s.created_at, s.deleted_at, s.role_id, s.updated_at, s.user_id, s.id0, s.created_at0, s.deleted_at0, s.name, s.updated_at0
+FROM (
+    SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+    FROM users AS u
+    WHERE u.email = @email
+    LIMIT 1
+) AS u1
+LEFT JOIN (
+    SELECT u0.id, u0.created_at, u0.deleted_at, u0.role_id, u0.updated_at, u0.user_id, r.id AS id0, r.created_at AS created_at0, r.deleted_at AS deleted_at0, r.name, r.updated_at AS updated_at0
+    FROM user_roles AS u0
+    LEFT JOIN roles AS r ON u0.role_id = r.id
+) AS s ON u1.id = s.user_id
+ORDER BY u1.id, s.id
+2026-06-05 12:22:00.151 +05:30 [INF] Executing OkObjectResult, writing value of type 'propertyManagement.DTOs.UserResponseDto'.
+2026-06-05 12:22:00.152 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Login (propertyManagement) in 265.9112ms
+2026-06-05 12:22:00.152 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Login (propertyManagement)'
+2026-06-05 12:22:00.152 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/login - 200 null application/json; charset=utf-8 272.6469ms
+2026-06-05 12:26:18.488 +05:30 [INF] Application is shutting down...
+2026-06-05 12:26:26.765 +05:30 [INF] User profile is available. Using '/Users/sabareesht/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-06-05 12:26:26.833 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-05 12:26:26.834 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-05 12:26:26.834 +05:30 [INF] Hosting environment: Development
+2026-06-05 12:26:26.834 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/propertyManagement
+2026-06-05 12:26:28.378 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/login - application/json 60
+2026-06-05 12:26:28.401 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-06-05 12:26:28.419 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Login (propertyManagement)'
+2026-06-05 12:26:28.428 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Login(propertyManagement.DTOs.LoginDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-05 12:26:29.165 +05:30 [INF] Executed DbCommand (32ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u1.id, u1.created_at, u1.date_of_birth, u1.deleted_at, u1.email, u1.first_name, u1.last_name, u1.password_hash, u1.phone, u1.updated_at, s.id, s.created_at, s.deleted_at, s.role_id, s.updated_at, s.user_id, s.id0, s.created_at0, s.deleted_at0, s.name, s.updated_at0
+FROM (
+    SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+    FROM users AS u
+    WHERE u.email = @email
+    LIMIT 1
+) AS u1
+LEFT JOIN (
+    SELECT u0.id, u0.created_at, u0.deleted_at, u0.role_id, u0.updated_at, u0.user_id, r.id AS id0, r.created_at AS created_at0, r.deleted_at AS deleted_at0, r.name, r.updated_at AS updated_at0
+    FROM user_roles AS u0
+    LEFT JOIN roles AS r ON u0.role_id = r.id
+) AS s ON u1.id = s.user_id
+ORDER BY u1.id, s.id
+2026-06-05 12:26:29.470 +05:30 [INF] Executing OkObjectResult, writing value of type 'propertyManagement.DTOs.UserResponseDto'.
+2026-06-05 12:26:29.479 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Login (propertyManagement) in 1049.511ms
+2026-06-05 12:26:29.480 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Login (propertyManagement)'
+2026-06-05 12:26:29.482 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/login - 200 null application/json; charset=utf-8 1105.0425ms
+2026-06-05 12:32:47.183 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/login - null 0
+2026-06-05 12:32:47.196 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Login (propertyManagement)'
+2026-06-05 12:32:47.199 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Login(propertyManagement.DTOs.LoginDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-05 12:32:47.215 +05:30 [INF] Executing ObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ProblemDetails'.
+2026-06-05 12:32:47.232 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Login (propertyManagement) in 32.9086ms
+2026-06-05 12:32:47.233 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Login (propertyManagement)'
+2026-06-05 12:32:47.233 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/login - 415 null application/problem+json; charset=utf-8 51.4152ms
+2026-06-05 12:32:58.476 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/login - null 0
+2026-06-05 12:32:58.484 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Login (propertyManagement)'
+2026-06-05 12:32:58.485 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Login(propertyManagement.DTOs.LoginDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-05 12:32:58.488 +05:30 [INF] Executing ObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ProblemDetails'.
+2026-06-05 12:32:58.489 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Login (propertyManagement) in 3.7043ms
+2026-06-05 12:32:58.489 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Login (propertyManagement)'
+2026-06-05 12:32:58.489 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/login - 415 null application/problem+json; charset=utf-8 12.5391ms
+2026-06-05 12:33:01.855 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/login - application/json 8
+2026-06-05 12:33:01.856 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Login (propertyManagement)'
+2026-06-05 12:33:01.856 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Login(propertyManagement.DTOs.LoginDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-05 12:33:01.865 +05:30 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2026-06-05 12:33:01.869 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Login (propertyManagement) in 12.586ms
+2026-06-05 12:33:01.869 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Login (propertyManagement)'
+2026-06-05 12:33:01.869 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/login - 400 null application/problem+json; charset=utf-8 13.8679ms
+2026-06-05 12:33:41.586 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/login - application/json 60
+2026-06-05 12:33:41.595 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Login (propertyManagement)'
+2026-06-05 12:33:41.597 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Login(propertyManagement.DTOs.LoginDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-05 12:33:41.680 +05:30 [INF] Executed DbCommand (12ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u1.id, u1.created_at, u1.date_of_birth, u1.deleted_at, u1.email, u1.first_name, u1.last_name, u1.password_hash, u1.phone, u1.updated_at, s.id, s.created_at, s.deleted_at, s.role_id, s.updated_at, s.user_id, s.id0, s.created_at0, s.deleted_at0, s.name, s.updated_at0
+FROM (
+    SELECT u.id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at
+    FROM users AS u
+    WHERE u.email = @email
+    LIMIT 1
+) AS u1
+LEFT JOIN (
+    SELECT u0.id, u0.created_at, u0.deleted_at, u0.role_id, u0.updated_at, u0.user_id, r.id AS id0, r.created_at AS created_at0, r.deleted_at AS deleted_at0, r.name, r.updated_at AS updated_at0
+    FROM user_roles AS u0
+    LEFT JOIN roles AS r ON u0.role_id = r.id
+) AS s ON u1.id = s.user_id
+ORDER BY u1.id, s.id
+2026-06-05 12:33:41.905 +05:30 [INF] Executing OkObjectResult, writing value of type 'propertyManagement.DTOs.UserResponseDto'.
+2026-06-05 12:33:41.906 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Login (propertyManagement) in 308.6907ms
+2026-06-05 12:33:41.906 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Login (propertyManagement)'
+2026-06-05 12:33:41.906 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/login - 200 null application/json; charset=utf-8 320.2124ms

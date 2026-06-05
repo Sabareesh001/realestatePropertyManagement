@@ -44,4 +44,9 @@ public class UserResponseDto
     /// The timestamp when the user was last updated.
     /// </summary>
     public DateTime? UpdatedAt { get; set; }
+
+    /// <summary>
+    /// The role details assigned to the user.
+    /// </summary>
+    public RoleResponseDto? Role { get; set; }
 }

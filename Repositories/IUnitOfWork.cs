@@ -11,6 +11,11 @@ public interface IUnitOfWork : IDisposable
     IUserRepository Users { get; }
 
     /// <summary>
+    /// Gets the Role repository.
+    /// </summary>
+    IRoleRepository Roles { get; }
+
+    /// <summary>
     /// Saves all changes made to the database.
     /// </summary>
     /// <returns>The number of state entries written to the database.</returns>

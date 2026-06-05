@@ -10,6 +10,7 @@ public class UnitOfWork : IUnitOfWork
 {
     private readonly PropertyManagementDbContext _context;
     private IUserRepository? _userRepository;
+    private IRoleRepository? _roleRepository;
     private IDbContextTransaction? _transaction;
 
     /// <summary>
@@ -25,6 +26,11 @@ public class UnitOfWork : IUnitOfWork
     /// Gets the User repository instance.
     /// </summary>
     public IUserRepository Users => _userRepository ??= new UserRepository(_context);
+
+    /// <summary>
+    /// Gets the Role repository instance.
+    /// </summary>
+    public IRoleRepository Roles => _roleRepository ??= new RoleRepository(_context);
 
     /// <summary>
     /// Saves all changes made within the context to the database.
