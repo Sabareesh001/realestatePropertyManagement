@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using propertyManagement.Data;
@@ -11,9 +12,11 @@ using propertyManagement.Data;
 namespace propertyManagement.Migrations
 {
     [DbContext(typeof(PropertyManagementDbContext))]
-    partial class PropertyManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260609110913_RemoveLeaseType")]
+    partial class RemoveLeaseType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -980,10 +983,6 @@ namespace propertyManagement.Migrations
                         .HasColumnType("numeric(12,2)")
                         .HasColumnName("upfront_payment");
 
-                    b.Property<Guid?>("VerifiedBy")
-                        .HasColumnType("uuid")
-                        .HasColumnName("verified_by");
-
                     b.HasKey("Id")
                         .HasName("properties_pkey");
 
@@ -992,8 +991,6 @@ namespace propertyManagement.Migrations
                     b.HasIndex("OwnerId");
 
                     b.HasIndex("StatusId");
-
-                    b.HasIndex("VerifiedBy");
 
                     b.ToTable("properties", (string)null);
                 });
@@ -1662,18 +1659,11 @@ namespace propertyManagement.Migrations
                         .HasForeignKey("StatusId")
                         .HasConstraintName("properties_status_id_fkey");
 
-                    b.HasOne("propertyManagement.Models.User", "VerifiedByNavigation")
-                        .WithMany("PropertiesVerified")
-                        .HasForeignKey("VerifiedBy")
-                        .HasConstraintName("properties_verified_by_fkey");
-
                     b.Navigation("City");
 
                     b.Navigation("Owner");
 
                     b.Navigation("Status");
-
-                    b.Navigation("VerifiedByNavigation");
                 });
 
             modelBuilder.Entity("propertyManagement.Models.State", b =>
@@ -1936,8 +1926,6 @@ namespace propertyManagement.Migrations
                     b.Navigation("Payments");
 
                     b.Navigation("Properties");
-
-                    b.Navigation("PropertiesVerified");
 
                     b.Navigation("UserBankAccounts");
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace propertyManagement.Models;
@@ -39,9 +39,26 @@ public partial class User
 
     public virtual ICollection<Property> Properties { get; set; } = new List<Property>();
 
+    public virtual ICollection<Property> PropertiesVerified { get; set; } = new List<Property>();
+
     public virtual UserProfile? UserProfile { get; set; }
 
     public virtual ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
 
     public virtual ICollection<Document> Documents { get; set; } = new List<Document>();
+
+    /// <summary>
+    /// Gets or sets the collection of verification requests submitted by this user.
+    /// </summary>
+    public virtual ICollection<UserVerification> UserVerifications { get; set; } = new List<UserVerification>();
+
+    /// <summary>
+    /// Gets or sets the collection of verification requests reviewed/performed by this user.
+    /// </summary>
+    public virtual ICollection<UserVerification> VerificationsPerformed { get; set; } = new List<UserVerification>();
+
+    /// <summary>
+    /// Gets or sets the bank accounts associated with this user.
+    /// </summary>
+    public virtual ICollection<UserBankAccount> UserBankAccounts { get; set; } = new List<UserBankAccount>();
 }

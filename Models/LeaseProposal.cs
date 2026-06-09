@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace propertyManagement.Models;
@@ -21,8 +21,6 @@ public partial class LeaseProposal
 
     public decimal? SecurityDeposit { get; set; }
 
-    public int? LeaseTypeId { get; set; }
-
     public int? StatusId { get; set; }
 
     public Guid? ReviewedBy { get; set; }
@@ -30,8 +28,6 @@ public partial class LeaseProposal
     public DateTime? ReviewedAt { get; set; }
 
     public DateTime? CreatedAt { get; set; }
-
-    public virtual LeaseType? LeaseType { get; set; }
 
     public virtual ICollection<Lease> Leases { get; set; } = new List<Lease>();
 
