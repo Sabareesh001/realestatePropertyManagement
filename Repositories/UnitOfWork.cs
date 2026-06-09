@@ -11,6 +11,10 @@ public class UnitOfWork : IUnitOfWork
     private readonly PropertyManagementDbContext _context;
     private IUserRepository? _userRepository;
     private IRoleRepository? _roleRepository;
+    private IUserVerificationRepository? _userVerificationRepository;
+    private IPropertyRepository? _propertyRepository;
+    private ILeaseProposalRepository? _leaseProposalRepository;
+    private IBankAccountRepository? _bankAccountRepository;
     private IDbContextTransaction? _transaction;
 
     /// <summary>
@@ -31,6 +35,26 @@ public class UnitOfWork : IUnitOfWork
     /// Gets the Role repository instance.
     /// </summary>
     public IRoleRepository Roles => _roleRepository ??= new RoleRepository(_context);
+
+    /// <summary>
+    /// Gets the UserVerification repository instance.
+    /// </summary>
+    public IUserVerificationRepository UserVerifications => _userVerificationRepository ??= new UserVerificationRepository(_context);
+
+    /// <summary>
+    /// Gets the Property repository instance.
+    /// </summary>
+    public IPropertyRepository Properties => _propertyRepository ??= new PropertyRepository(_context);
+
+    /// <summary>
+    /// Gets the LeaseProposal repository instance.
+    /// </summary>
+    public ILeaseProposalRepository LeaseProposals => _leaseProposalRepository ??= new LeaseProposalRepository(_context);
+
+    /// <summary>
+    /// Gets the BankAccount repository instance.
+    /// </summary>
+    public IBankAccountRepository BankAccounts => _bankAccountRepository ??= new BankAccountRepository(_context);
 
     /// <summary>
     /// Saves all changes made within the context to the database.

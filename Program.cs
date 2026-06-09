@@ -33,6 +33,18 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 // Register User Service
 builder.Services.AddScoped<IUserService, UserService>();
 
+// Register User Verification Service
+builder.Services.AddScoped<IUserVerificationService, UserVerificationService>();
+
+// Register Property Service
+builder.Services.AddScoped<IPropertyService, PropertyService>();
+
+// Register Lease Proposal Service
+builder.Services.AddScoped<ILeaseProposalService, LeaseProposalService>();
+
+// Register Bank Account Service
+builder.Services.AddScoped<IBankAccountService, BankAccountService>();
+
 // Register JWT Service
 builder.Services.AddScoped<IJwtService, JwtService>();
 

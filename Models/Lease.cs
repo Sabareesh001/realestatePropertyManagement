@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace propertyManagement.Models;
@@ -23,11 +23,7 @@ public partial class Lease
 
     public decimal? SecurityDeposit { get; set; }
 
-    public int? LeaseTypeId { get; set; }
-
     public int? StatusId { get; set; }
-
-    public virtual LeaseType? LeaseType { get; set; }
 
     public virtual Property? PropertyNavigation { get; set; }
 

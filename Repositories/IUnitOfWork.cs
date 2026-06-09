@@ -16,6 +16,26 @@ public interface IUnitOfWork : IDisposable
     IRoleRepository Roles { get; }
 
     /// <summary>
+    /// Gets the UserVerification repository.
+    /// </summary>
+    IUserVerificationRepository UserVerifications { get; }
+
+    /// <summary>
+    /// Gets the Property repository.
+    /// </summary>
+    IPropertyRepository Properties { get; }
+
+    /// <summary>
+    /// Gets the LeaseProposal repository.
+    /// </summary>
+    ILeaseProposalRepository LeaseProposals { get; }
+
+    /// <summary>
+    /// Gets the BankAccount repository.
+    /// </summary>
+    IBankAccountRepository BankAccounts { get; }
+
+    /// <summary>
     /// Saves all changes made to the database.
     /// </summary>
     /// <returns>The number of state entries written to the database.</returns>

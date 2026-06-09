@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace propertyManagement.Models;
@@ -22,4 +22,9 @@ public partial class Document
     public virtual ICollection<Property> Properties { get; set; } = new List<Property>();
 
     public virtual ICollection<User> Users { get; set; } = new List<User>();
+
+    /// <summary>
+    /// Gets or sets the collection of user verification document mappings associated with this document.
+    /// </summary>
+    public virtual ICollection<UserVerificationDocument> UserVerificationDocuments { get; set; } = new List<UserVerificationDocument>();
 }

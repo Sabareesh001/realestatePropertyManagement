@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using propertyManagement.Data;
@@ -11,9 +12,11 @@ using propertyManagement.Data;
 namespace propertyManagement.Migrations
 {
     [DbContext(typeof(PropertyManagementDbContext))]
-    partial class PropertyManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260607062645_AddUserVerificationSchema")]
+    partial class AddUserVerificationSchema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,51 +113,6 @@ namespace propertyManagement.Migrations
                     b.HasIndex("DocumentId");
 
                     b.ToTable("user_documents", (string)null);
-                });
-
-            modelBuilder.Entity("propertyManagement.Models.BankAccount", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<string>("AccountHolderName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("account_holder_name");
-
-                    b.Property<string>("AccountNumber")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("account_number");
-
-                    b.Property<string>("BankName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("bank_name");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("created_at");
-
-                    b.Property<string>("IfscCode")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)")
-                        .HasColumnName("ifsc_code");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("updated_at");
-
-                    b.HasKey("Id")
-                        .HasName("bank_accounts_pkey");
-
-                    b.ToTable("bank_accounts", (string)null);
                 });
 
             modelBuilder.Entity("propertyManagement.Models.Charge", b =>
@@ -560,6 +518,10 @@ namespace propertyManagement.Migrations
                         .HasColumnType("date")
                         .HasColumnName("end_date");
 
+                    b.Property<int?>("LeaseTypeId")
+                        .HasColumnType("integer")
+                        .HasColumnName("lease_type_id");
+
                     b.Property<decimal?>("MonthlyRent")
                         .HasPrecision(12, 2)
                         .HasColumnType("numeric(12,2)")
@@ -598,6 +560,8 @@ namespace propertyManagement.Migrations
                     b.HasKey("Id")
                         .HasName("leases_pkey");
 
+                    b.HasIndex("LeaseTypeId");
+
                     b.HasIndex("PropertyId");
 
                     b.HasIndex("ProposalId");
@@ -623,6 +587,10 @@ namespace propertyManagement.Migrations
                     b.Property<DateOnly?>("EndDate")
                         .HasColumnType("date")
                         .HasColumnName("end_date");
+
+                    b.Property<int?>("LeaseTypeId")
+                        .HasColumnType("integer")
+                        .HasColumnName("lease_type_id");
 
                     b.Property<decimal?>("MonthlyRent")
                         .HasPrecision(12, 2)
@@ -666,6 +634,8 @@ namespace propertyManagement.Migrations
                     b.HasKey("Id")
                         .HasName("lease_proposals_pkey");
 
+                    b.HasIndex("LeaseTypeId");
+
                     b.HasIndex("PropertyId");
 
                     b.HasIndex("ReviewedBy");
@@ -697,6 +667,28 @@ namespace propertyManagement.Migrations
                         .IsUnique();
 
                     b.ToTable("lease_statuses", (string)null);
+                });
+
+            modelBuilder.Entity("propertyManagement.Models.LeaseType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .HasColumnType("character varying")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("lease_types_pkey");
+
+                    b.HasIndex(new[] { "Name" }, "lease_types_name_key")
+                        .IsUnique();
+
+                    b.ToTable("lease_types", (string)null);
                 });
 
             modelBuilder.Entity("propertyManagement.Models.OwnerProfile", b =>
@@ -980,10 +972,6 @@ namespace propertyManagement.Migrations
                         .HasColumnType("numeric(12,2)")
                         .HasColumnName("upfront_payment");
 
-                    b.Property<Guid?>("VerifiedBy")
-                        .HasColumnType("uuid")
-                        .HasColumnName("verified_by");
-
                     b.HasKey("Id")
                         .HasName("properties_pkey");
 
@@ -992,8 +980,6 @@ namespace propertyManagement.Migrations
                     b.HasIndex("OwnerId");
 
                     b.HasIndex("StatusId");
-
-                    b.HasIndex("VerifiedBy");
 
                     b.ToTable("properties", (string)null);
                 });
@@ -1196,24 +1182,6 @@ namespace propertyManagement.Migrations
                         .IsUnique();
 
                     b.ToTable("users", (string)null);
-                });
-
-            modelBuilder.Entity("propertyManagement.Models.UserBankAccount", b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("user_id");
-
-                    b.Property<Guid>("BankAccountId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("bank_account_id");
-
-                    b.HasKey("UserId", "BankAccountId")
-                        .HasName("user_bank_accounts_pkey");
-
-                    b.HasIndex("BankAccountId");
-
-                    b.ToTable("user_bank_accounts", (string)null);
                 });
 
             modelBuilder.Entity("propertyManagement.Models.UserProfile", b =>
@@ -1535,6 +1503,11 @@ namespace propertyManagement.Migrations
 
             modelBuilder.Entity("propertyManagement.Models.Lease", b =>
                 {
+                    b.HasOne("propertyManagement.Models.LeaseType", "LeaseType")
+                        .WithMany("Leases")
+                        .HasForeignKey("LeaseTypeId")
+                        .HasConstraintName("leases_lease_type_id_fkey");
+
                     b.HasOne("propertyManagement.Models.Property", "PropertyNavigation")
                         .WithMany("Leases")
                         .HasForeignKey("PropertyId")
@@ -1555,6 +1528,8 @@ namespace propertyManagement.Migrations
                         .HasForeignKey("TenantId")
                         .HasConstraintName("leases_tenant_id_fkey");
 
+                    b.Navigation("LeaseType");
+
                     b.Navigation("PropertyNavigation");
 
                     b.Navigation("Proposal");
@@ -1566,6 +1541,11 @@ namespace propertyManagement.Migrations
 
             modelBuilder.Entity("propertyManagement.Models.LeaseProposal", b =>
                 {
+                    b.HasOne("propertyManagement.Models.LeaseType", "LeaseType")
+                        .WithMany("LeaseProposals")
+                        .HasForeignKey("LeaseTypeId")
+                        .HasConstraintName("lease_proposals_lease_type_id_fkey");
+
                     b.HasOne("propertyManagement.Models.Property", "Property")
                         .WithMany("LeaseProposals")
                         .HasForeignKey("PropertyId")
@@ -1585,6 +1565,8 @@ namespace propertyManagement.Migrations
                         .WithMany("LeaseProposalTenants")
                         .HasForeignKey("TenantId")
                         .HasConstraintName("lease_proposals_tenant_id_fkey");
+
+                    b.Navigation("LeaseType");
 
                     b.Navigation("Property");
 
@@ -1662,18 +1644,11 @@ namespace propertyManagement.Migrations
                         .HasForeignKey("StatusId")
                         .HasConstraintName("properties_status_id_fkey");
 
-                    b.HasOne("propertyManagement.Models.User", "VerifiedByNavigation")
-                        .WithMany("PropertiesVerified")
-                        .HasForeignKey("VerifiedBy")
-                        .HasConstraintName("properties_verified_by_fkey");
-
                     b.Navigation("City");
 
                     b.Navigation("Owner");
 
                     b.Navigation("Status");
-
-                    b.Navigation("VerifiedByNavigation");
                 });
 
             modelBuilder.Entity("propertyManagement.Models.State", b =>
@@ -1693,27 +1668,6 @@ namespace propertyManagement.Migrations
                         .HasForeignKey("propertyManagement.Models.TenantProfile", "UserId")
                         .IsRequired()
                         .HasConstraintName("tenant_profiles_user_id_fkey");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("propertyManagement.Models.UserBankAccount", b =>
-                {
-                    b.HasOne("propertyManagement.Models.BankAccount", "BankAccount")
-                        .WithMany("UserBankAccounts")
-                        .HasForeignKey("BankAccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("user_bank_accounts_bank_account_id_fkey");
-
-                    b.HasOne("propertyManagement.Models.User", "User")
-                        .WithMany("UserBankAccounts")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("user_bank_accounts_user_id_fkey");
-
-                    b.Navigation("BankAccount");
 
                     b.Navigation("User");
                 });
@@ -1792,11 +1746,6 @@ namespace propertyManagement.Migrations
                     b.Navigation("UserVerification");
                 });
 
-            modelBuilder.Entity("propertyManagement.Models.BankAccount", b =>
-                {
-                    b.Navigation("UserBankAccounts");
-                });
-
             modelBuilder.Entity("propertyManagement.Models.Charge", b =>
                 {
                     b.Navigation("ChargePayments");
@@ -1864,6 +1813,13 @@ namespace propertyManagement.Migrations
 
             modelBuilder.Entity("propertyManagement.Models.LeaseStatus", b =>
                 {
+                    b.Navigation("Leases");
+                });
+
+            modelBuilder.Entity("propertyManagement.Models.LeaseType", b =>
+                {
+                    b.Navigation("LeaseProposals");
+
                     b.Navigation("Leases");
                 });
 
@@ -1936,10 +1892,6 @@ namespace propertyManagement.Migrations
                     b.Navigation("Payments");
 
                     b.Navigation("Properties");
-
-                    b.Navigation("PropertiesVerified");
-
-                    b.Navigation("UserBankAccounts");
 
                     b.Navigation("UserProfile");
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace propertyManagement.Models;
@@ -37,6 +37,8 @@ public partial class Property
 
     public DateTime? DeletedAt { get; set; }
 
+    public Guid? VerifiedBy { get; set; }
+
     public virtual City? City { get; set; }
 
     public virtual ICollection<Complaint> Complaints { get; set; } = new List<Complaint>();
@@ -48,6 +50,8 @@ public partial class Property
     public virtual User Owner { get; set; } = null!;
 
     public virtual PropertyStatus? Status { get; set; }
+
+    public virtual User? VerifiedByNavigation { get; set; }
 
     public virtual ICollection<Document> Documents { get; set; } = new List<Document>();
 }

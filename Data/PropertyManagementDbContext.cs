@@ -49,8 +49,6 @@ public partial class PropertyManagementDbContext : DbContext
 
     public virtual DbSet<LeaseStatus> LeaseStatuses { get; set; }
 
-    public virtual DbSet<LeaseType> LeaseTypes { get; set; }
-
     public virtual DbSet<OwnerProfile> OwnerProfiles { get; set; }
 
     public virtual DbSet<OwnerType> OwnerTypes { get; set; }
@@ -80,6 +78,26 @@ public partial class PropertyManagementDbContext : DbContext
     public virtual DbSet<UserProfile> UserProfiles { get; set; }
 
     public virtual DbSet<UserRole> UserRoles { get; set; }
+
+    /// <summary>
+    /// Gets or sets the database set for user verifications.
+    /// </summary>
+    public virtual DbSet<UserVerification> UserVerifications { get; set; }
+
+    /// <summary>
+    /// Gets or sets the database set for user verification document mappings.
+    /// </summary>
+    public virtual DbSet<UserVerificationDocument> UserVerificationDocuments { get; set; }
+
+    /// <summary>
+    /// Gets or sets the database set for bank accounts.
+    /// </summary>
+    public virtual DbSet<BankAccount> BankAccounts { get; set; }
+
+    /// <summary>
+    /// Gets or sets the database set for user bank accounts.
+    /// </summary>
+    public virtual DbSet<UserBankAccount> UserBankAccounts { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -402,7 +420,6 @@ public partial class PropertyManagementDbContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.EndDate).HasColumnName("end_date");
-            entity.Property(e => e.LeaseTypeId).HasColumnName("lease_type_id");
             entity.Property(e => e.MonthlyRent)
                 .HasPrecision(12, 2)
                 .HasColumnName("monthly_rent");
@@ -417,10 +434,6 @@ public partial class PropertyManagementDbContext : DbContext
             entity.Property(e => e.UpfrontPayment)
                 .HasPrecision(12, 2)
                 .HasColumnName("upfront_payment");
-
-            entity.HasOne(d => d.LeaseType).WithMany(p => p.Leases)
-                .HasForeignKey(d => d.LeaseTypeId)
-                .HasConstraintName("leases_lease_type_id_fkey");
 
             entity.HasOne(d => d.PropertyNavigation).WithMany(p => p.Leases)
                 .HasForeignKey(d => d.PropertyId)
@@ -469,7 +482,6 @@ public partial class PropertyManagementDbContext : DbContext
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("created_at");
             entity.Property(e => e.EndDate).HasColumnName("end_date");
-            entity.Property(e => e.LeaseTypeId).HasColumnName("lease_type_id");
             entity.Property(e => e.MonthlyRent)
                 .HasPrecision(12, 2)
                 .HasColumnName("monthly_rent");
@@ -487,10 +499,6 @@ public partial class PropertyManagementDbContext : DbContext
             entity.Property(e => e.UpfrontPayment)
                 .HasPrecision(12, 2)
                 .HasColumnName("upfront_payment");
-
-            entity.HasOne(d => d.LeaseType).WithMany(p => p.LeaseProposals)
-                .HasForeignKey(d => d.LeaseTypeId)
-                .HasConstraintName("lease_proposals_lease_type_id_fkey");
 
             entity.HasOne(d => d.Property).WithMany(p => p.LeaseProposals)
                 .HasForeignKey(d => d.PropertyId)
@@ -523,19 +531,6 @@ public partial class PropertyManagementDbContext : DbContext
                 .HasColumnName("name");
         });
 
-        modelBuilder.Entity<LeaseType>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("lease_types_pkey");
-
-            entity.ToTable("lease_types");
-
-            entity.HasIndex(e => e.Name, "lease_types_name_key").IsUnique();
-
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Name)
-                .HasColumnType("character varying")
-                .HasColumnName("name");
-        });
 
         modelBuilder.Entity<OwnerProfile>(entity =>
         {
@@ -721,6 +716,7 @@ public partial class PropertyManagementDbContext : DbContext
             entity.Property(e => e.UpfrontPayment)
                 .HasPrecision(12, 2)
                 .HasColumnName("upfront_payment");
+            entity.Property(e => e.VerifiedBy).HasColumnName("verified_by");
 
             entity.HasOne(d => d.City).WithMany(p => p.Properties)
                 .HasForeignKey(d => d.CityId)
@@ -734,6 +730,10 @@ public partial class PropertyManagementDbContext : DbContext
             entity.HasOne(d => d.Status).WithMany(p => p.Properties)
                 .HasForeignKey(d => d.StatusId)
                 .HasConstraintName("properties_status_id_fkey");
+
+            entity.HasOne(d => d.VerifiedByNavigation).WithMany(p => p.PropertiesVerified)
+                .HasForeignKey(d => d.VerifiedBy)
+                .HasConstraintName("properties_verified_by_fkey");
 
             entity.HasMany(d => d.Documents).WithMany(p => p.Properties)
                 .UsingEntity<Dictionary<string, object>>(
@@ -962,6 +962,106 @@ public partial class PropertyManagementDbContext : DbContext
             entity.HasOne(d => d.User).WithMany(p => p.UserRoles)
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("user_roles_user_id_fkey");
+        });
+
+        modelBuilder.Entity<UserVerification>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("user_verifications_pkey");
+
+            entity.ToTable("user_verifications");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+            entity.Property(e => e.Status)
+                .HasMaxLength(50)
+                .HasColumnName("status")
+                .HasDefaultValue("Pending");
+            entity.Property(e => e.Remarks).HasColumnName("remarks");
+            entity.Property(e => e.VerifiedBy).HasColumnName("verified_by");
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at")
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+
+            entity.HasOne(d => d.User).WithMany(p => p.UserVerifications)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("user_verifications_user_id_fkey");
+
+            entity.HasOne(d => d.VerifiedByNavigation).WithMany(p => p.VerificationsPerformed)
+                .HasForeignKey(d => d.VerifiedBy)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("user_verifications_verified_by_fkey");
+        });
+
+        modelBuilder.Entity<UserVerificationDocument>(entity =>
+        {
+            entity.HasKey(e => new { e.UserVerificationId, e.DocumentId }).HasName("user_verification_documents_pkey");
+
+            entity.ToTable("user_verification_documents");
+
+            entity.Property(e => e.UserVerificationId).HasColumnName("user_verification_id");
+            entity.Property(e => e.DocumentId).HasColumnName("document_id");
+
+            entity.HasOne(d => d.UserVerification).WithMany(p => p.UserVerificationDocuments)
+                .HasForeignKey(d => d.UserVerificationId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("user_verification_documents_user_verification_id_fkey");
+
+            entity.HasOne(d => d.Document).WithMany(p => p.UserVerificationDocuments)
+                .HasForeignKey(d => d.DocumentId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("user_verification_documents_document_id_fkey");
+        });
+
+        modelBuilder.Entity<BankAccount>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("bank_accounts_pkey");
+
+            entity.ToTable("bank_accounts");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.BankName)
+                .HasMaxLength(100)
+                .HasColumnName("bank_name");
+            entity.Property(e => e.AccountNumber)
+                .HasMaxLength(50)
+                .HasColumnName("account_number");
+            entity.Property(e => e.AccountHolderName)
+                .HasMaxLength(100)
+                .HasColumnName("account_holder_name");
+            entity.Property(e => e.IfscCode)
+                .HasMaxLength(20)
+                .HasColumnName("ifsc_code");
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+        });
+
+        modelBuilder.Entity<UserBankAccount>(entity =>
+        {
+            entity.HasKey(e => new { e.UserId, e.BankAccountId }).HasName("user_bank_accounts_pkey");
+
+            entity.ToTable("user_bank_accounts");
+
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+            entity.Property(e => e.BankAccountId).HasColumnName("bank_account_id");
+
+            entity.HasOne(d => d.User).WithMany(p => p.UserBankAccounts)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("user_bank_accounts_user_id_fkey");
+
+            entity.HasOne(d => d.BankAccount).WithMany(p => p.UserBankAccounts)
+                .HasForeignKey(d => d.BankAccountId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("user_bank_accounts_bank_account_id_fkey");
         });
 
         OnModelCreatingPartial(modelBuilder);
