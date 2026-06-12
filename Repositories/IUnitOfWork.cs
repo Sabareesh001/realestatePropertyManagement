@@ -26,6 +26,11 @@ public interface IUnitOfWork : IDisposable
     IPropertyRepository Properties { get; }
 
     /// <summary>
+    /// Gets the City repository.
+    /// </summary>
+    ICityRepository Cities { get; }
+
+    /// <summary>
     /// Gets the LeaseProposal repository.
     /// </summary>
     ILeaseProposalRepository LeaseProposals { get; }
