@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using propertyManagement.DTOs;
 using propertyManagement.Services;
+using propertyManagement.Filters;
 
 namespace propertyManagement.Controllers;
 
@@ -13,7 +14,7 @@ namespace propertyManagement.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]
-public class PropertyController : ControllerBase
+public class PropertyController : BaseApiController
 {
     private readonly IPropertyService _propertyService;
 
@@ -34,7 +35,7 @@ public class PropertyController : ControllerBase
     /// <response code="201">Property successfully created.</response>
     /// <response code="400">If user is not verified or request is invalid.</response>
     /// <response code="401">If user is unauthorized.</response>
-    [Authorize]
+    [AuthorizeRoles("Owner")]
     [HttpPost]
     public async Task<ActionResult<PropertyResponseDto>> CreateProperty([FromBody] CreatePropertyDto dto)
     {
@@ -43,13 +44,4 @@ public class PropertyController : ControllerBase
         return CreatedAtAction(null, result);
     }
 
-    private Guid GetCurrentUserId()
-    {
-        var nameIdentifier = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (string.IsNullOrEmpty(nameIdentifier) || !Guid.TryParse(nameIdentifier, out var userId))
-        {
-            throw new InvalidOperationException("User is not authenticated or user ID claim is missing.");
-        }
-        return userId;
-    }
 }

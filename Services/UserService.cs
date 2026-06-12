@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using propertyManagement.DTOs;
 using propertyManagement.Models;
 using propertyManagement.Repositories;
@@ -43,6 +47,8 @@ public class UserService : IUserService
             LastName = registerDto.LastName,
             Phone = registerDto.Phone,
             DateOfBirth = registerDto.DateOfBirth,
+            VerificationStatusId = UserVerificationStatus.Unverified,
+            ActiveStatusId = UserActiveStatus.Active,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(registerDto.Password),
             UserRoles = new List<UserRole>
             {
@@ -152,6 +158,49 @@ public class UserService : IUserService
     }
 
     /// <summary>
+    /// Assigns the "Owner" role to the specified user without modifying existing roles.
+    /// </summary>
+    /// <param name="userId">The unique identifier of the user.</param>
+    /// <returns>The updated user response.</returns>
+    /// <exception cref="KeyNotFoundException">Thrown when user is not found.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when user is already an owner.</exception>
+    public async Task<UserResponseDto> AssignOwnerRoleAsync(Guid userId)
+    {
+        var user = await _unitOfWork.Users.GetByIdAsync(userId);
+        if (user == null)
+        {
+            throw new KeyNotFoundException("User not found");
+        }
+
+        user.UserRoles ??= new List<UserRole>();
+
+        // Check if user is already an owner
+        var isOwner = user.UserRoles.Any(ur => ur.RoleId == Role.Owner);
+        if (isOwner)
+        {
+            throw new InvalidOperationException("User is already an owner.");
+        }
+
+        var ownerRole = await _unitOfWork.Roles.GetByIdAsync(Role.Owner);
+        if (ownerRole == null)
+        {
+            throw new InvalidOperationException("Owner role does not exist in the database.");
+        }
+
+        user.UserRoles.Add(new UserRole
+        {
+            RoleId = Role.Owner,
+            Role = ownerRole,
+            CreatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified)
+        });
+
+        await _unitOfWork.Users.UpdateAsync(user);
+        await _unitOfWork.SaveChangesAsync();
+
+        return MapToUserResponseDto(user);
+    }
+
+    /// <summary>
     /// Maps a User entity to a UserResponseDto.
     /// </summary>
     /// <param name="user">The user entity to map.</param>
@@ -174,7 +223,14 @@ public class UserService : IUserService
             {
                 Id = userRole.Role!.Id,
                 Name = userRole.Role.Name
-            } : null
+            } : null,
+            Roles = user.UserRoles?.Where(ur => ur.Role != null).Select(ur => new RoleResponseDto
+            {
+                Id = ur.Role!.Id,
+                Name = ur.Role.Name
+            }).ToList() ?? new List<RoleResponseDto>(),
+            VerificationStatusId = user.VerificationStatusId,
+            ActiveStatusId = user.ActiveStatusId
         };
     }
 }

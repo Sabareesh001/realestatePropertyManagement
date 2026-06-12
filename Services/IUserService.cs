@@ -47,4 +47,11 @@ public interface IUserService
     /// </summary>
     /// <param name="id">The unique identifier of the user to delete.</param>
     Task DeleteUserAsync(Guid id);
+
+    /// <summary>
+    /// Assigns the "Owner" role to the specified user without modifying existing roles.
+    /// </summary>
+    /// <param name="userId">The unique identifier of the user.</param>
+    /// <returns>The updated user response.</returns>
+    Task<UserResponseDto> AssignOwnerRoleAsync(Guid userId);
 }

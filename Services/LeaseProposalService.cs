@@ -48,7 +48,7 @@ public class LeaseProposalService : ILeaseProposalService
             UpfrontPayment = dto.UpfrontPayment,
             SecurityDeposit = dto.SecurityDeposit,
             StatusId = 1, // Default status
-            CreatedAt = DateTime.UtcNow
+            CreatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified)
         };
 
         await _unitOfWork.LeaseProposals.CreateAsync(proposal);

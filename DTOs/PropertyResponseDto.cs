@@ -58,9 +58,14 @@ public class PropertyResponseDto
     public string? ThumbnailImgUrl { get; set; }
 
     /// <summary>
-    /// Gets or sets the status identifier of the property.
+    /// Gets or sets the verification status identifier of the property.
     /// </summary>
-    public int? StatusId { get; set; }
+    public int? VerificationStatusId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the availability status identifier of the property.
+    /// </summary>
+    public int? AvailabilityStatusId { get; set; }
 
     /// <summary>
     /// Gets or sets the creation timestamp.
@@ -71,4 +76,9 @@ public class PropertyResponseDto
     /// Gets or sets the unique identifier of the admin who verified the property.
     /// </summary>
     public Guid? VerifiedBy { get; set; }
+
+    /// <summary>
+    /// Gets or sets verification or rejection remarks for the property.
+    /// </summary>
+    public string? Remarks { get; set; }
 }

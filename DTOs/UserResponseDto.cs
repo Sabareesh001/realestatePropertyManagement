@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace propertyManagement.DTOs;
 
 /// <summary>
@@ -49,4 +51,19 @@ public class UserResponseDto
     /// The role details assigned to the user.
     /// </summary>
     public RoleResponseDto? Role { get; set; }
+
+    /// <summary>
+    /// The collection of roles assigned to the user.
+    /// </summary>
+    public ICollection<RoleResponseDto> Roles { get; set; } = new List<RoleResponseDto>();
+
+    /// <summary>
+    /// The verification status identifier of the user.
+    /// </summary>
+    public int? VerificationStatusId { get; set; }
+
+    /// <summary>
+    /// The active status identifier of the user.
+    /// </summary>
+    public int? ActiveStatusId { get; set; }
 }

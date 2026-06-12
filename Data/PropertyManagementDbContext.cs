@@ -63,7 +63,25 @@ public partial class PropertyManagementDbContext : DbContext
 
     public virtual DbSet<Property> Properties { get; set; }
 
-    public virtual DbSet<PropertyStatus> PropertyStatuses { get; set; }
+    /// <summary>
+    /// Gets or sets the database set for property verification statuses.
+    /// </summary>
+    public virtual DbSet<PropertyVerificationStatus> PropertyVerificationStatuses { get; set; }
+
+    /// <summary>
+    /// Gets or sets the database set for property availability statuses.
+    /// </summary>
+    public virtual DbSet<PropertyAvailabilityStatus> PropertyAvailabilityStatuses { get; set; }
+
+    /// <summary>
+    /// Gets or sets the database set for user verification statuses.
+    /// </summary>
+    public virtual DbSet<UserVerificationStatus> UserVerificationStatuses { get; set; }
+
+    /// <summary>
+    /// Gets or sets the database set for user active statuses.
+    /// </summary>
+    public virtual DbSet<UserActiveStatus> UserActiveStatuses { get; set; }
 
     public virtual DbSet<ProposalStatus> ProposalStatuses { get; set; }
 
@@ -171,6 +189,13 @@ public partial class PropertyManagementDbContext : DbContext
                         j.IndexerProperty<Guid>("ChargeId").HasColumnName("charge_id");
                         j.IndexerProperty<Guid>("UserId").HasColumnName("user_id");
                     });
+        
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
         });
 
         modelBuilder.Entity<ChargePayment>(entity =>
@@ -208,6 +233,16 @@ public partial class PropertyManagementDbContext : DbContext
             entity.Property(e => e.Name)
                 .HasColumnType("character varying")
                 .HasColumnName("name");
+        
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
         });
 
         modelBuilder.Entity<ChargeType>(entity =>
@@ -222,6 +257,16 @@ public partial class PropertyManagementDbContext : DbContext
             entity.Property(e => e.Name)
                 .HasColumnType("character varying")
                 .HasColumnName("name");
+        
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
         });
 
         modelBuilder.Entity<City>(entity =>
@@ -239,6 +284,16 @@ public partial class PropertyManagementDbContext : DbContext
             entity.HasOne(d => d.District).WithMany(p => p.Cities)
                 .HasForeignKey(d => d.DistrictId)
                 .HasConstraintName("cities_district_id_fkey");
+        
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
         });
 
         modelBuilder.Entity<Complaint>(entity =>
@@ -285,6 +340,16 @@ public partial class PropertyManagementDbContext : DbContext
             entity.HasOne(d => d.Tenant).WithMany(p => p.ComplaintTenants)
                 .HasForeignKey(d => d.TenantId)
                 .HasConstraintName("complaints_tenant_id_fkey");
+        
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
         });
 
         modelBuilder.Entity<ComplaintPriority>(entity =>
@@ -299,6 +364,16 @@ public partial class PropertyManagementDbContext : DbContext
             entity.Property(e => e.Name)
                 .HasColumnType("character varying")
                 .HasColumnName("name");
+        
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
         });
 
         modelBuilder.Entity<ComplaintStatus>(entity =>
@@ -313,6 +388,16 @@ public partial class PropertyManagementDbContext : DbContext
             entity.Property(e => e.Name)
                 .HasColumnType("character varying")
                 .HasColumnName("name");
+        
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
         });
 
         modelBuilder.Entity<ComplaintType>(entity =>
@@ -327,6 +412,16 @@ public partial class PropertyManagementDbContext : DbContext
             entity.Property(e => e.Name)
                 .HasColumnType("character varying")
                 .HasColumnName("name");
+        
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
         });
 
         modelBuilder.Entity<Country>(entity =>
@@ -341,6 +436,16 @@ public partial class PropertyManagementDbContext : DbContext
             entity.Property(e => e.Name)
                 .HasColumnType("character varying")
                 .HasColumnName("name");
+        
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
         });
 
         modelBuilder.Entity<Currency>(entity =>
@@ -358,6 +463,16 @@ public partial class PropertyManagementDbContext : DbContext
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
                 .HasColumnName("name");
+        
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
         });
 
         modelBuilder.Entity<District>(entity =>
@@ -375,6 +490,16 @@ public partial class PropertyManagementDbContext : DbContext
             entity.HasOne(d => d.State).WithMany(p => p.Districts)
                 .HasForeignKey(d => d.StateId)
                 .HasConstraintName("districts_state_id_fkey");
+        
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
         });
 
         modelBuilder.Entity<Document>(entity =>
@@ -396,6 +521,13 @@ public partial class PropertyManagementDbContext : DbContext
             entity.HasOne(d => d.DocumentType).WithMany(p => p.Documents)
                 .HasForeignKey(d => d.DocumentTypeId)
                 .HasConstraintName("documents_document_type_id_fkey");
+        
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
         });
 
         modelBuilder.Entity<DocumentType>(entity =>
@@ -410,6 +542,16 @@ public partial class PropertyManagementDbContext : DbContext
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
                 .HasColumnName("name");
+        
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
         });
 
         modelBuilder.Entity<Lease>(entity =>
@@ -469,6 +611,16 @@ public partial class PropertyManagementDbContext : DbContext
                         j.IndexerProperty<Guid>("LeaseId").HasColumnName("lease_id");
                         j.IndexerProperty<Guid>("DocumentId").HasColumnName("document_id");
                     });
+        
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
         });
 
         modelBuilder.Entity<LeaseProposal>(entity =>
@@ -515,6 +667,13 @@ public partial class PropertyManagementDbContext : DbContext
             entity.HasOne(d => d.Tenant).WithMany(p => p.LeaseProposalTenants)
                 .HasForeignKey(d => d.TenantId)
                 .HasConstraintName("lease_proposals_tenant_id_fkey");
+        
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
         });
 
         modelBuilder.Entity<LeaseStatus>(entity =>
@@ -529,6 +688,16 @@ public partial class PropertyManagementDbContext : DbContext
             entity.Property(e => e.Name)
                 .HasColumnType("character varying")
                 .HasColumnName("name");
+        
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
         });
 
 
@@ -557,6 +726,16 @@ public partial class PropertyManagementDbContext : DbContext
                 .HasForeignKey<OwnerProfile>(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("owner_profiles_user_id_fkey");
+        
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
         });
 
         modelBuilder.Entity<OwnerType>(entity =>
@@ -571,6 +750,16 @@ public partial class PropertyManagementDbContext : DbContext
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
                 .HasColumnName("name");
+        
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
         });
 
         modelBuilder.Entity<Payment>(entity =>
@@ -614,6 +803,13 @@ public partial class PropertyManagementDbContext : DbContext
             entity.HasOne(d => d.Status).WithMany(p => p.Payments)
                 .HasForeignKey(d => d.StatusId)
                 .HasConstraintName("payments_status_id_fkey");
+        
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
         });
 
         modelBuilder.Entity<PaymentMethod>(entity =>
@@ -655,6 +851,16 @@ public partial class PropertyManagementDbContext : DbContext
             entity.Property(e => e.Name)
                 .HasColumnType("character varying")
                 .HasColumnName("name");
+        
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
         });
 
         modelBuilder.Entity<ProfileType>(entity =>
@@ -670,6 +876,16 @@ public partial class PropertyManagementDbContext : DbContext
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
                 .HasColumnName("name");
+        
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
         });
 
         modelBuilder.Entity<Property>(entity =>
@@ -703,7 +919,8 @@ public partial class PropertyManagementDbContext : DbContext
             entity.Property(e => e.SecurityDeposit)
                 .HasPrecision(12, 2)
                 .HasColumnName("security_deposit");
-            entity.Property(e => e.StatusId).HasColumnName("status_id");
+            entity.Property(e => e.VerificationStatusId).HasColumnName("verification_status_id");
+            entity.Property(e => e.AvailabilityStatusId).HasColumnName("availability_status_id");
             entity.Property(e => e.ThumbnailImgUrl)
                 .HasMaxLength(255)
                 .HasColumnName("thumbnail_img_url");
@@ -717,6 +934,7 @@ public partial class PropertyManagementDbContext : DbContext
                 .HasPrecision(12, 2)
                 .HasColumnName("upfront_payment");
             entity.Property(e => e.VerifiedBy).HasColumnName("verified_by");
+            entity.Property(e => e.Remarks).HasColumnName("remarks");
 
             entity.HasOne(d => d.City).WithMany(p => p.Properties)
                 .HasForeignKey(d => d.CityId)
@@ -727,9 +945,13 @@ public partial class PropertyManagementDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("properties_owner_id_fkey");
 
-            entity.HasOne(d => d.Status).WithMany(p => p.Properties)
-                .HasForeignKey(d => d.StatusId)
-                .HasConstraintName("properties_status_id_fkey");
+            entity.HasOne(d => d.VerificationStatus).WithMany(p => p.Properties)
+                .HasForeignKey(d => d.VerificationStatusId)
+                .HasConstraintName("properties_verification_status_id_fkey");
+
+            entity.HasOne(d => d.AvailabilityStatus).WithMany(p => p.Properties)
+                .HasForeignKey(d => d.AvailabilityStatusId)
+                .HasConstraintName("properties_availability_status_id_fkey");
 
             entity.HasOne(d => d.VerifiedByNavigation).WithMany(p => p.PropertiesVerified)
                 .HasForeignKey(d => d.VerifiedBy)
@@ -755,18 +977,52 @@ public partial class PropertyManagementDbContext : DbContext
                     });
         });
 
-        modelBuilder.Entity<PropertyStatus>(entity =>
+        modelBuilder.Entity<PropertyVerificationStatus>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("property_statuses_pkey");
+            entity.HasKey(e => e.Id).HasName("property_verification_statuses_pkey");
 
-            entity.ToTable("property_statuses");
+            entity.ToTable("property_verification_statuses");
 
-            entity.HasIndex(e => e.Name, "property_statuses_name_key").IsUnique();
+            entity.HasIndex(e => e.Name, "property_verification_statuses_name_key").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Name)
                 .HasMaxLength(30)
                 .HasColumnName("name");
+        
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
+        });
+
+        modelBuilder.Entity<PropertyAvailabilityStatus>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("property_availability_statuses_pkey");
+
+            entity.ToTable("property_availability_statuses");
+
+            entity.HasIndex(e => e.Name, "property_availability_statuses_name_key").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Name)
+                .HasMaxLength(30)
+                .HasColumnName("name");
+        
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
         });
 
         modelBuilder.Entity<ProposalStatus>(entity =>
@@ -781,6 +1037,16 @@ public partial class PropertyManagementDbContext : DbContext
             entity.Property(e => e.Name)
                 .HasColumnType("character varying")
                 .HasColumnName("name");
+        
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
         });
 
         modelBuilder.Entity<Role>(entity =>
@@ -821,6 +1087,16 @@ public partial class PropertyManagementDbContext : DbContext
             entity.HasOne(d => d.Country).WithMany(p => p.States)
                 .HasForeignKey(d => d.CountryId)
                 .HasConstraintName("states_country_id_fkey");
+        
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
         });
 
         modelBuilder.Entity<TenantProfile>(entity =>
@@ -849,6 +1125,16 @@ public partial class PropertyManagementDbContext : DbContext
                 .HasForeignKey<TenantProfile>(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("tenant_profiles_user_id_fkey");
+        
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
         });
 
         modelBuilder.Entity<User>(entity =>
@@ -904,6 +1190,21 @@ public partial class PropertyManagementDbContext : DbContext
                         j.IndexerProperty<Guid>("UserId").HasColumnName("user_id");
                         j.IndexerProperty<Guid>("DocumentId").HasColumnName("document_id");
                     });
+
+            entity.Property(e => e.VerificationStatusId)
+                .HasColumnName("verification_status_id")
+                .HasDefaultValue(1);
+            entity.Property(e => e.ActiveStatusId)
+                .HasColumnName("active_status_id")
+                .HasDefaultValue(1);
+
+            entity.HasOne(d => d.VerificationStatus).WithMany(p => p.Users)
+                .HasForeignKey(d => d.VerificationStatusId)
+                .HasConstraintName("users_verification_status_id_fkey");
+
+            entity.HasOne(d => d.ActiveStatus).WithMany(p => p.Users)
+                .HasForeignKey(d => d.ActiveStatusId)
+                .HasConstraintName("users_active_status_id_fkey");
         });
 
         modelBuilder.Entity<UserProfile>(entity =>
@@ -932,6 +1233,10 @@ public partial class PropertyManagementDbContext : DbContext
                 .HasForeignKey<UserProfile>(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("user_profiles_user_id_fkey");
+        
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
         });
 
         modelBuilder.Entity<UserRole>(entity =>
@@ -968,7 +1273,7 @@ public partial class PropertyManagementDbContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("user_verifications_pkey");
 
-            entity.ToTable("user_verifications");
+            entity.ToTable("user_verifications", t => t.HasCheckConstraint("CK_UserVerification_Status", "status IN ('Pending', 'Verified', 'Rejected')"));
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.UserId).HasColumnName("user_id");
@@ -995,6 +1300,10 @@ public partial class PropertyManagementDbContext : DbContext
                 .HasForeignKey(d => d.VerifiedBy)
                 .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("user_verifications_verified_by_fkey");
+        
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
         });
 
         modelBuilder.Entity<UserVerificationDocument>(entity =>
@@ -1042,6 +1351,10 @@ public partial class PropertyManagementDbContext : DbContext
             entity.Property(e => e.UpdatedAt)
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("updated_at");
+        
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
         });
 
         modelBuilder.Entity<UserBankAccount>(entity =>
@@ -1062,6 +1375,54 @@ public partial class PropertyManagementDbContext : DbContext
                 .HasForeignKey(d => d.BankAccountId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("user_bank_accounts_bank_account_id_fkey");
+        });
+
+        modelBuilder.Entity<UserVerificationStatus>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("user_verification_statuses_pkey");
+
+            entity.ToTable("user_verification_statuses");
+
+            entity.HasIndex(e => e.Name, "user_verification_statuses_name_key").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Name)
+                .HasMaxLength(30)
+                .HasColumnName("name");
+        
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
+        });
+
+        modelBuilder.Entity<UserActiveStatus>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("user_active_statuses_pkey");
+
+            entity.ToTable("user_active_statuses");
+
+            entity.HasIndex(e => e.Name, "user_active_statuses_name_key").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Name)
+                .HasMaxLength(30)
+                .HasColumnName("name");
+        
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -48,11 +48,11 @@ public class UserVerificationService : IUserVerificationService
         var latestVerification = await _unitOfWork.UserVerifications.GetLatestVerificationByUserIdAsync(userId);
         if (latestVerification != null)
         {
-            if (latestVerification.Status == "Pending")
+            if (latestVerification.Status == UserVerification.StatusPending)
             {
                 throw new InvalidOperationException("A verification request is already pending.");
             }
-            if (latestVerification.Status == "Verified")
+            if (latestVerification.Status == UserVerification.StatusVerified)
             {
                 throw new InvalidOperationException("User is already verified.");
             }
@@ -65,9 +65,12 @@ public class UserVerificationService : IUserVerificationService
             {
                 Id = Guid.NewGuid(),
                 UserId = userId,
-                Status = "Pending",
-                CreatedAt = DateTime.UtcNow
+                Status = UserVerification.StatusPending,
+                CreatedAt = DateTime.SpecifyKind(DateTime.UtcNow,DateTimeKind.Unspecified)
             };
+
+            user.VerificationStatusId = UserVerificationStatus.Pending;
+            await _unitOfWork.Users.UpdateAsync(user);
 
             foreach (var docDto in submitVerificationDto.Documents)
             {
@@ -77,7 +80,7 @@ public class UserVerificationService : IUserVerificationService
                     DocumentTypeId = docDto.DocumentTypeId,
                     DocumentNumber = docDto.DocumentNumber,
                     DocumentUrl = docDto.DocumentUrl,
-                    CreatedAt = DateTime.UtcNow
+                    CreatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified)
                 };
 
                 userVerification.UserVerificationDocuments.Add(new UserVerificationDocument
@@ -116,18 +119,36 @@ public class UserVerificationService : IUserVerificationService
             throw new InvalidOperationException("Verification request not found.");
         }
 
-        if (verification.Status != "Pending")
+        if (verification.Status != UserVerification.StatusPending)
         {
             throw new InvalidOperationException($"Cannot approve a request with status '{verification.Status}'.");
         }
 
-        verification.Status = "Verified";
-        verification.VerifiedBy = adminId;
-        verification.Remarks = dto?.Remarks;
-        verification.UpdatedAt = DateTime.UtcNow;
+        await _unitOfWork.BeginTransactionAsync();
+        try
+        {
+            verification.Status = UserVerification.StatusVerified;
+            verification.VerifiedBy = adminId;
+            verification.Remarks = dto?.Remarks;
+            verification.UpdatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified);
 
-        await _unitOfWork.UserVerifications.UpdateAsync(verification);
-        await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.UserVerifications.UpdateAsync(verification);
+
+            var user = await _unitOfWork.Users.GetByIdAsync(verification.UserId);
+            if (user != null)
+            {
+                user.VerificationStatusId = UserVerificationStatus.Verified;
+                await _unitOfWork.Users.UpdateAsync(user);
+            }
+
+            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.CommitTransactionAsync();
+        }
+        catch
+        {
+            await _unitOfWork.RollbackTransactionAsync();
+            throw;
+        }
 
         return MapToResponseDto(verification);
     }
@@ -148,18 +169,36 @@ public class UserVerificationService : IUserVerificationService
             throw new InvalidOperationException("Verification request not found.");
         }
 
-        if (verification.Status != "Pending")
+        if (verification.Status != UserVerification.StatusPending)
         {
             throw new InvalidOperationException($"Cannot reject a request with status '{verification.Status}'.");
         }
 
-        verification.Status = "Rejected";
-        verification.VerifiedBy = adminId;
-        verification.Remarks = dto?.Remarks ?? "Rejected by Admin";
-        verification.UpdatedAt = DateTime.UtcNow;
+        await _unitOfWork.BeginTransactionAsync();
+        try
+        {
+            verification.Status = UserVerification.StatusRejected;
+            verification.VerifiedBy = adminId;
+            verification.Remarks = dto?.Remarks ?? "Rejected by Admin";
+            verification.UpdatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified);
 
-        await _unitOfWork.UserVerifications.UpdateAsync(verification);
-        await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.UserVerifications.UpdateAsync(verification);
+
+            var user = await _unitOfWork.Users.GetByIdAsync(verification.UserId);
+            if (user != null)
+            {
+                user.VerificationStatusId = UserVerificationStatus.Rejected;
+                await _unitOfWork.Users.UpdateAsync(user);
+            }
+
+            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.CommitTransactionAsync();
+        }
+        catch
+        {
+            await _unitOfWork.RollbackTransactionAsync();
+            throw;
+        }
 
         return MapToResponseDto(verification);
     }
@@ -182,7 +221,7 @@ public class UserVerificationService : IUserVerificationService
     public async Task<string> GetVerificationStatusAsync(Guid userId)
     {
         var latest = await _unitOfWork.UserVerifications.GetLatestVerificationByUserIdAsync(userId);
-        return latest?.Status ?? "Unverified";
+        return latest?.Status ?? UserVerification.StatusUnverified;
     }
 
     private UserVerificationResponseDto MapToResponseDto(UserVerification uv)

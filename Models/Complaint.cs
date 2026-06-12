@@ -36,4 +36,19 @@ public partial class Complaint
     public virtual ComplaintStatus? Status { get; set; }
 
     public virtual User? Tenant { get; set; }
+
+    /// <summary>
+    /// Gets or sets the date and time when the complaint was created.
+    /// </summary>
+    public DateTime? CreatedAt { get; set; }
+
+    /// <summary>
+    /// Gets or sets the date and time when the complaint was last updated.
+    /// </summary>
+    public DateTime? UpdatedAt { get; set; }
+
+    /// <summary>
+    /// Gets or sets the date and time when the complaint was soft deleted.
+    /// </summary>
+    public DateTime? DeletedAt { get; set; }
 }
