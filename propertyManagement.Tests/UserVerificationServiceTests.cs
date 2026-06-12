@@ -68,8 +68,10 @@ public class UserVerificationServiceTests
         Assert.That(result.Status, Is.EqualTo("Pending"));
         Assert.That(result.Documents, Has.Count.EqualTo(1));
         Assert.That(result.Documents[0].DocumentNumber, Is.EqualTo("DOC123"));
+        Assert.That(user.VerificationStatusId, Is.EqualTo(UserVerificationStatus.Pending));
 
         _mockVerificationRepository.Verify(r => r.CreateAsync(It.IsAny<UserVerification>()), Times.Once);
+        _mockUserRepository.Verify(r => r.UpdateAsync(user), Times.Once);
         _mockUnitOfWork.Verify(u => u.SaveChangesAsync(), Times.Once);
     }
 
@@ -119,9 +121,12 @@ public class UserVerificationServiceTests
         // Arrange
         var adminId = Guid.NewGuid();
         var verificationId = Guid.NewGuid();
-        var verification = new UserVerification { Id = verificationId, Status = "Pending" };
+        var userId = Guid.NewGuid();
+        var user = new User { Id = userId, VerificationStatusId = UserVerificationStatus.Pending };
+        var verification = new UserVerification { Id = verificationId, UserId = userId, Status = "Pending" };
 
         _mockVerificationRepository.Setup(r => r.GetByIdAsync(verificationId)).ReturnsAsync(verification);
+        _mockUserRepository.Setup(r => r.GetByIdAsync(userId)).ReturnsAsync(user);
 
         var verifyDto = new VerifyRequestDto { Remarks = "Approved remarks" };
 
@@ -132,8 +137,10 @@ public class UserVerificationServiceTests
         Assert.That(result.Status, Is.EqualTo("Verified"));
         Assert.That(result.VerifiedBy, Is.EqualTo(adminId));
         Assert.That(result.Remarks, Is.EqualTo("Approved remarks"));
+        Assert.That(user.VerificationStatusId, Is.EqualTo(UserVerificationStatus.Verified));
 
         _mockVerificationRepository.Verify(r => r.UpdateAsync(verification), Times.Once);
+        _mockUserRepository.Verify(r => r.UpdateAsync(user), Times.Once);
         _mockUnitOfWork.Verify(u => u.SaveChangesAsync(), Times.Once);
     }
 
@@ -143,9 +150,12 @@ public class UserVerificationServiceTests
         // Arrange
         var adminId = Guid.NewGuid();
         var verificationId = Guid.NewGuid();
-        var verification = new UserVerification { Id = verificationId, Status = "Pending" };
+        var userId = Guid.NewGuid();
+        var user = new User { Id = userId, VerificationStatusId = UserVerificationStatus.Pending };
+        var verification = new UserVerification { Id = verificationId, UserId = userId, Status = "Pending" };
 
         _mockVerificationRepository.Setup(r => r.GetByIdAsync(verificationId)).ReturnsAsync(verification);
+        _mockUserRepository.Setup(r => r.GetByIdAsync(userId)).ReturnsAsync(user);
 
         var verifyDto = new VerifyRequestDto { Remarks = "Invalid docs" };
 
@@ -156,8 +166,10 @@ public class UserVerificationServiceTests
         Assert.That(result.Status, Is.EqualTo("Rejected"));
         Assert.That(result.VerifiedBy, Is.EqualTo(adminId));
         Assert.That(result.Remarks, Is.EqualTo("Invalid docs"));
+        Assert.That(user.VerificationStatusId, Is.EqualTo(UserVerificationStatus.Rejected));
 
         _mockVerificationRepository.Verify(r => r.UpdateAsync(verification), Times.Once);
+        _mockUserRepository.Verify(r => r.UpdateAsync(user), Times.Once);
         _mockUnitOfWork.Verify(u => u.SaveChangesAsync(), Times.Once);
     }
 

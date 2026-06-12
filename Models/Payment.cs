@@ -32,4 +32,14 @@ public partial class Payment
     public virtual PaymentMethod? PaymentMethod { get; set; }
 
     public virtual PaymentStatus? Status { get; set; }
+
+    /// <summary>
+    /// Gets or sets the date and time when the payment was last updated.
+    /// </summary>
+    public DateTime? UpdatedAt { get; set; }
+
+    /// <summary>
+    /// Gets or sets the date and time when the payment was soft deleted.
+    /// </summary>
+    public DateTime? DeletedAt { get; set; }
 }

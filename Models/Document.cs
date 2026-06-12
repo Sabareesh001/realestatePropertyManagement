@@ -27,4 +27,14 @@ public partial class Document
     /// Gets or sets the collection of user verification document mappings associated with this document.
     /// </summary>
     public virtual ICollection<UserVerificationDocument> UserVerificationDocuments { get; set; } = new List<UserVerificationDocument>();
+
+    /// <summary>
+    /// Gets or sets the date and time when the document was last updated.
+    /// </summary>
+    public DateTime? UpdatedAt { get; set; }
+
+    /// <summary>
+    /// Gets or sets the date and time when the document was soft deleted.
+    /// </summary>
+    public DateTime? DeletedAt { get; set; }
 }

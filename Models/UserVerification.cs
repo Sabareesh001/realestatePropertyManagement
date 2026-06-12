@@ -9,6 +9,26 @@ namespace propertyManagement.Models;
 public partial class UserVerification
 {
     /// <summary>
+    /// Status indicating that a verification request is pending review.
+    /// </summary>
+    public const string StatusPending = "Pending";
+
+    /// <summary>
+    /// Status indicating that the user's verification has been approved.
+    /// </summary>
+    public const string StatusVerified = "Verified";
+
+    /// <summary>
+    /// Status indicating that the verification request was rejected.
+    /// </summary>
+    public const string StatusRejected = "Rejected";
+
+    /// <summary>
+    /// Status indicating that the user is unverified.
+    /// </summary>
+    public const string StatusUnverified = "Unverified";
+
+    /// <summary>
     /// Gets or sets the unique identifier for the user verification record.
     /// </summary>
     public Guid Id { get; set; } = Guid.NewGuid();
@@ -19,9 +39,9 @@ public partial class UserVerification
     public Guid UserId { get; set; }
 
     /// <summary>
-    /// Gets or sets the status of the verification (e.g., "Pending", "Verified", "Rejected").
+    /// Gets or sets the status of the verification.
     /// </summary>
-    public string Status { get; set; } = "Pending";
+    public string Status { get; set; } = StatusPending;
 
     /// <summary>
     /// Gets or sets optional remarks or rejection reason from the administrator.
@@ -36,7 +56,7 @@ public partial class UserVerification
     /// <summary>
     /// Gets or sets the timestamp when the verification request was created.
     /// </summary>
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime CreatedAt { get; set; } = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified);
 
     /// <summary>
     /// Gets or sets the timestamp when the verification request was last updated.
@@ -57,4 +77,9 @@ public partial class UserVerification
     /// Gets or sets the collection of documents associated with this verification.
     /// </summary>
     public virtual ICollection<UserVerificationDocument> UserVerificationDocuments { get; set; } = new List<UserVerificationDocument>();
+
+    /// <summary>
+    /// Gets or sets the date and time when the user verification was soft deleted.
+    /// </summary>
+    public DateTime? DeletedAt { get; set; }
 }

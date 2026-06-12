@@ -141,6 +141,10 @@ namespace propertyManagement.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
 
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
+
                     b.Property<string>("IfscCode")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -177,6 +181,10 @@ namespace propertyManagement.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
 
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
+
                     b.Property<string>("Desc")
                         .HasColumnType("text")
                         .HasColumnName("desc");
@@ -188,6 +196,10 @@ namespace propertyManagement.Migrations
                     b.Property<int?>("StatusId")
                         .HasColumnType("integer")
                         .HasColumnName("status_id");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
                         .HasName("charges_pkey");
@@ -231,9 +243,21 @@ namespace propertyManagement.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
+
                     b.Property<string>("Name")
                         .HasColumnType("character varying")
                         .HasColumnName("name");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
                         .HasName("charge_statuses_pkey");
@@ -253,9 +277,21 @@ namespace propertyManagement.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
+
                     b.Property<string>("Name")
                         .HasColumnType("character varying")
                         .HasColumnName("name");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
                         .HasName("charge_types_pkey");
@@ -275,6 +311,14 @@ namespace propertyManagement.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
+
                     b.Property<int?>("DistrictId")
                         .HasColumnType("integer")
                         .HasColumnName("district_id");
@@ -283,12 +327,284 @@ namespace propertyManagement.Migrations
                         .HasColumnType("character varying")
                         .HasColumnName("name");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
+
                     b.HasKey("Id")
                         .HasName("cities_pkey");
 
                     b.HasIndex("DistrictId");
 
                     b.ToTable("cities", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 1,
+                            Name = "Ariyalur"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 2,
+                            Name = "Chengalpattu"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 3,
+                            Name = "Chennai"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 4,
+                            Name = "Coimbatore"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 5,
+                            Name = "Cuddalore"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 6,
+                            Name = "Dharmapuri"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 7,
+                            Name = "Dindigul"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 8,
+                            Name = "Erode"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 9,
+                            Name = "Kallakurichi"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 10,
+                            Name = "Kanchipuram"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 11,
+                            Name = "Nagercoil"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 12,
+                            Name = "Karur"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 13,
+                            Name = "Krishnagiri"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 14,
+                            Name = "Madurai"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 15,
+                            Name = "Mayiladuthurai"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 16,
+                            Name = "Nagapattinam"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 17,
+                            Name = "Namakkal"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 18,
+                            Name = "Udhagamandalam"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 19,
+                            Name = "Perambalur"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 20,
+                            Name = "Pudukkottai"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 21,
+                            Name = "Ramanathapuram"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 22,
+                            Name = "Ranipet"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 23,
+                            Name = "Salem"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 24,
+                            Name = "Sivaganga"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 25,
+                            Name = "Tenkasi"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 26,
+                            Name = "Thanjavur"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 27,
+                            Name = "Theni"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 28,
+                            Name = "Thoothukudi"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 29,
+                            Name = "Tiruchirappalli"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 30,
+                            Name = "Tirunelveli"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 31,
+                            Name = "Tirupattur"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 32,
+                            Name = "Tiruppur"
+                        },
+                        new
+                        {
+                            Id = 33,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 33,
+                            Name = "Tiruvallur"
+                        },
+                        new
+                        {
+                            Id = 34,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 34,
+                            Name = "Tiruvannamalai"
+                        },
+                        new
+                        {
+                            Id = 35,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 35,
+                            Name = "Tiruvarur"
+                        },
+                        new
+                        {
+                            Id = 36,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 36,
+                            Name = "Vellore"
+                        },
+                        new
+                        {
+                            Id = 37,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 37,
+                            Name = "Viluppuram"
+                        },
+                        new
+                        {
+                            Id = 38,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 38,
+                            Name = "Virudhunagar"
+                        });
                 });
 
             modelBuilder.Entity("propertyManagement.Models.Complaint", b =>
@@ -301,6 +617,14 @@ namespace propertyManagement.Migrations
                     b.Property<int?>("ComplaintTypeId")
                         .HasColumnType("integer")
                         .HasColumnName("complaint_type_id");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
 
                     b.Property<string>("Description")
                         .HasColumnType("text")
@@ -335,6 +659,10 @@ namespace propertyManagement.Migrations
                         .HasColumnType("character varying(200)")
                         .HasColumnName("title");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
+
                     b.HasKey("Id")
                         .HasName("complaints_pkey");
 
@@ -362,9 +690,21 @@ namespace propertyManagement.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
+
                     b.Property<string>("Name")
                         .HasColumnType("character varying")
                         .HasColumnName("name");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
                         .HasName("complaint_priorities_pkey");
@@ -384,9 +724,21 @@ namespace propertyManagement.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
+
                     b.Property<string>("Name")
                         .HasColumnType("character varying")
                         .HasColumnName("name");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
                         .HasName("complaint_statuses_pkey");
@@ -406,9 +758,21 @@ namespace propertyManagement.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
+
                     b.Property<string>("Name")
                         .HasColumnType("character varying")
                         .HasColumnName("name");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
                         .HasName("complaint_types_pkey");
@@ -428,9 +792,21 @@ namespace propertyManagement.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
+
                     b.Property<string>("Name")
                         .HasColumnType("character varying")
                         .HasColumnName("name");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
                         .HasName("countries_pkey");
@@ -439,6 +815,14 @@ namespace propertyManagement.Migrations
                         .IsUnique();
 
                     b.ToTable("countries", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "India"
+                        });
                 });
 
             modelBuilder.Entity("propertyManagement.Models.Currency", b =>
@@ -455,10 +839,22 @@ namespace propertyManagement.Migrations
                         .HasColumnType("character varying(10)")
                         .HasColumnName("code");
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
+
                     b.Property<string>("Name")
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)")
                         .HasColumnName("name");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
                         .HasName("currencies_pkey");
@@ -478,6 +874,14 @@ namespace propertyManagement.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
+
                     b.Property<string>("Name")
                         .HasColumnType("character varying")
                         .HasColumnName("name");
@@ -486,12 +890,284 @@ namespace propertyManagement.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("state_id");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
+
                     b.HasKey("Id")
                         .HasName("districts_pkey");
 
                     b.HasIndex("StateId");
 
                     b.ToTable("districts", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Ariyalur",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Chengalpattu",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Chennai",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Coimbatore",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Cuddalore",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Dharmapuri",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Dindigul",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Erode",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Kallakurichi",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Kanchipuram",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Kanyakumari",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Karur",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Krishnagiri",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Madurai",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Mayiladuthurai",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Nagapattinam",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Namakkal",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Nilgiris",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Perambalur",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Pudukkottai",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Ramanathapuram",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Ranipet",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 23,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Salem",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 24,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Sivaganga",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 25,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tenkasi",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 26,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Thanjavur",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 27,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Theni",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 28,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Thoothukudi",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 29,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tiruchirappalli",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 30,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tirunelveli",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 31,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tirupattur",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 32,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tiruppur",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 33,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tiruvallur",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 34,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tiruvannamalai",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 35,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tiruvarur",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 36,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Vellore",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 37,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Viluppuram",
+                            StateId = 1
+                        },
+                        new
+                        {
+                            Id = 38,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Virudhunagar",
+                            StateId = 1
+                        });
                 });
 
             modelBuilder.Entity("propertyManagement.Models.Document", b =>
@@ -505,6 +1181,10 @@ namespace propertyManagement.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
 
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
+
                     b.Property<string>("DocumentNumber")
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)")
@@ -517,6 +1197,10 @@ namespace propertyManagement.Migrations
                     b.Property<string>("DocumentUrl")
                         .HasColumnType("text")
                         .HasColumnName("document_url");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
                         .HasName("documents_pkey");
@@ -535,10 +1219,22 @@ namespace propertyManagement.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
+
                     b.Property<string>("Name")
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)")
                         .HasColumnName("name");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
                         .HasName("document_types_pkey");
@@ -547,6 +1243,32 @@ namespace propertyManagement.Migrations
                         .IsUnique();
 
                     b.ToTable("document_types", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Pan card"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Property Deed"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Salary Slip"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Lease Agreement"
+                        });
                 });
 
             modelBuilder.Entity("propertyManagement.Models.Lease", b =>
@@ -555,6 +1277,14 @@ namespace propertyManagement.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
 
                     b.Property<DateOnly?>("EndDate")
                         .HasColumnType("date")
@@ -590,6 +1320,10 @@ namespace propertyManagement.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("tenant_id");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
+
                     b.Property<decimal?>("UpfrontPayment")
                         .HasPrecision(12, 2)
                         .HasColumnType("numeric(12,2)")
@@ -619,6 +1353,10 @@ namespace propertyManagement.Migrations
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
 
                     b.Property<DateOnly?>("EndDate")
                         .HasColumnType("date")
@@ -658,6 +1396,10 @@ namespace propertyManagement.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("tenant_id");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
+
                     b.Property<decimal?>("UpfrontPayment")
                         .HasPrecision(12, 2)
                         .HasColumnType("numeric(12,2)")
@@ -686,9 +1428,21 @@ namespace propertyManagement.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
+
                     b.Property<string>("Name")
                         .HasColumnType("character varying")
                         .HasColumnName("name");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
                         .HasName("lease_statuses_pkey");
@@ -705,6 +1459,14 @@ namespace propertyManagement.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("user_id");
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
+
                     b.Property<string>("Gstin")
                         .HasMaxLength(15)
                         .HasColumnType("character varying(15)")
@@ -718,6 +1480,10 @@ namespace propertyManagement.Migrations
                     b.Property<int?>("OwnerTypeId")
                         .HasColumnType("integer")
                         .HasColumnName("owner_type_id");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("UserId")
                         .HasName("owner_profiles_pkey");
@@ -736,10 +1502,22 @@ namespace propertyManagement.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
+
                     b.Property<string>("Name")
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)")
                         .HasColumnName("name");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
                         .HasName("owner_types_pkey");
@@ -770,6 +1548,10 @@ namespace propertyManagement.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("currency_id");
 
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
+
                     b.Property<DateTime?>("PaidAt")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("paid_at");
@@ -789,6 +1571,10 @@ namespace propertyManagement.Migrations
                     b.Property<string>("TransactionRef")
                         .HasColumnType("character varying")
                         .HasColumnName("transaction_ref");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
                         .HasName("payments_pkey");
@@ -862,9 +1648,21 @@ namespace propertyManagement.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
+
                     b.Property<string>("Name")
                         .HasColumnType("character varying")
                         .HasColumnName("name");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
                         .HasName("payment_statuses_pkey");
@@ -884,6 +1682,14 @@ namespace propertyManagement.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
+
                     b.Property<string>("Description")
                         .HasColumnType("text")
                         .HasColumnName("description");
@@ -893,6 +1699,10 @@ namespace propertyManagement.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)")
                         .HasColumnName("name");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
                         .HasName("profile_types_pkey");
@@ -916,6 +1726,10 @@ namespace propertyManagement.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)")
                         .HasColumnName("address_line");
+
+                    b.Property<int?>("AvailabilityStatusId")
+                        .HasColumnType("integer")
+                        .HasColumnName("availability_status_id");
 
                     b.Property<int?>("CityId")
                         .HasColumnType("integer")
@@ -952,14 +1766,14 @@ namespace propertyManagement.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("owner_id");
 
+                    b.Property<string>("Remarks")
+                        .HasColumnType("text")
+                        .HasColumnName("remarks");
+
                     b.Property<decimal>("SecurityDeposit")
                         .HasPrecision(12, 2)
                         .HasColumnType("numeric(12,2)")
                         .HasColumnName("security_deposit");
-
-                    b.Property<int?>("StatusId")
-                        .HasColumnType("integer")
-                        .HasColumnName("status_id");
 
                     b.Property<string>("ThumbnailImgUrl")
                         .HasMaxLength(255)
@@ -980,6 +1794,10 @@ namespace propertyManagement.Migrations
                         .HasColumnType("numeric(12,2)")
                         .HasColumnName("upfront_payment");
 
+                    b.Property<int?>("VerificationStatusId")
+                        .HasColumnType("integer")
+                        .HasColumnName("verification_status_id");
+
                     b.Property<Guid?>("VerifiedBy")
                         .HasColumnType("uuid")
                         .HasColumnName("verified_by");
@@ -987,18 +1805,20 @@ namespace propertyManagement.Migrations
                     b.HasKey("Id")
                         .HasName("properties_pkey");
 
+                    b.HasIndex("AvailabilityStatusId");
+
                     b.HasIndex("CityId");
 
                     b.HasIndex("OwnerId");
 
-                    b.HasIndex("StatusId");
+                    b.HasIndex("VerificationStatusId");
 
                     b.HasIndex("VerifiedBy");
 
                     b.ToTable("properties", (string)null);
                 });
 
-            modelBuilder.Entity("propertyManagement.Models.PropertyStatus", b =>
+            modelBuilder.Entity("propertyManagement.Models.PropertyAvailabilityStatus", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1007,18 +1827,111 @@ namespace propertyManagement.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
+
                     b.Property<string>("Name")
                         .HasMaxLength(30)
                         .HasColumnType("character varying(30)")
                         .HasColumnName("name");
 
-                    b.HasKey("Id")
-                        .HasName("property_statuses_pkey");
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
-                    b.HasIndex(new[] { "Name" }, "property_statuses_name_key")
+                    b.HasKey("Id")
+                        .HasName("property_availability_statuses_pkey");
+
+                    b.HasIndex(new[] { "Name" }, "property_availability_statuses_name_key")
                         .IsUnique();
 
-                    b.ToTable("property_statuses", (string)null);
+                    b.ToTable("property_availability_statuses", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Available"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Occupied"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Unavailable"
+                        });
+                });
+
+            modelBuilder.Entity("propertyManagement.Models.PropertyVerificationStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)")
+                        .HasColumnName("name");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("property_verification_statuses_pkey");
+
+                    b.HasIndex(new[] { "Name" }, "property_verification_statuses_name_key")
+                        .IsUnique();
+
+                    b.ToTable("property_verification_statuses", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Draft"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Submitted"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Verified"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Rejected"
+                        });
                 });
 
             modelBuilder.Entity("propertyManagement.Models.ProposalStatus", b =>
@@ -1030,9 +1943,21 @@ namespace propertyManagement.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
+
                     b.Property<string>("Name")
                         .HasColumnType("character varying")
                         .HasColumnName("name");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
                         .HasName("proposal_statuses_pkey");
@@ -1077,6 +2002,26 @@ namespace propertyManagement.Migrations
                         .IsUnique();
 
                     b.ToTable("roles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tenant"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Owner"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("propertyManagement.Models.State", b =>
@@ -1092,9 +2037,21 @@ namespace propertyManagement.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("country_id");
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
+
                     b.Property<string>("Name")
                         .HasColumnType("character varying")
                         .HasColumnName("name");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
                         .HasName("states_pkey");
@@ -1102,6 +2059,15 @@ namespace propertyManagement.Migrations
                     b.HasIndex("CountryId");
 
                     b.ToTable("states", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CountryId = 1,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tamil Nadu"
+                        });
                 });
 
             modelBuilder.Entity("propertyManagement.Models.TenantProfile", b =>
@@ -1109,6 +2075,14 @@ namespace propertyManagement.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid")
                         .HasColumnName("user_id");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
 
                     b.Property<string>("EmergencyContactName")
                         .HasMaxLength(100)
@@ -1130,6 +2104,10 @@ namespace propertyManagement.Migrations
                         .HasColumnType("character varying(100)")
                         .HasColumnName("occupation");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
+
                     b.HasKey("UserId")
                         .HasName("tenant_profiles_pkey");
 
@@ -1142,6 +2120,12 @@ namespace propertyManagement.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
+
+                    b.Property<int?>("ActiveStatusId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(1)
+                        .HasColumnName("active_status_id");
 
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("timestamp without time zone")
@@ -1189,13 +2173,78 @@ namespace propertyManagement.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("updated_at");
 
+                    b.Property<int?>("VerificationStatusId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(1)
+                        .HasColumnName("verification_status_id");
+
                     b.HasKey("Id")
                         .HasName("users_pkey");
+
+                    b.HasIndex("ActiveStatusId");
+
+                    b.HasIndex("VerificationStatusId");
 
                     b.HasIndex(new[] { "Email" }, "users_email_key")
                         .IsUnique();
 
                     b.ToTable("users", (string)null);
+                });
+
+            modelBuilder.Entity("propertyManagement.Models.UserActiveStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)")
+                        .HasColumnName("name");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("user_active_statuses_pkey");
+
+                    b.HasIndex(new[] { "Name" }, "user_active_statuses_name_key")
+                        .IsUnique();
+
+                    b.ToTable("user_active_statuses", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Active"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Inactive"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Suspended"
+                        });
                 });
 
             modelBuilder.Entity("propertyManagement.Models.UserBankAccount", b =>
@@ -1225,6 +2274,10 @@ namespace propertyManagement.Migrations
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
 
                     b.Property<int>("ProfileTypeId")
                         .HasColumnType("integer")
@@ -1295,6 +2348,10 @@ namespace propertyManagement.Migrations
                         .HasColumnName("created_at")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
+
                     b.Property<string>("Remarks")
                         .HasColumnType("text")
                         .HasColumnName("remarks");
@@ -1326,7 +2383,10 @@ namespace propertyManagement.Migrations
 
                     b.HasIndex("VerifiedBy");
 
-                    b.ToTable("user_verifications", (string)null);
+                    b.ToTable("user_verifications", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_UserVerification_Status", "status IN ('Pending', 'Verified', 'Rejected')");
+                        });
                 });
 
             modelBuilder.Entity("propertyManagement.Models.UserVerificationDocument", b =>
@@ -1345,6 +2405,67 @@ namespace propertyManagement.Migrations
                     b.HasIndex("DocumentId");
 
                     b.ToTable("user_verification_documents", (string)null);
+                });
+
+            modelBuilder.Entity("propertyManagement.Models.UserVerificationStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)")
+                        .HasColumnName("name");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("user_verification_statuses_pkey");
+
+                    b.HasIndex(new[] { "Name" }, "user_verification_statuses_name_key")
+                        .IsUnique();
+
+                    b.ToTable("user_verification_statuses", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Unverified"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Pending"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Verified"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Rejected"
+                        });
                 });
 
             modelBuilder.Entity("LeaseCharge", b =>
@@ -1646,6 +2767,11 @@ namespace propertyManagement.Migrations
 
             modelBuilder.Entity("propertyManagement.Models.Property", b =>
                 {
+                    b.HasOne("propertyManagement.Models.PropertyAvailabilityStatus", "AvailabilityStatus")
+                        .WithMany("Properties")
+                        .HasForeignKey("AvailabilityStatusId")
+                        .HasConstraintName("properties_availability_status_id_fkey");
+
                     b.HasOne("propertyManagement.Models.City", "City")
                         .WithMany("Properties")
                         .HasForeignKey("CityId")
@@ -1657,21 +2783,23 @@ namespace propertyManagement.Migrations
                         .IsRequired()
                         .HasConstraintName("properties_owner_id_fkey");
 
-                    b.HasOne("propertyManagement.Models.PropertyStatus", "Status")
+                    b.HasOne("propertyManagement.Models.PropertyVerificationStatus", "VerificationStatus")
                         .WithMany("Properties")
-                        .HasForeignKey("StatusId")
-                        .HasConstraintName("properties_status_id_fkey");
+                        .HasForeignKey("VerificationStatusId")
+                        .HasConstraintName("properties_verification_status_id_fkey");
 
                     b.HasOne("propertyManagement.Models.User", "VerifiedByNavigation")
                         .WithMany("PropertiesVerified")
                         .HasForeignKey("VerifiedBy")
                         .HasConstraintName("properties_verified_by_fkey");
 
+                    b.Navigation("AvailabilityStatus");
+
                     b.Navigation("City");
 
                     b.Navigation("Owner");
 
-                    b.Navigation("Status");
+                    b.Navigation("VerificationStatus");
 
                     b.Navigation("VerifiedByNavigation");
                 });
@@ -1695,6 +2823,23 @@ namespace propertyManagement.Migrations
                         .HasConstraintName("tenant_profiles_user_id_fkey");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("propertyManagement.Models.User", b =>
+                {
+                    b.HasOne("propertyManagement.Models.UserActiveStatus", "ActiveStatus")
+                        .WithMany("Users")
+                        .HasForeignKey("ActiveStatusId")
+                        .HasConstraintName("users_active_status_id_fkey");
+
+                    b.HasOne("propertyManagement.Models.UserVerificationStatus", "VerificationStatus")
+                        .WithMany("Users")
+                        .HasForeignKey("VerificationStatusId")
+                        .HasConstraintName("users_verification_status_id_fkey");
+
+                    b.Navigation("ActiveStatus");
+
+                    b.Navigation("VerificationStatus");
                 });
 
             modelBuilder.Entity("propertyManagement.Models.UserBankAccount", b =>
@@ -1901,7 +3046,12 @@ namespace propertyManagement.Migrations
                     b.Navigation("Leases");
                 });
 
-            modelBuilder.Entity("propertyManagement.Models.PropertyStatus", b =>
+            modelBuilder.Entity("propertyManagement.Models.PropertyAvailabilityStatus", b =>
+                {
+                    b.Navigation("Properties");
+                });
+
+            modelBuilder.Entity("propertyManagement.Models.PropertyVerificationStatus", b =>
                 {
                     b.Navigation("Properties");
                 });
@@ -1950,6 +3100,11 @@ namespace propertyManagement.Migrations
                     b.Navigation("VerificationsPerformed");
                 });
 
+            modelBuilder.Entity("propertyManagement.Models.UserActiveStatus", b =>
+                {
+                    b.Navigation("Users");
+                });
+
             modelBuilder.Entity("propertyManagement.Models.UserProfile", b =>
                 {
                     b.Navigation("OwnerProfile");
@@ -1960,6 +3115,11 @@ namespace propertyManagement.Migrations
             modelBuilder.Entity("propertyManagement.Models.UserVerification", b =>
                 {
                     b.Navigation("UserVerificationDocuments");
+                });
+
+            modelBuilder.Entity("propertyManagement.Models.UserVerificationStatus", b =>
+                {
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

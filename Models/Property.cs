@@ -13,7 +13,15 @@ public partial class Property
 
     public string? Description { get; set; }
 
-    public int? StatusId { get; set; }
+    /// <summary>
+    /// Gets or sets the verification status identifier of the property.
+    /// </summary>
+    public int? VerificationStatusId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the availability status identifier of the property.
+    /// </summary>
+    public int? AvailabilityStatusId { get; set; }
 
     public int? CityId { get; set; }
 
@@ -39,6 +47,11 @@ public partial class Property
 
     public Guid? VerifiedBy { get; set; }
 
+    /// <summary>
+    /// Gets or sets optional verification or rejection remarks from the administrator.
+    /// </summary>
+    public string? Remarks { get; set; }
+
     public virtual City? City { get; set; }
 
     public virtual ICollection<Complaint> Complaints { get; set; } = new List<Complaint>();
@@ -49,7 +62,15 @@ public partial class Property
 
     public virtual User Owner { get; set; } = null!;
 
-    public virtual PropertyStatus? Status { get; set; }
+    /// <summary>
+    /// Gets or sets the verification status associated with the property.
+    /// </summary>
+    public virtual PropertyVerificationStatus? VerificationStatus { get; set; }
+
+    /// <summary>
+    /// Gets or sets the availability status associated with the property.
+    /// </summary>
+    public virtual PropertyAvailabilityStatus? AvailabilityStatus { get; set; }
 
     public virtual User? VerifiedByNavigation { get; set; }
 

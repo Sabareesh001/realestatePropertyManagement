@@ -48,8 +48,9 @@ public class PropertyService : IPropertyService
             UpfrontPayment = dto.UpfrontPayment,
             SecurityDeposit = dto.SecurityDeposit,
             ThumbnailImgUrl = dto.ThumbnailImgUrl,
-            StatusId = 1, // Default status
-            CreatedAt = DateTime.UtcNow
+            VerificationStatusId = PropertyVerificationStatus.Draft,
+            AvailabilityStatusId = PropertyAvailabilityStatus.Unavailable,
+            CreatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified)
         };
 
         await _unitOfWork.Properties.CreateAsync(property);
@@ -67,9 +68,11 @@ public class PropertyService : IPropertyService
             UpfrontPayment = property.UpfrontPayment,
             SecurityDeposit = property.SecurityDeposit,
             ThumbnailImgUrl = property.ThumbnailImgUrl,
-            StatusId = property.StatusId,
+            VerificationStatusId = property.VerificationStatusId,
+            AvailabilityStatusId = property.AvailabilityStatusId,
             CreatedAt = property.CreatedAt,
-            VerifiedBy = property.VerifiedBy
+            VerifiedBy = property.VerifiedBy,
+            Remarks = property.Remarks
         };
     }
 }

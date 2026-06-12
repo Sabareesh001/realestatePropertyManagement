@@ -39,7 +39,7 @@ public class BankAccountService : IBankAccountService
             AccountNumber = dto.AccountNumber,
             AccountHolderName = dto.AccountHolderName,
             IfscCode = dto.IfscCode,
-            CreatedAt = DateTime.UtcNow
+            CreatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified)
         };
 
         await _unitOfWork.BankAccounts.CreateAsync(bankAccount);
@@ -91,7 +91,7 @@ public class BankAccountService : IBankAccountService
         bankAccount.AccountNumber = dto.AccountNumber;
         bankAccount.AccountHolderName = dto.AccountHolderName;
         bankAccount.IfscCode = dto.IfscCode;
-        bankAccount.UpdatedAt = DateTime.UtcNow;
+        bankAccount.UpdatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified);
 
         await _unitOfWork.BankAccounts.UpdateAsync(bankAccount);
         await _unitOfWork.SaveChangesAsync();

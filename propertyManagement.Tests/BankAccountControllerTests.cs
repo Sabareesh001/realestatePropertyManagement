@@ -62,7 +62,7 @@ public class BankAccountControllerTests
             AccountNumber = "123",
             AccountHolderName = "John",
             IfscCode = "C1",
-            CreatedAt = DateTime.UtcNow
+            CreatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified)
         };
 
         _mockBankAccountService.Setup(s => s.CreateBankAccountAsync(userId, dto)).ReturnsAsync(responseDto);
@@ -121,7 +121,7 @@ public class BankAccountControllerTests
     }
 
     [Test]
-    public async Task GetBankAccountById_UnauthorizedAccess_ReturnsForbid()
+    public void GetBankAccountById_UnauthorizedAccess_ThrowsUnauthorizedAccessException()
     {
         // Arrange
         var userId = Guid.NewGuid();
@@ -131,15 +131,12 @@ public class BankAccountControllerTests
         _mockBankAccountService.Setup(s => s.GetBankAccountByIdAsync(userId, bankAccountId))
             .ThrowsAsync(new UnauthorizedAccessException());
 
-        // Act
-        var result = await _controller.GetBankAccountById(bankAccountId);
-
-        // Assert
-        Assert.That(result.Result, Is.InstanceOf<ForbidResult>());
+        // Act & Assert
+        Assert.ThrowsAsync<UnauthorizedAccessException>(async () => await _controller.GetBankAccountById(bankAccountId));
     }
 
     [Test]
-    public async Task GetBankAccountById_NotFound_ReturnsNotFound()
+    public void GetBankAccountById_NotFound_ThrowsKeyNotFoundException()
     {
         // Arrange
         var userId = Guid.NewGuid();
@@ -149,11 +146,8 @@ public class BankAccountControllerTests
         _mockBankAccountService.Setup(s => s.GetBankAccountByIdAsync(userId, bankAccountId))
             .ThrowsAsync(new KeyNotFoundException());
 
-        // Act
-        var result = await _controller.GetBankAccountById(bankAccountId);
-
-        // Assert
-        Assert.That(result.Result, Is.InstanceOf<NotFoundResult>());
+        // Act & Assert
+        Assert.ThrowsAsync<KeyNotFoundException>(async () => await _controller.GetBankAccountById(bankAccountId));
     }
 
     [Test]

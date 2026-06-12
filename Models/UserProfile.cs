@@ -20,4 +20,9 @@ public partial class UserProfile
     public virtual TenantProfile? TenantProfile { get; set; }
 
     public virtual User User { get; set; } = null!;
+
+    /// <summary>
+    /// Gets or sets the date and time when the user profile was soft deleted.
+    /// </summary>
+    public DateTime? DeletedAt { get; set; }
 }

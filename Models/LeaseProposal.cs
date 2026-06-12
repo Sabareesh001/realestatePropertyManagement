@@ -38,4 +38,14 @@ public partial class LeaseProposal
     public virtual ProposalStatus? Status { get; set; }
 
     public virtual User? Tenant { get; set; }
+
+    /// <summary>
+    /// Gets or sets the date and time when the lease proposal was last updated.
+    /// </summary>
+    public DateTime? UpdatedAt { get; set; }
+
+    /// <summary>
+    /// Gets or sets the date and time when the lease proposal was soft deleted.
+    /// </summary>
+    public DateTime? DeletedAt { get; set; }
 }

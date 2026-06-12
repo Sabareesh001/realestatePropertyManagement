@@ -1,0 +1,30 @@
+2026-06-11 19:16:07.006 +05:30 [INF] User profile is available. Using '/Users/sabareesht/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-06-11 19:16:07.089 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-11 19:16:07.090 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-11 19:16:07.090 +05:30 [INF] Hosting environment: Development
+2026-06-11 19:16:07.090 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/realestatePropertyManagement
+2026-06-11 19:16:20.597 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/ - null null
+2026-06-11 19:16:20.620 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-06-11 19:16:20.637 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/ - 404 0 null 40.8307ms
+2026-06-11 19:16:20.638 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5104/, Response status code: 404
+2026-06-11 19:16:46.219 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/ - null null
+2026-06-11 19:16:46.224 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/ - 404 0 null 6.2187ms
+2026-06-11 19:16:46.225 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5104/, Response status code: 404
+2026-06-11 19:16:59.422 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/index.html - null null
+2026-06-11 19:16:59.467 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/index.html - 200 null text/html;charset=utf-8 44.6127ms
+2026-06-11 19:16:59.821 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/swagger-ui-standalone-preset.js - null null
+2026-06-11 19:16:59.825 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/index.css - null null
+2026-06-11 19:16:59.826 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/index.js - null null
+2026-06-11 19:16:59.826 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/swagger-ui.css - null null
+2026-06-11 19:16:59.826 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/index.js - 304 null null 0.6295ms
+2026-06-11 19:16:59.827 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/swagger-ui-bundle.js - null null
+2026-06-11 19:16:59.830 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/index.css - 304 null null 4.6545ms
+2026-06-11 19:16:59.830 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/swagger-ui.css - 304 null null 3.5846ms
+2026-06-11 19:16:59.830 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/swagger-ui-standalone-preset.js - 304 null null 9.2418ms
+2026-06-11 19:16:59.837 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/swagger-ui-bundle.js - 304 null null 10.0712ms
+2026-06-11 19:16:59.940 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/favicon-32x32.png - null null
+2026-06-11 19:16:59.940 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/favicon-16x16.png - null null
+2026-06-11 19:16:59.942 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/favicon-16x16.png - 200 665 image/png 1.973ms
+2026-06-11 19:16:59.942 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/favicon-32x32.png - 200 628 image/png 2.181ms
+2026-06-11 19:16:59.951 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/swagger/v1/swagger.json - null null
+2026-06-11 19:17:00.013 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 62.3321ms

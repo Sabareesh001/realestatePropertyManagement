@@ -19,6 +19,26 @@ public partial class User
 
     public DateOnly DateOfBirth { get; set; }
 
+    /// <summary>
+    /// Gets or sets the verification status identifier of the user.
+    /// </summary>
+    public int? VerificationStatusId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the active status identifier of the user.
+    /// </summary>
+    public int? ActiveStatusId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the verification status associated with this user.
+    /// </summary>
+    public virtual UserVerificationStatus? VerificationStatus { get; set; }
+
+    /// <summary>
+    /// Gets or sets the active status associated with this user.
+    /// </summary>
+    public virtual UserActiveStatus? ActiveStatus { get; set; }
+
     public DateTime? CreatedAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }

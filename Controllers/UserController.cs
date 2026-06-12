@@ -11,7 +11,7 @@ namespace propertyManagement.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]
-public class UserController : ControllerBase
+public class UserController : BaseApiController
 {
     private readonly IUserService _userService;
     private readonly IJwtService _jwtService;
@@ -129,5 +129,33 @@ public class UserController : ControllerBase
     {
         await _userService.DeleteUserAsync(id);
         return Ok(new { message = "User deleted successfully" });
-    }   
+    }
+
+    /// <summary>
+    /// Promotes the currently authenticated user to the Owner role.
+    /// </summary>
+    /// <returns>The updated user details.</returns>
+    /// <response code="200">Successfully assigned Owner role.</response>
+    /// <response code="400">If the user is already an owner.</response>
+    /// <response code="401">If the user is unauthorized.</response>
+    /// <response code="404">If the user is not found.</response>
+    [Authorize]
+    [HttpPost("become-owner")]
+    public async Task<ActionResult<UserResponseDto>> BecomeOwner()
+    {
+        var userId = GetCurrentUserId();
+        var userResponseDto = await _userService.AssignOwnerRoleAsync(userId);
+
+        var token = _jwtService.GenerateToken(userResponseDto);
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.Strict,
+            Expires = DateTime.UtcNow.AddHours(1)
+        };
+        Response.Cookies.Append("jwt_token", token, cookieOptions);
+
+        return Ok(userResponseDto);
+    }
 }

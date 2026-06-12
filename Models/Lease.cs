@@ -38,4 +38,19 @@ public partial class Lease
     public virtual ICollection<Charge> ChargesNavigation { get; set; } = new List<Charge>();
 
     public virtual ICollection<Document> Documents { get; set; } = new List<Document>();
+
+    /// <summary>
+    /// Gets or sets the date and time when the lease was created.
+    /// </summary>
+    public DateTime? CreatedAt { get; set; }
+
+    /// <summary>
+    /// Gets or sets the date and time when the lease was last updated.
+    /// </summary>
+    public DateTime? UpdatedAt { get; set; }
+
+    /// <summary>
+    /// Gets or sets the date and time when the lease was soft deleted.
+    /// </summary>
+    public DateTime? DeletedAt { get; set; }
 }

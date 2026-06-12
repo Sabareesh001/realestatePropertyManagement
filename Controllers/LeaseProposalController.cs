@@ -13,7 +13,7 @@ namespace propertyManagement.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]
-public class LeaseProposalController : ControllerBase
+public class LeaseProposalController : BaseApiController
 {
     private readonly ILeaseProposalService _leaseProposalService;
 
@@ -43,13 +43,4 @@ public class LeaseProposalController : ControllerBase
         return CreatedAtAction(null, result);
     }
 
-    private Guid GetCurrentUserId()
-    {
-        var nameIdentifier = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (string.IsNullOrEmpty(nameIdentifier) || !Guid.TryParse(nameIdentifier, out var userId))
-        {
-            throw new InvalidOperationException("User is not authenticated or user ID claim is missing.");
-        }
-        return userId;
-    }
 }

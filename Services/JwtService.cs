@@ -1,6 +1,8 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Linq;
+using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using propertyManagement.DTOs;
@@ -53,7 +55,17 @@ public class JwtService : IJwtService
             new Claim(ClaimTypes.Surname, user.LastName)
         };
 
-        if (user.Role != null && !string.IsNullOrEmpty(user.Role.Name))
+        if (user.Roles != null && user.Roles.Any())
+        {
+            foreach (var role in user.Roles)
+            {
+                if (!string.IsNullOrEmpty(role.Name))
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, role.Name));
+                }
+            }
+        }
+        else if (user.Role != null && !string.IsNullOrEmpty(user.Role.Name))
         {
             claims.Add(new Claim(ClaimTypes.Role, user.Role.Name));
         }

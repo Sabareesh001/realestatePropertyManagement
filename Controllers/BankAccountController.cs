@@ -14,7 +14,7 @@ namespace propertyManagement.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]
-public class BankAccountController : ControllerBase
+public class BankAccountController : BaseApiController
 {
     private readonly IBankAccountService _bankAccountService;
 
@@ -73,19 +73,8 @@ public class BankAccountController : ControllerBase
     public async Task<ActionResult<BankAccountResponseDto>> GetBankAccountById(Guid id)
     {
         var userId = GetCurrentUserId();
-        try
-        {
-            var result = await _bankAccountService.GetBankAccountByIdAsync(userId, id);
-            return Ok(result);
-        }
-        catch (UnauthorizedAccessException)
-        {
-            return Forbid();
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
+        var result = await _bankAccountService.GetBankAccountByIdAsync(userId, id);
+        return Ok(result);
     }
 
     /// <summary>
@@ -104,19 +93,8 @@ public class BankAccountController : ControllerBase
     public async Task<ActionResult<BankAccountResponseDto>> UpdateBankAccount(Guid id, [FromBody] UpdateBankAccountDto dto)
     {
         var userId = GetCurrentUserId();
-        try
-        {
-            var result = await _bankAccountService.UpdateBankAccountAsync(userId, id, dto);
-            return Ok(result);
-        }
-        catch (UnauthorizedAccessException)
-        {
-            return Forbid();
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
+        var result = await _bankAccountService.UpdateBankAccountAsync(userId, id, dto);
+        return Ok(result);
     }
 
     /// <summary>
@@ -132,28 +110,7 @@ public class BankAccountController : ControllerBase
     public async Task<IActionResult> DeleteBankAccount(Guid id)
     {
         var userId = GetCurrentUserId();
-        try
-        {
-            await _bankAccountService.DeleteBankAccountAsync(userId, id);
-            return NoContent();
-        }
-        catch (UnauthorizedAccessException)
-        {
-            return Forbid();
-        }
-        catch (KeyNotFoundException)
-        {
-            return NoContent();
-        }
-    }
-
-    private Guid GetCurrentUserId()
-    {
-        var nameIdentifier = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (string.IsNullOrEmpty(nameIdentifier) || !Guid.TryParse(nameIdentifier, out var userId))
-        {
-            throw new InvalidOperationException("User is not authenticated or user ID claim is missing.");
-        }
-        return userId;
+        await _bankAccountService.DeleteBankAccountAsync(userId, id);
+        return NoContent();
     }
 }

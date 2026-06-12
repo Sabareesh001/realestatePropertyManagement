@@ -28,4 +28,14 @@ public partial class Charge
     public virtual ICollection<Lease> Leases { get; set; } = new List<Lease>();
 
     public virtual ICollection<Lease> Users { get; set; } = new List<Lease>();
+
+    /// <summary>
+    /// Gets or sets the date and time when the charge was last updated.
+    /// </summary>
+    public DateTime? UpdatedAt { get; set; }
+
+    /// <summary>
+    /// Gets or sets the date and time when the charge was soft deleted.
+    /// </summary>
+    public DateTime? DeletedAt { get; set; }
 }

@@ -116,6 +116,8 @@ public class UserServiceTests
         Assert.That(result.Role.Name, Is.EqualTo(role.Name));
 
         Assert.That(savedUser, Is.Not.Null);
+        Assert.That(savedUser.VerificationStatusId, Is.EqualTo(UserVerificationStatus.Unverified));
+        Assert.That(savedUser.ActiveStatusId, Is.EqualTo(UserActiveStatus.Active));
         Assert.That(BCrypt.Net.BCrypt.Verify(registerDto.Password, savedUser.PasswordHash), Is.True);
 
         _mockUserRepository.Verify(r => r.GetByEmailAsync(registerDto.Email), Times.Once);
@@ -420,6 +422,87 @@ public class UserServiceTests
         // Assert
         _mockUserRepository.Verify(r => r.GetByIdAsync(userId), Times.Once);
         _mockUserRepository.Verify(r => r.DeleteAsync(userId), Times.Once);
+        _mockUnitOfWork.Verify(u => u.SaveChangesAsync(), Times.Once);
+    }
+
+    /// <summary>
+    /// Verifies that AssignOwnerRoleAsync throws KeyNotFoundException when the user does not exist.
+    /// </summary>
+    [Test]
+    public void AssignOwnerRoleAsync_UserNotFound_ThrowsKeyNotFoundException()
+    {
+        // Arrange
+        var userId = Guid.NewGuid();
+        _mockUserRepository.Setup(r => r.GetByIdAsync(userId)).ReturnsAsync((User?)null);
+
+        // Act & Assert
+        var ex = Assert.ThrowsAsync<KeyNotFoundException>(async () =>
+            await _userService.AssignOwnerRoleAsync(userId));
+        Assert.That(ex.Message, Is.EqualTo("User not found"));
+
+        _mockUserRepository.Verify(r => r.GetByIdAsync(userId), Times.Once);
+        _mockUnitOfWork.Verify(u => u.SaveChangesAsync(), Times.Never);
+    }
+
+    /// <summary>
+    /// Verifies that AssignOwnerRoleAsync throws InvalidOperationException when the user is already an owner.
+    /// </summary>
+    [Test]
+    public void AssignOwnerRoleAsync_UserAlreadyOwner_ThrowsInvalidOperationException()
+    {
+        // Arrange
+        var userId = Guid.NewGuid();
+        var user = new User { Id = userId };
+        user.UserRoles.Add(new UserRole { RoleId = Role.Owner }); // Already an Owner
+
+        _mockUserRepository.Setup(r => r.GetByIdAsync(userId)).ReturnsAsync(user);
+
+        // Act & Assert
+        var ex = Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            await _userService.AssignOwnerRoleAsync(userId));
+        Assert.That(ex.Message, Is.EqualTo("User is already an owner."));
+
+        _mockUserRepository.Verify(r => r.GetByIdAsync(userId), Times.Once);
+        _mockUnitOfWork.Verify(u => u.SaveChangesAsync(), Times.Never);
+    }
+
+    /// <summary>
+    /// Verifies that AssignOwnerRoleAsync successfully appends the Owner role to the user's role collection.
+    /// </summary>
+    [Test]
+    public async Task AssignOwnerRoleAsync_ValidUser_AppendsOwnerRoleAndSaves()
+    {
+        // Arrange
+        var userId = Guid.NewGuid();
+        var user = new User { Id = userId, Email = "test@example.com", FirstName = "John", LastName = "Doe" };
+        var tenantRole = new Role { Id = Role.Tenant, Name = "Tenant" };
+        var ownerRole = new Role { Id = Role.Owner, Name = "Owner" };
+
+        user.UserRoles.Add(new UserRole { RoleId = Role.Tenant, Role = tenantRole });
+
+        _mockUserRepository.Setup(r => r.GetByIdAsync(userId)).ReturnsAsync(user);
+        _mockRoleRepository.Setup(r => r.GetByIdAsync(Role.Owner)).ReturnsAsync(ownerRole);
+        _mockUserRepository.Setup(r => r.UpdateAsync(user)).Returns(Task.CompletedTask);
+        _mockUnitOfWork.Setup(u => u.SaveChangesAsync()).ReturnsAsync(1);
+
+        // Act
+        var result = await _userService.AssignOwnerRoleAsync(userId);
+
+        // Assert
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.Id, Is.EqualTo(userId));
+        
+        // Ensure both Tenant and Owner roles are present
+        Assert.That(result.Roles, Has.Count.EqualTo(2));
+        var rolesList = result.Roles.ToList();
+        Assert.That(rolesList[0].Id, Is.EqualTo(Role.Tenant));
+        Assert.That(rolesList[0].Name, Is.EqualTo("Tenant"));
+        Assert.That(rolesList[1].Id, Is.EqualTo(Role.Owner));
+        Assert.That(rolesList[1].Name, Is.EqualTo("Owner"));
+
+        _mockUserRepository.Verify(r => r.GetByIdAsync(userId), Times.Once);
+        _mockRoleRepository.Verify(r => r.GetByIdAsync(Role.Owner), Times.Once);
+        _mockUserRepository.Verify(r => r.UpdateAsync(user), Times.Once);
         _mockUnitOfWork.Verify(u => u.SaveChangesAsync(), Times.Once);
     }
 }
