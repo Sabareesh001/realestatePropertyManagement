@@ -3638,3 +3638,159 @@ RETURNING id;
 2026-06-12 20:09:02.687 +05:30 [INF] Executed action propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement) in 15.2522ms
 2026-06-12 20:09:02.687 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement)'
 2026-06-12 20:09:02.687 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/Property - 201 null application/json; charset=utf-8 17.718ms
+2026-06-12 20:18:14.651 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/Property - application/json 240
+2026-06-12 20:18:14.662 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement)'
+2026-06-12 20:18:14.663 +05:30 [INF] Route matched with {action = "CreateProperty", controller = "Property"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.PropertyResponseDto]] CreateProperty(propertyManagement.DTOs.CreatePropertyDto) on controller propertyManagement.Controllers.PropertyController (propertyManagement).
+2026-06-12 20:18:14.700 +05:30 [INF] Executed DbCommand (6ms) [Parameters=[@userId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM user_verifications AS u
+    WHERE u.user_id = @userId AND u.status = 'Verified')
+2026-06-12 20:18:14.715 +05:30 [INF] Executed DbCommand (13ms) [Parameters=[@p0='?', @p1='?' (DbType = Int32), @p2='?' (DbType = Int32), @p3='?' (DbType = DateTime2), @p4='?' (DbType = DateTime2), @p5='?', @p6='?' (DbType = Decimal), @p7='?' (DbType = Decimal), @p8='?' (DbType = Decimal), @p9='?' (DbType = Guid), @p10='?', @p11='?' (DbType = Decimal), @p12='?', @p13='?', @p14='?' (DbType = DateTime2), @p15='?' (DbType = Decimal), @p16='?' (DbType = Int32), @p17='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO properties (address_line, availability_status_id, city_id, created_at, deleted_at, description, latitude, longitude, monthly_rent, owner_id, remarks, security_deposit, thumbnail_img_url, title, updated_at, upfront_payment, verification_status_id, verified_by)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17)
+RETURNING id;
+2026-06-12 20:18:14.716 +05:30 [INF] Executing CreatedAtActionResult, writing value of type 'propertyManagement.DTOs.PropertyResponseDto'.
+2026-06-12 20:18:14.717 +05:30 [INF] Executed action propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement) in 53.5591ms
+2026-06-12 20:18:14.717 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement)'
+2026-06-12 20:18:14.717 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/Property - 201 null application/json; charset=utf-8 65.4585ms
+2026-06-12 20:27:35.573 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/Property - application/json 240
+2026-06-12 20:27:35.579 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement)'
+2026-06-12 20:27:35.580 +05:30 [INF] Route matched with {action = "CreateProperty", controller = "Property"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.PropertyResponseDto]] CreateProperty(propertyManagement.DTOs.CreatePropertyDto) on controller propertyManagement.Controllers.PropertyController (propertyManagement).
+2026-06-12 20:27:35.615 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[@userId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM user_verifications AS u
+    WHERE u.user_id = @userId AND u.status = 'Verified')
+2026-06-12 20:27:35.651 +05:30 [INF] Executed DbCommand (28ms) [Parameters=[@p0='?', @p1='?' (DbType = Int32), @p2='?' (DbType = Int32), @p3='?' (DbType = DateTime2), @p4='?' (DbType = DateTime2), @p5='?', @p6='?' (DbType = Decimal), @p7='?' (DbType = Decimal), @p8='?' (DbType = Decimal), @p9='?' (DbType = Guid), @p10='?', @p11='?' (DbType = Decimal), @p12='?', @p13='?', @p14='?' (DbType = DateTime2), @p15='?' (DbType = Decimal), @p16='?' (DbType = Int32), @p17='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO properties (address_line, availability_status_id, city_id, created_at, deleted_at, description, latitude, longitude, monthly_rent, owner_id, remarks, security_deposit, thumbnail_img_url, title, updated_at, upfront_payment, verification_status_id, verified_by)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17)
+RETURNING id;
+2026-06-12 20:27:35.652 +05:30 [INF] Executing CreatedAtActionResult, writing value of type 'propertyManagement.DTOs.PropertyResponseDto'.
+2026-06-12 20:27:35.652 +05:30 [INF] Executed action propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement) in 72.496ms
+2026-06-12 20:27:35.652 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement)'
+2026-06-12 20:27:35.653 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/Property - 201 null application/json; charset=utf-8 79.6985ms
+2026-06-12 20:27:43.188 +05:30 [INF] Application is shutting down...
+2026-06-12 20:27:47.173 +05:30 [INF] User profile is available. Using '/Users/sabareesht/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-06-12 20:27:47.250 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-12 20:27:47.250 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-12 20:27:47.250 +05:30 [INF] Hosting environment: Development
+2026-06-12 20:27:47.250 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/realestatePropertyManagement
+2026-06-12 20:27:48.758 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/Property - application/json 240
+2026-06-12 20:27:48.776 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-06-12 20:27:48.819 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement)'
+2026-06-12 20:27:48.828 +05:30 [INF] Route matched with {action = "CreateProperty", controller = "Property"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.PropertyResponseDto]] CreateProperty(propertyManagement.DTOs.CreatePropertyDto) on controller propertyManagement.Controllers.PropertyController (propertyManagement).
+2026-06-12 20:27:49.618 +05:30 [INF] Executed DbCommand (24ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT c.id, c.created_at, c.deleted_at, c.district_id, c.name, c.updated_at
+FROM cities AS c
+WHERE c.id = @id AND c.deleted_at IS NULL
+LIMIT 1
+2026-06-12 20:27:49.650 +05:30 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.SerializableError'.
+2026-06-12 20:27:49.656 +05:30 [INF] Executed action propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement) in 826.0754ms
+2026-06-12 20:27:49.656 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement)'
+2026-06-12 20:27:49.658 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/Property - 400 null application/json; charset=utf-8 901.2047ms
+2026-06-12 20:27:56.543 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/Property - application/json 248
+2026-06-12 20:27:56.549 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement)'
+2026-06-12 20:27:56.549 +05:30 [INF] Route matched with {action = "CreateProperty", controller = "Property"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.PropertyResponseDto]] CreateProperty(propertyManagement.DTOs.CreatePropertyDto) on controller propertyManagement.Controllers.PropertyController (propertyManagement).
+2026-06-12 20:27:56.565 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT c.id, c.created_at, c.deleted_at, c.district_id, c.name, c.updated_at
+FROM cities AS c
+WHERE c.id = @id AND c.deleted_at IS NULL
+LIMIT 1
+2026-06-12 20:27:56.566 +05:30 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.SerializableError'.
+2026-06-12 20:27:56.566 +05:30 [INF] Executed action propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement) in 16.5929ms
+2026-06-12 20:27:56.566 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement)'
+2026-06-12 20:27:56.566 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/Property - 400 null application/json; charset=utf-8 23.4687ms
+2026-06-12 20:28:13.276 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/Property - application/json 217
+2026-06-12 20:28:13.282 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement)'
+2026-06-12 20:28:13.283 +05:30 [INF] Route matched with {action = "CreateProperty", controller = "Property"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.PropertyResponseDto]] CreateProperty(propertyManagement.DTOs.CreatePropertyDto) on controller propertyManagement.Controllers.PropertyController (propertyManagement).
+2026-06-12 20:28:13.315 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT c.id, c.created_at, c.deleted_at, c.district_id, c.name, c.updated_at
+FROM cities AS c
+WHERE c.id = @id AND c.deleted_at IS NULL
+LIMIT 1
+2026-06-12 20:28:13.315 +05:30 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.SerializableError'.
+2026-06-12 20:28:13.315 +05:30 [INF] Executed action propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement) in 32.572ms
+2026-06-12 20:28:13.315 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement)'
+2026-06-12 20:28:13.315 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/Property - 400 null application/json; charset=utf-8 39.1571ms
+2026-06-12 20:28:20.336 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/Property - application/json 216
+2026-06-12 20:28:20.337 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement)'
+2026-06-12 20:28:20.338 +05:30 [INF] Route matched with {action = "CreateProperty", controller = "Property"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.PropertyResponseDto]] CreateProperty(propertyManagement.DTOs.CreatePropertyDto) on controller propertyManagement.Controllers.PropertyController (propertyManagement).
+2026-06-12 20:28:20.341 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT c.id, c.created_at, c.deleted_at, c.district_id, c.name, c.updated_at
+FROM cities AS c
+WHERE c.id = @id AND c.deleted_at IS NULL
+LIMIT 1
+2026-06-12 20:28:20.342 +05:30 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.SerializableError'.
+2026-06-12 20:28:20.342 +05:30 [INF] Executed action propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement) in 3.941ms
+2026-06-12 20:28:20.342 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement)'
+2026-06-12 20:28:20.342 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/Property - 400 null application/json; charset=utf-8 6.0826ms
+2026-06-12 20:28:22.613 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/Property - application/json 216
+2026-06-12 20:28:22.614 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement)'
+2026-06-12 20:28:22.614 +05:30 [INF] Route matched with {action = "CreateProperty", controller = "Property"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.PropertyResponseDto]] CreateProperty(propertyManagement.DTOs.CreatePropertyDto) on controller propertyManagement.Controllers.PropertyController (propertyManagement).
+2026-06-12 20:28:22.618 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT c.id, c.created_at, c.deleted_at, c.district_id, c.name, c.updated_at
+FROM cities AS c
+WHERE c.id = @id AND c.deleted_at IS NULL
+LIMIT 1
+2026-06-12 20:28:22.619 +05:30 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.SerializableError'.
+2026-06-12 20:28:22.619 +05:30 [INF] Executed action propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement) in 4.3208ms
+2026-06-12 20:28:22.619 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement)'
+2026-06-12 20:28:22.619 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/Property - 400 null application/json; charset=utf-8 6.7592ms
+2026-06-12 20:28:26.870 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/Property - application/json 216
+2026-06-12 20:28:26.871 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement)'
+2026-06-12 20:28:26.871 +05:30 [INF] Route matched with {action = "CreateProperty", controller = "Property"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.PropertyResponseDto]] CreateProperty(propertyManagement.DTOs.CreatePropertyDto) on controller propertyManagement.Controllers.PropertyController (propertyManagement).
+2026-06-12 20:28:26.874 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT c.id, c.created_at, c.deleted_at, c.district_id, c.name, c.updated_at
+FROM cities AS c
+WHERE c.id = @id AND c.deleted_at IS NULL
+LIMIT 1
+2026-06-12 20:28:26.876 +05:30 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.SerializableError'.
+2026-06-12 20:28:26.876 +05:30 [INF] Executed action propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement) in 4.2103ms
+2026-06-12 20:28:26.876 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement)'
+2026-06-12 20:28:26.876 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/Property - 400 null application/json; charset=utf-8 5.8967ms
+2026-06-12 20:28:33.538 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/Property - application/json 217
+2026-06-12 20:28:33.539 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement)'
+2026-06-12 20:28:33.539 +05:30 [INF] Route matched with {action = "CreateProperty", controller = "Property"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.PropertyResponseDto]] CreateProperty(propertyManagement.DTOs.CreatePropertyDto) on controller propertyManagement.Controllers.PropertyController (propertyManagement).
+2026-06-12 20:28:33.542 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT c.id, c.created_at, c.deleted_at, c.district_id, c.name, c.updated_at
+FROM cities AS c
+WHERE c.id = @id AND c.deleted_at IS NULL
+LIMIT 1
+2026-06-12 20:28:33.544 +05:30 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.SerializableError'.
+2026-06-12 20:28:33.544 +05:30 [INF] Executed action propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement) in 4.8585ms
+2026-06-12 20:28:33.545 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement)'
+2026-06-12 20:28:33.545 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/Property - 400 null application/json; charset=utf-8 7.162ms
+2026-06-12 20:28:40.296 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/Property - application/json 218
+2026-06-12 20:28:40.299 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement)'
+2026-06-12 20:28:40.299 +05:30 [INF] Route matched with {action = "CreateProperty", controller = "Property"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.PropertyResponseDto]] CreateProperty(propertyManagement.DTOs.CreatePropertyDto) on controller propertyManagement.Controllers.PropertyController (propertyManagement).
+2026-06-12 20:28:40.303 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT c.id, c.created_at, c.deleted_at, c.district_id, c.name, c.updated_at
+FROM cities AS c
+WHERE c.id = @id AND c.deleted_at IS NULL
+LIMIT 1
+2026-06-12 20:28:40.319 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[@userId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM user_verifications AS u
+    WHERE u.user_id = @userId AND u.status = 'Verified')
+2026-06-12 20:28:40.415 +05:30 [INF] Executed DbCommand (11ms) [Parameters=[@p0='?', @p1='?' (DbType = Int32), @p2='?' (DbType = Int32), @p3='?' (DbType = DateTime2), @p4='?' (DbType = DateTime2), @p5='?', @p6='?' (DbType = Decimal), @p7='?' (DbType = Decimal), @p8='?' (DbType = Decimal), @p9='?' (DbType = Guid), @p10='?', @p11='?' (DbType = Decimal), @p12='?', @p13='?', @p14='?' (DbType = DateTime2), @p15='?' (DbType = Decimal), @p16='?' (DbType = Int32), @p17='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO properties (address_line, availability_status_id, city_id, created_at, deleted_at, description, latitude, longitude, monthly_rent, owner_id, remarks, security_deposit, thumbnail_img_url, title, updated_at, upfront_payment, verification_status_id, verified_by)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17)
+RETURNING id;
+2026-06-12 20:28:40.425 +05:30 [INF] Executing CreatedAtActionResult, writing value of type 'propertyManagement.DTOs.PropertyResponseDto'.
+2026-06-12 20:28:40.438 +05:30 [INF] Executed action propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement) in 138.3854ms
+2026-06-12 20:28:40.438 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement)'
+2026-06-12 20:28:40.438 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/Property - 201 null application/json; charset=utf-8 141.7313ms
+2026-06-12 20:28:48.987 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/Property - application/json 205
+2026-06-12 20:28:48.989 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement)'
+2026-06-12 20:28:48.989 +05:30 [INF] Route matched with {action = "CreateProperty", controller = "Property"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.PropertyResponseDto]] CreateProperty(propertyManagement.DTOs.CreatePropertyDto) on controller propertyManagement.Controllers.PropertyController (propertyManagement).
+2026-06-12 20:28:48.993 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT c.id, c.created_at, c.deleted_at, c.district_id, c.name, c.updated_at
+FROM cities AS c
+WHERE c.id = @id AND c.deleted_at IS NULL
+LIMIT 1
+2026-06-12 20:28:48.994 +05:30 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.SerializableError'.
+2026-06-12 20:28:48.994 +05:30 [INF] Executed action propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement) in 4.9225ms
+2026-06-12 20:28:48.994 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.PropertyController.CreateProperty (propertyManagement)'
+2026-06-12 20:28:48.994 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/Property - 400 null application/json; charset=utf-8 7.2565ms
