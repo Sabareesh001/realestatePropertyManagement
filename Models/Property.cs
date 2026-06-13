@@ -75,4 +75,9 @@ public partial class Property
     public virtual User? VerifiedByNavigation { get; set; }
 
     public virtual ICollection<Document> Documents { get; set; } = new List<Document>();
+
+    /// <summary>
+    /// Gets or sets the collection of images associated with this property.
+    /// </summary>
+    public virtual ICollection<PropertyImage> PropertyImages { get; set; } = new List<PropertyImage>();
 }
