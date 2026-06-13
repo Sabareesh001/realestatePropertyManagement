@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using propertyManagement.Data;
@@ -30,7 +31,9 @@ public class PropertyRepository : IPropertyRepository
     /// <returns>The property entity if found.</returns>
     public async Task<Property?> GetByIdAsync(int id)
     {
-        return await _context.Properties.FindAsync(id);
+        return await _context.Properties
+            .Include(p => p.PropertyImages)
+            .FirstOrDefaultAsync(p => p.Id == id);
     }
 
     /// <summary>
@@ -39,7 +42,9 @@ public class PropertyRepository : IPropertyRepository
     /// <returns>A collection of properties.</returns>
     public async Task<IEnumerable<Property>> GetAllAsync()
     {
-        return await _context.Properties.ToListAsync();
+        return await _context.Properties
+            .Include(p => p.PropertyImages)
+            .ToListAsync();
     }
 
     /// <summary>
@@ -75,5 +80,18 @@ public class PropertyRepository : IPropertyRepository
         {
             _context.Properties.Remove(property);
         }
+    }
+
+    /// <summary>
+    /// Retrieves all properties owned by a specific owner.
+    /// </summary>
+    /// <param name="ownerId">The unique identifier of the owner.</param>
+    /// <returns>A collection of properties.</returns>
+    public async Task<IEnumerable<Property>> GetPropertiesByOwnerIdAsync(Guid ownerId)
+    {
+        return await _context.Properties
+            .Include(p => p.PropertyImages)
+            .Where(p => p.OwnerId == ownerId)
+            .ToListAsync();
     }
 }

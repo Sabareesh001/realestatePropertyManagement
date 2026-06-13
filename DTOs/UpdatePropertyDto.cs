@@ -1,9 +1,9 @@
 namespace propertyManagement.DTOs;
 
 /// <summary>
-/// Data Transfer Object for creating a new property.
+/// Data Transfer Object for updating an existing property listing.
 /// </summary>
-public class CreatePropertyDto
+public class UpdatePropertyDto
 {
     /// <summary>
     /// Gets or sets the title of the property.
@@ -48,5 +48,5 @@ public class CreatePropertyDto
     /// <summary>
     /// Gets or sets the list of images associated with the property.
     /// </summary>
-    public System.Collections.Generic.List<CreatePropertyImageDto> PropertyImages { get; set; } = new();
+    public System.Collections.Generic.List<PropertyImageDto> PropertyImages { get; set; } = new();
 }

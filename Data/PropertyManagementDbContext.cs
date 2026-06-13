@@ -64,6 +64,11 @@ public partial class PropertyManagementDbContext : DbContext
     public virtual DbSet<Property> Properties { get; set; }
 
     /// <summary>
+    /// Gets or sets the database set for property images.
+    /// </summary>
+    public virtual DbSet<PropertyImage> PropertyImages { get; set; }
+
+    /// <summary>
     /// Gets or sets the database set for property verification statuses.
     /// </summary>
     public virtual DbSet<PropertyVerificationStatus> PropertyVerificationStatuses { get; set; }
@@ -975,6 +980,39 @@ public partial class PropertyManagementDbContext : DbContext
                         j.IndexerProperty<int>("PropertyId").HasColumnName("property_id");
                         j.IndexerProperty<Guid>("DocumentId").HasColumnName("document_id");
                     });
+        });
+
+        modelBuilder.Entity<PropertyImage>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("property_images_pkey");
+
+            entity.ToTable("property_images");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.PropertyId).HasColumnName("property_id");
+            entity.Property(e => e.ImageUrl)
+                .HasMaxLength(500)
+                .HasColumnName("image_url");
+            entity.Property(e => e.Description)
+                .HasMaxLength(255)
+                .HasColumnName("description");
+            entity.Property(e => e.DisplayOrder)
+                .HasDefaultValue(0)
+                .HasColumnName("display_order");
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
+
+            entity.HasOne(d => d.Property).WithMany(p => p.PropertyImages)
+                .HasForeignKey(d => d.PropertyId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("property_images_property_id_fkey");
         });
 
         modelBuilder.Entity<PropertyVerificationStatus>(entity =>
