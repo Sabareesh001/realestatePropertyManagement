@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace propertyManagement.DTOs;
 
@@ -11,29 +10,21 @@ public class CreateBankAccountDto
     /// <summary>
     /// Gets or sets the name of the bank.
     /// </summary>
-    [Required]
-    [StringLength(100)]
     public string BankName { get; set; } = null!;
 
     /// <summary>
     /// Gets or sets the account number.
     /// </summary>
-    [Required]
-    [StringLength(50)]
     public string AccountNumber { get; set; } = null!;
 
     /// <summary>
     /// Gets or sets the name of the account holder.
     /// </summary>
-    [Required]
-    [StringLength(100)]
     public string AccountHolderName { get; set; } = null!;
 
     /// <summary>
     /// Gets or sets the IFSC code of the bank branch.
     /// </summary>
-    [Required]
-    [StringLength(20)]
     public string IfscCode { get; set; } = null!;
 }
 
@@ -45,29 +36,21 @@ public class UpdateBankAccountDto
     /// <summary>
     /// Gets or sets the name of the bank.
     /// </summary>
-    [Required]
-    [StringLength(100)]
     public string BankName { get; set; } = null!;
 
     /// <summary>
     /// Gets or sets the account number.
     /// </summary>
-    [Required]
-    [StringLength(50)]
     public string AccountNumber { get; set; } = null!;
 
     /// <summary>
     /// Gets or sets the name of the account holder.
     /// </summary>
-    [Required]
-    [StringLength(100)]
     public string AccountHolderName { get; set; } = null!;
 
     /// <summary>
     /// Gets or sets the IFSC code of the bank branch.
     /// </summary>
-    [Required]
-    [StringLength(20)]
     public string IfscCode { get; set; } = null!;
 }
 
