@@ -1,0 +1,54 @@
+2026-06-13 09:03:41.906 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/BankAccount - application/json 106
+2026-06-13 09:03:41.930 +05:30 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2026-06-13 09:03:41.934 +05:30 [INF] AuthenticationScheme: Bearer was challenged.
+2026-06-13 09:03:41.934 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/BankAccount - 401 0 null 28.1715ms
+2026-06-13 09:03:47.723 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/User/login - application/json 61
+2026-06-13 09:03:47.724 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserController.Login (propertyManagement)'
+2026-06-13 09:03:47.737 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserResponseDto]] Login(propertyManagement.DTOs.LoginDto) on controller propertyManagement.Controllers.UserController (propertyManagement).
+2026-06-13 09:03:47.879 +05:30 [INF] Executed DbCommand (14ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u1.id, u1.active_status_id, u1.created_at, u1.date_of_birth, u1.deleted_at, u1.email, u1.first_name, u1.last_name, u1.password_hash, u1.phone, u1.updated_at, u1.verification_status_id, s.id, s.created_at, s.deleted_at, s.role_id, s.updated_at, s.user_id, s.id0, s.created_at0, s.deleted_at0, s.name, s.updated_at0
+FROM (
+    SELECT u.id, u.active_status_id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at, u.verification_status_id
+    FROM users AS u
+    WHERE u.email = @email
+    LIMIT 1
+) AS u1
+LEFT JOIN (
+    SELECT u0.id, u0.created_at, u0.deleted_at, u0.role_id, u0.updated_at, u0.user_id, r.id AS id0, r.created_at AS created_at0, r.deleted_at AS deleted_at0, r.name, r.updated_at AS updated_at0
+    FROM user_roles AS u0
+    LEFT JOIN roles AS r ON u0.role_id = r.id
+) AS s ON u1.id = s.user_id
+ORDER BY u1.id, s.id
+2026-06-13 09:03:48.160 +05:30 [INF] Executing OkObjectResult, writing value of type 'propertyManagement.DTOs.UserResponseDto'.
+2026-06-13 09:03:48.163 +05:30 [INF] Executed action propertyManagement.Controllers.UserController.Login (propertyManagement) in 425.1772ms
+2026-06-13 09:03:48.163 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserController.Login (propertyManagement)'
+2026-06-13 09:03:48.163 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/User/login - 200 null application/json; charset=utf-8 439.8447ms
+2026-06-13 09:03:53.193 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/BankAccount - application/json 106
+2026-06-13 09:03:53.202 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.BankAccountController.CreateBankAccount (propertyManagement)'
+2026-06-13 09:03:53.208 +05:30 [INF] Route matched with {action = "CreateBankAccount", controller = "BankAccount"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.BankAccountResponseDto]] CreateBankAccount(propertyManagement.DTOs.CreateBankAccountDto) on controller propertyManagement.Controllers.BankAccountController (propertyManagement).
+2026-06-13 09:03:53.213 +05:30 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2026-06-13 09:03:53.218 +05:30 [INF] Executed action propertyManagement.Controllers.BankAccountController.CreateBankAccount (propertyManagement) in 10.5927ms
+2026-06-13 09:03:53.219 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.BankAccountController.CreateBankAccount (propertyManagement)'
+2026-06-13 09:03:53.219 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/BankAccount - 400 null application/problem+json; charset=utf-8 25.7253ms
+2026-06-13 09:04:21.505 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/BankAccount - application/json 112
+2026-06-13 09:04:21.509 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.BankAccountController.CreateBankAccount (propertyManagement)'
+2026-06-13 09:04:21.509 +05:30 [INF] Route matched with {action = "CreateBankAccount", controller = "BankAccount"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.BankAccountResponseDto]] CreateBankAccount(propertyManagement.DTOs.CreateBankAccountDto) on controller propertyManagement.Controllers.BankAccountController (propertyManagement).
+2026-06-13 09:04:21.510 +05:30 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2026-06-13 09:04:21.511 +05:30 [INF] Executed action propertyManagement.Controllers.BankAccountController.CreateBankAccount (propertyManagement) in 1.564ms
+2026-06-13 09:04:21.511 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.BankAccountController.CreateBankAccount (propertyManagement)'
+2026-06-13 09:04:21.511 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/BankAccount - 400 null application/problem+json; charset=utf-8 6.3535ms
+2026-06-13 09:04:25.109 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/BankAccount - application/json 106
+2026-06-13 09:04:25.111 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.BankAccountController.CreateBankAccount (propertyManagement)'
+2026-06-13 09:04:25.111 +05:30 [INF] Route matched with {action = "CreateBankAccount", controller = "BankAccount"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.BankAccountResponseDto]] CreateBankAccount(propertyManagement.DTOs.CreateBankAccountDto) on controller propertyManagement.Controllers.BankAccountController (propertyManagement).
+2026-06-13 09:04:25.114 +05:30 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2026-06-13 09:04:25.114 +05:30 [INF] Executed action propertyManagement.Controllers.BankAccountController.CreateBankAccount (propertyManagement) in 3.0269ms
+2026-06-13 09:04:25.115 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.BankAccountController.CreateBankAccount (propertyManagement)'
+2026-06-13 09:04:25.115 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/BankAccount - 400 null application/problem+json; charset=utf-8 5.7571ms
+2026-06-13 09:04:28.664 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/BankAccount - application/json 100
+2026-06-13 09:04:28.666 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.BankAccountController.CreateBankAccount (propertyManagement)'
+2026-06-13 09:04:28.666 +05:30 [INF] Route matched with {action = "CreateBankAccount", controller = "BankAccount"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.BankAccountResponseDto]] CreateBankAccount(propertyManagement.DTOs.CreateBankAccountDto) on controller propertyManagement.Controllers.BankAccountController (propertyManagement).
+2026-06-13 09:04:28.667 +05:30 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2026-06-13 09:04:28.667 +05:30 [INF] Executed action propertyManagement.Controllers.BankAccountController.CreateBankAccount (propertyManagement) in 0.8635ms
+2026-06-13 09:04:28.667 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.BankAccountController.CreateBankAccount (propertyManagement)'
+2026-06-13 09:04:28.667 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/BankAccount - 400 null application/problem+json; charset=utf-8 3.0563ms
