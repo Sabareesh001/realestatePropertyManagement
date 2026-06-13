@@ -52,3 +52,195 @@ ORDER BY u1.id, s.id
 2026-06-13 09:04:28.667 +05:30 [INF] Executed action propertyManagement.Controllers.BankAccountController.CreateBankAccount (propertyManagement) in 0.8635ms
 2026-06-13 09:04:28.667 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.BankAccountController.CreateBankAccount (propertyManagement)'
 2026-06-13 09:04:28.667 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/BankAccount - 400 null application/problem+json; charset=utf-8 3.0563ms
+2026-06-13 09:26:31.591 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/BankAccount - application/json 135
+2026-06-13 09:26:31.598 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.BankAccountController.CreateBankAccount (propertyManagement)'
+2026-06-13 09:26:31.598 +05:30 [INF] Route matched with {action = "CreateBankAccount", controller = "BankAccount"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.BankAccountResponseDto]] CreateBankAccount(propertyManagement.DTOs.CreateBankAccountDto) on controller propertyManagement.Controllers.BankAccountController (propertyManagement).
+2026-06-13 09:26:31.696 +05:30 [INF] Executed DbCommand (25ms) [Parameters=[@id='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT u1.id, u1.active_status_id, u1.created_at, u1.date_of_birth, u1.deleted_at, u1.email, u1.first_name, u1.last_name, u1.password_hash, u1.phone, u1.updated_at, u1.verification_status_id, s.id, s.created_at, s.deleted_at, s.role_id, s.updated_at, s.user_id, s.id0, s.created_at0, s.deleted_at0, s.name, s.updated_at0
+FROM (
+    SELECT u.id, u.active_status_id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at, u.verification_status_id
+    FROM users AS u
+    WHERE u.id = @id
+    LIMIT 1
+) AS u1
+LEFT JOIN (
+    SELECT u0.id, u0.created_at, u0.deleted_at, u0.role_id, u0.updated_at, u0.user_id, r.id AS id0, r.created_at AS created_at0, r.deleted_at AS deleted_at0, r.name, r.updated_at AS updated_at0
+    FROM user_roles AS u0
+    LEFT JOIN roles AS r ON u0.role_id = r.id
+) AS s ON u1.id = s.user_id
+ORDER BY u1.id, s.id
+2026-06-13 09:26:31.792 +05:30 [INF] Executed DbCommand (16ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?', @p2='?', @p3='?', @p4='?' (DbType = DateTime2), @p5='?' (DbType = DateTime2), @p6='?', @p7='?' (DbType = DateTime2), @p8='?' (DbType = Guid), @p9='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO bank_accounts (id, account_holder_name, account_number, bank_name, created_at, deleted_at, ifsc_code, updated_at)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+INSERT INTO user_bank_accounts (bank_account_id, user_id)
+VALUES (@p8, @p9);
+2026-06-13 09:26:31.799 +05:30 [INF] Executing CreatedAtActionResult, writing value of type 'propertyManagement.DTOs.BankAccountResponseDto'.
+2026-06-13 09:26:31.807 +05:30 [INF] Executed action propertyManagement.Controllers.BankAccountController.CreateBankAccount (propertyManagement) in 208.8217ms
+2026-06-13 09:26:31.807 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.BankAccountController.CreateBankAccount (propertyManagement)'
+2026-06-13 09:26:31.807 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/BankAccount - 201 null application/json; charset=utf-8 216.7855ms
+2026-06-13 09:26:38.292 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5104/api/BankAccount - null null
+2026-06-13 09:26:38.301 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.BankAccountController.GetUserBankAccounts (propertyManagement)'
+2026-06-13 09:26:38.304 +05:30 [INF] Route matched with {action = "GetUserBankAccounts", controller = "BankAccount"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[propertyManagement.DTOs.BankAccountResponseDto]]] GetUserBankAccounts() on controller propertyManagement.Controllers.BankAccountController (propertyManagement).
+2026-06-13 09:26:38.315 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@userId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT b.id, b.account_holder_name, b.account_number, b.bank_name, b.created_at, b.deleted_at, b.ifsc_code, b.updated_at
+FROM user_bank_accounts AS u
+INNER JOIN bank_accounts AS b ON u.bank_account_id = b.id
+WHERE u.user_id = @userId
+2026-06-13 09:26:38.315 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[propertyManagement.Models.BankAccount, propertyManagement, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[propertyManagement.DTOs.BankAccountResponseDto, propertyManagement, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-06-13 09:26:38.316 +05:30 [INF] Executed action propertyManagement.Controllers.BankAccountController.GetUserBankAccounts (propertyManagement) in 11.6513ms
+2026-06-13 09:26:38.316 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.BankAccountController.GetUserBankAccounts (propertyManagement)'
+2026-06-13 09:26:38.316 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5104/api/BankAccount - 200 null application/json; charset=utf-8 23.4907ms
+2026-06-13 09:27:22.550 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/UserVerification/submit - application/json 126
+2026-06-13 09:27:22.552 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserVerificationController.Submit (propertyManagement)'
+2026-06-13 09:27:22.558 +05:30 [INF] Route matched with {action = "Submit", controller = "UserVerification"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserVerificationResponseDto]] Submit(propertyManagement.DTOs.SubmitVerificationDto) on controller propertyManagement.Controllers.UserVerificationController (propertyManagement).
+2026-06-13 09:27:22.566 +05:30 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2026-06-13 09:27:22.566 +05:30 [INF] Executed action propertyManagement.Controllers.UserVerificationController.Submit (propertyManagement) in 7.4182ms
+2026-06-13 09:27:22.566 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserVerificationController.Submit (propertyManagement)'
+2026-06-13 09:27:22.566 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/UserVerification/submit - 400 null application/problem+json; charset=utf-8 16.461ms
+2026-06-13 09:27:32.799 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/UserVerification/submit - application/json 128
+2026-06-13 09:27:32.802 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserVerificationController.Submit (propertyManagement)'
+2026-06-13 09:27:32.802 +05:30 [INF] Route matched with {action = "Submit", controller = "UserVerification"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserVerificationResponseDto]] Submit(propertyManagement.DTOs.SubmitVerificationDto) on controller propertyManagement.Controllers.UserVerificationController (propertyManagement).
+2026-06-13 09:27:32.814 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@id='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT u1.id, u1.active_status_id, u1.created_at, u1.date_of_birth, u1.deleted_at, u1.email, u1.first_name, u1.last_name, u1.password_hash, u1.phone, u1.updated_at, u1.verification_status_id, s.id, s.created_at, s.deleted_at, s.role_id, s.updated_at, s.user_id, s.id0, s.created_at0, s.deleted_at0, s.name, s.updated_at0
+FROM (
+    SELECT u.id, u.active_status_id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at, u.verification_status_id
+    FROM users AS u
+    WHERE u.id = @id
+    LIMIT 1
+) AS u1
+LEFT JOIN (
+    SELECT u0.id, u0.created_at, u0.deleted_at, u0.role_id, u0.updated_at, u0.user_id, r.id AS id0, r.created_at AS created_at0, r.deleted_at AS deleted_at0, r.name, r.updated_at AS updated_at0
+    FROM user_roles AS u0
+    LEFT JOIN roles AS r ON u0.role_id = r.id
+) AS s ON u1.id = s.user_id
+ORDER BY u1.id, s.id
+2026-06-13 09:27:32.830 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[@userId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT u1.id, u1.created_at, u1.deleted_at, u1.remarks, u1.status, u1.updated_at, u1.user_id, u1.verified_by, s.user_verification_id, s.document_id, s.id, s.created_at, s.deleted_at, s.document_number, s.document_type_id, s.document_url, s.updated_at
+FROM (
+    SELECT u.id, u.created_at, u.deleted_at, u.remarks, u.status, u.updated_at, u.user_id, u.verified_by
+    FROM user_verifications AS u
+    WHERE u.user_id = @userId
+    ORDER BY u.created_at DESC
+    LIMIT 1
+) AS u1
+LEFT JOIN (
+    SELECT u0.user_verification_id, u0.document_id, d.id, d.created_at, d.deleted_at, d.document_number, d.document_type_id, d.document_url, d.updated_at
+    FROM user_verification_documents AS u0
+    INNER JOIN documents AS d ON u0.document_id = d.id
+) AS s ON u1.id = s.user_verification_id
+ORDER BY u1.created_at DESC, u1.id, s.user_verification_id, s.document_id
+2026-06-13 09:27:32.852 +05:30 [INF] Executed action propertyManagement.Controllers.UserVerificationController.Submit (propertyManagement) in 49.727ms
+2026-06-13 09:27:32.853 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserVerificationController.Submit (propertyManagement)'
+2026-06-13 09:27:32.860 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/UserVerification/submit - 400 null application/json; charset=utf-8 60.9425ms
+2026-06-13 09:28:02.240 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/UserVerification/submit - application/json 128
+2026-06-13 09:28:02.244 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserVerificationController.Submit (propertyManagement)'
+2026-06-13 09:28:02.245 +05:30 [INF] Route matched with {action = "Submit", controller = "UserVerification"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserVerificationResponseDto]] Submit(propertyManagement.DTOs.SubmitVerificationDto) on controller propertyManagement.Controllers.UserVerificationController (propertyManagement).
+2026-06-13 09:28:02.260 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@id='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT u1.id, u1.active_status_id, u1.created_at, u1.date_of_birth, u1.deleted_at, u1.email, u1.first_name, u1.last_name, u1.password_hash, u1.phone, u1.updated_at, u1.verification_status_id, s.id, s.created_at, s.deleted_at, s.role_id, s.updated_at, s.user_id, s.id0, s.created_at0, s.deleted_at0, s.name, s.updated_at0
+FROM (
+    SELECT u.id, u.active_status_id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at, u.verification_status_id
+    FROM users AS u
+    WHERE u.id = @id
+    LIMIT 1
+) AS u1
+LEFT JOIN (
+    SELECT u0.id, u0.created_at, u0.deleted_at, u0.role_id, u0.updated_at, u0.user_id, r.id AS id0, r.created_at AS created_at0, r.deleted_at AS deleted_at0, r.name, r.updated_at AS updated_at0
+    FROM user_roles AS u0
+    LEFT JOIN roles AS r ON u0.role_id = r.id
+) AS s ON u1.id = s.user_id
+ORDER BY u1.id, s.id
+2026-06-13 09:28:02.266 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@userId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT u1.id, u1.created_at, u1.deleted_at, u1.remarks, u1.status, u1.updated_at, u1.user_id, u1.verified_by, s.user_verification_id, s.document_id, s.id, s.created_at, s.deleted_at, s.document_number, s.document_type_id, s.document_url, s.updated_at
+FROM (
+    SELECT u.id, u.created_at, u.deleted_at, u.remarks, u.status, u.updated_at, u.user_id, u.verified_by
+    FROM user_verifications AS u
+    WHERE u.user_id = @userId
+    ORDER BY u.created_at DESC
+    LIMIT 1
+) AS u1
+LEFT JOIN (
+    SELECT u0.user_verification_id, u0.document_id, d.id, d.created_at, d.deleted_at, d.document_number, d.document_type_id, d.document_url, d.updated_at
+    FROM user_verification_documents AS u0
+    INNER JOIN documents AS d ON u0.document_id = d.id
+) AS s ON u1.id = s.user_verification_id
+ORDER BY u1.created_at DESC, u1.id, s.user_verification_id, s.document_id
+2026-06-13 09:28:02.267 +05:30 [INF] Executed action propertyManagement.Controllers.UserVerificationController.Submit (propertyManagement) in 21.7939ms
+2026-06-13 09:28:02.267 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserVerificationController.Submit (propertyManagement)'
+2026-06-13 09:28:02.267 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/UserVerification/submit - 400 null application/json; charset=utf-8 27.7749ms
+2026-06-13 09:28:09.358 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/UserVerification/submit - application/json 122
+2026-06-13 09:28:09.360 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserVerificationController.Submit (propertyManagement)'
+2026-06-13 09:28:09.360 +05:30 [INF] Route matched with {action = "Submit", controller = "UserVerification"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserVerificationResponseDto]] Submit(propertyManagement.DTOs.SubmitVerificationDto) on controller propertyManagement.Controllers.UserVerificationController (propertyManagement).
+2026-06-13 09:28:09.363 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@id='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT u1.id, u1.active_status_id, u1.created_at, u1.date_of_birth, u1.deleted_at, u1.email, u1.first_name, u1.last_name, u1.password_hash, u1.phone, u1.updated_at, u1.verification_status_id, s.id, s.created_at, s.deleted_at, s.role_id, s.updated_at, s.user_id, s.id0, s.created_at0, s.deleted_at0, s.name, s.updated_at0
+FROM (
+    SELECT u.id, u.active_status_id, u.created_at, u.date_of_birth, u.deleted_at, u.email, u.first_name, u.last_name, u.password_hash, u.phone, u.updated_at, u.verification_status_id
+    FROM users AS u
+    WHERE u.id = @id
+    LIMIT 1
+) AS u1
+LEFT JOIN (
+    SELECT u0.id, u0.created_at, u0.deleted_at, u0.role_id, u0.updated_at, u0.user_id, r.id AS id0, r.created_at AS created_at0, r.deleted_at AS deleted_at0, r.name, r.updated_at AS updated_at0
+    FROM user_roles AS u0
+    LEFT JOIN roles AS r ON u0.role_id = r.id
+) AS s ON u1.id = s.user_id
+ORDER BY u1.id, s.id
+2026-06-13 09:28:09.366 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@userId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT u1.id, u1.created_at, u1.deleted_at, u1.remarks, u1.status, u1.updated_at, u1.user_id, u1.verified_by, s.user_verification_id, s.document_id, s.id, s.created_at, s.deleted_at, s.document_number, s.document_type_id, s.document_url, s.updated_at
+FROM (
+    SELECT u.id, u.created_at, u.deleted_at, u.remarks, u.status, u.updated_at, u.user_id, u.verified_by
+    FROM user_verifications AS u
+    WHERE u.user_id = @userId
+    ORDER BY u.created_at DESC
+    LIMIT 1
+) AS u1
+LEFT JOIN (
+    SELECT u0.user_verification_id, u0.document_id, d.id, d.created_at, d.deleted_at, d.document_number, d.document_type_id, d.document_url, d.updated_at
+    FROM user_verification_documents AS u0
+    INNER JOIN documents AS d ON u0.document_id = d.id
+) AS s ON u1.id = s.user_verification_id
+ORDER BY u1.created_at DESC, u1.id, s.user_verification_id, s.document_id
+2026-06-13 09:28:09.366 +05:30 [INF] Executed action propertyManagement.Controllers.UserVerificationController.Submit (propertyManagement) in 6.2806ms
+2026-06-13 09:28:09.367 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserVerificationController.Submit (propertyManagement)'
+2026-06-13 09:28:09.367 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/UserVerification/submit - 400 null application/json; charset=utf-8 9.0247ms
+2026-06-13 09:34:36.718 +05:30 [INF] Application is shutting down...
+2026-06-13 09:34:44.483 +05:30 [INF] User profile is available. Using '/Users/sabareesht/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-06-13 09:34:44.620 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-13 09:34:44.622 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-13 09:34:44.622 +05:30 [INF] Hosting environment: Development
+2026-06-13 09:34:44.622 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/realestatePropertyManagement
+2026-06-13 09:34:47.237 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/UserVerification/submit - application/json 122
+2026-06-13 09:34:47.253 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-06-13 09:34:47.298 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserVerificationController.Submit (propertyManagement)'
+2026-06-13 09:34:47.307 +05:30 [INF] Route matched with {action = "Submit", controller = "UserVerification"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserVerificationResponseDto]] Submit(propertyManagement.DTOs.SubmitVerificationDto) on controller propertyManagement.Controllers.UserVerificationController (propertyManagement).
+2026-06-13 09:34:47.407 +05:30 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.SerializableError'.
+2026-06-13 09:34:47.410 +05:30 [INF] Executed action propertyManagement.Controllers.UserVerificationController.Submit (propertyManagement) in 101.4468ms
+2026-06-13 09:34:47.410 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserVerificationController.Submit (propertyManagement)'
+2026-06-13 09:34:47.411 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/UserVerification/submit - 400 null application/json; charset=utf-8 174.6898ms
+2026-06-13 09:35:13.883 +05:30 [INF] Application is shutting down...
+2026-06-13 09:35:18.355 +05:30 [INF] User profile is available. Using '/Users/sabareesht/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-06-13 09:35:18.437 +05:30 [INF] Now listening on: http://localhost:5104
+2026-06-13 09:35:18.437 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-13 09:35:18.438 +05:30 [INF] Hosting environment: Development
+2026-06-13 09:35:18.438 +05:30 [INF] Content root path: /Users/sabareesht/Documents/genSpark/realestatePropertyManagement
+2026-06-13 09:35:18.688 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/UserVerification/submit - application/json 122
+2026-06-13 09:35:18.703 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-06-13 09:35:18.738 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserVerificationController.Submit (propertyManagement)'
+2026-06-13 09:35:18.746 +05:30 [INF] Route matched with {action = "Submit", controller = "UserVerification"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserVerificationResponseDto]] Submit(propertyManagement.DTOs.SubmitVerificationDto) on controller propertyManagement.Controllers.UserVerificationController (propertyManagement).
+2026-06-13 09:35:18.826 +05:30 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.SerializableError'.
+2026-06-13 09:35:18.830 +05:30 [INF] Executed action propertyManagement.Controllers.UserVerificationController.Submit (propertyManagement) in 82.7373ms
+2026-06-13 09:35:18.831 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserVerificationController.Submit (propertyManagement)'
+2026-06-13 09:35:18.832 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/UserVerification/submit - 400 null application/json; charset=utf-8 144.92ms
+2026-06-13 09:35:29.297 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/UserVerification/submit - application/json 116
+2026-06-13 09:35:29.303 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserVerificationController.Submit (propertyManagement)'
+2026-06-13 09:35:29.303 +05:30 [INF] Route matched with {action = "Submit", controller = "UserVerification"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserVerificationResponseDto]] Submit(propertyManagement.DTOs.SubmitVerificationDto) on controller propertyManagement.Controllers.UserVerificationController (propertyManagement).
+2026-06-13 09:35:29.308 +05:30 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.SerializableError'.
+2026-06-13 09:35:29.308 +05:30 [INF] Executed action propertyManagement.Controllers.UserVerificationController.Submit (propertyManagement) in 4.7364ms
+2026-06-13 09:35:29.308 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserVerificationController.Submit (propertyManagement)'
+2026-06-13 09:35:29.308 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/UserVerification/submit - 400 null application/json; charset=utf-8 11.9049ms
+2026-06-13 09:35:44.675 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5104/api/UserVerification/submit - application/json 255
+2026-06-13 09:35:44.680 +05:30 [INF] Executing endpoint 'propertyManagement.Controllers.UserVerificationController.Submit (propertyManagement)'
+2026-06-13 09:35:44.680 +05:30 [INF] Route matched with {action = "Submit", controller = "UserVerification"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[propertyManagement.DTOs.UserVerificationResponseDto]] Submit(propertyManagement.DTOs.SubmitVerificationDto) on controller propertyManagement.Controllers.UserVerificationController (propertyManagement).
+2026-06-13 09:35:44.686 +05:30 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.SerializableError'.
+2026-06-13 09:35:44.687 +05:30 [INF] Executed action propertyManagement.Controllers.UserVerificationController.Submit (propertyManagement) in 6.0426ms
+2026-06-13 09:35:44.687 +05:30 [INF] Executed endpoint 'propertyManagement.Controllers.UserVerificationController.Submit (propertyManagement)'
+2026-06-13 09:35:44.687 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5104/api/UserVerification/submit - 400 null application/json; charset=utf-8 11.814ms
