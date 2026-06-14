@@ -153,7 +153,31 @@ public partial class PropertyManagementDbContext
             new DocumentType { Id = DocumentType.PanCard, Name = "Pan card", CreatedAt = seedTime },
             new DocumentType { Id = DocumentType.PropertyDeed, Name = "Property Deed", CreatedAt = seedTime },
             new DocumentType { Id = DocumentType.SalarySlip, Name = "Salary Slip", CreatedAt = seedTime },
-            new DocumentType { Id = DocumentType.LeaseAgreement, Name = "Lease Agreement", CreatedAt = seedTime }
+            new DocumentType { Id = DocumentType.LeaseAgreement, Name = "Lease Agreement", CreatedAt = seedTime },
+            new DocumentType { Id = DocumentType.SignedLeaseAgreement, Name = "Signed Lease Agreement", CreatedAt = seedTime }
         );
+
+        // Seed ProposalStatus
+        modelBuilder.Entity<ProposalStatus>().HasData(
+            new ProposalStatus { Id = ProposalStatus.Draft, Name = "DRAFT", CreatedAt = seedTime },
+            new ProposalStatus { Id = ProposalStatus.Submitted, Name = "SUBMITTED", CreatedAt = seedTime },
+            new ProposalStatus { Id = ProposalStatus.Approved, Name = "APPROVED", CreatedAt = seedTime },
+            new ProposalStatus { Id = ProposalStatus.Rejected, Name = "REJECTED", CreatedAt = seedTime },
+            new ProposalStatus { Id = ProposalStatus.Expired, Name = "EXPIRED", CreatedAt = seedTime },
+            new ProposalStatus { Id = ProposalStatus.Cancelled, Name = "CANCELLED", CreatedAt = seedTime }
+        );
+
+        // Seed LeaseStatus
+        modelBuilder.Entity<LeaseStatus>().HasData(
+            new LeaseStatus { Id = LeaseStatus.Draft, Name = "DRAFT", CreatedAt = seedTime },
+            new LeaseStatus { Id = LeaseStatus.Submitted, Name = "SUBMITTED", CreatedAt = seedTime },
+            new LeaseStatus { Id = LeaseStatus.PendingSignature, Name = "PENDING_SIGNATURE", CreatedAt = seedTime },
+            new LeaseStatus { Id = LeaseStatus.TenantSigned, Name = "TENANT_SIGNED", CreatedAt = seedTime },
+            new LeaseStatus { Id = LeaseStatus.Active, Name = "ACTIVE", CreatedAt = seedTime },
+            new LeaseStatus { Id = LeaseStatus.Rejected, Name = "REJECTED", CreatedAt = seedTime },
+            new LeaseStatus { Id = LeaseStatus.Terminated, Name = "TERMINATED", CreatedAt = seedTime },
+            new LeaseStatus { Id = LeaseStatus.Expired, Name = "EXPIRED", CreatedAt = seedTime }
+        );
+
     }
 }

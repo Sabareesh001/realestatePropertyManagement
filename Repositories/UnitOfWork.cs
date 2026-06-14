@@ -15,6 +15,7 @@ public class UnitOfWork : IUnitOfWork
     private IPropertyRepository? _propertyRepository;
     private ICityRepository? _cityRepository;
     private ILeaseProposalRepository? _leaseProposalRepository;
+    private ILeaseRepository? _leaseRepository;
     private IBankAccountRepository? _bankAccountRepository;
     private IPropertyImageRepository? _propertyImageRepository;
     private IDbContextTransaction? _transaction;
@@ -57,6 +58,11 @@ public class UnitOfWork : IUnitOfWork
     /// Gets the LeaseProposal repository instance.
     /// </summary>
     public ILeaseProposalRepository LeaseProposals => _leaseProposalRepository ??= new LeaseProposalRepository(_context);
+
+    /// <summary>
+    /// Gets the Lease repository instance.
+    /// </summary>
+    public ILeaseRepository Leases => _leaseRepository ??= new LeaseRepository(_context);
 
     /// <summary>
     /// Gets the BankAccount repository instance.

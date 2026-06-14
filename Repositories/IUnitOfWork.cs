@@ -36,9 +36,15 @@ public interface IUnitOfWork : IDisposable
     ILeaseProposalRepository LeaseProposals { get; }
 
     /// <summary>
+    /// Gets the Lease repository.
+    /// </summary>
+    ILeaseRepository Leases { get; }
+
+    /// <summary>
     /// Gets the BankAccount repository.
     /// </summary>
     IBankAccountRepository BankAccounts { get; }
+
 
     /// <summary>
     /// Gets the PropertyImage repository.

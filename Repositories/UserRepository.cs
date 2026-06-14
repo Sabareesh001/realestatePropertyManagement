@@ -28,9 +28,9 @@ public class UserRepository : IUserRepository
     public async Task<User?> GetByIdAsync(Guid id)
     {
         return await _context.Users
-            .Include(u => u.UserRoles)
+            .Include(u => u.UserRoles.Where(ur => ur.DeletedAt == null))
                 .ThenInclude(ur => ur.Role)
-            .FirstOrDefaultAsync(u => u.Id == id);
+            .FirstOrDefaultAsync(u => u.Id == id && u.DeletedAt == null);
     }
 
     /// <summary>
@@ -40,8 +40,9 @@ public class UserRepository : IUserRepository
     public async Task<IEnumerable<User>> GetAllAsync()
     {
         return await _context.Users
-            .Include(u => u.UserRoles)
+            .Include(u => u.UserRoles.Where(ur => ur.DeletedAt == null))
                 .ThenInclude(ur => ur.Role)
+            .Where(u => u.DeletedAt == null)
             .ToListAsync();
     }
 
@@ -53,9 +54,9 @@ public class UserRepository : IUserRepository
     public async Task<User?> GetByEmailAsync(string email)
     {
         return await _context.Users
-            .Include(u => u.UserRoles)
+            .Include(u => u.UserRoles.Where(ur => ur.DeletedAt == null))
                 .ThenInclude(ur => ur.Role)
-            .FirstOrDefaultAsync(u => u.Email == email);
+            .FirstOrDefaultAsync(u => u.Email == email && u.DeletedAt == null);
     }
 
     /// <summary>
@@ -89,7 +90,8 @@ public class UserRepository : IUserRepository
         var user = await GetByIdAsync(id);
         if (user != null)
         {
-            _context.Users.Remove(user);
+            user.DeletedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified);
+            _context.Users.Update(user);
         }
     }
 }

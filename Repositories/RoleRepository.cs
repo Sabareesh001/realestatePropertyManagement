@@ -27,7 +27,7 @@ public class RoleRepository : IRoleRepository
     /// <returns>The role entity if found; otherwise null.</returns>
     public async Task<Role?> GetByIdAsync(int id)
     {
-        return await _context.Roles.FirstOrDefaultAsync(r => r.Id == id);
+        return await _context.Roles.FirstOrDefaultAsync(r => r.Id == id && r.DeletedAt == null);
     }
 
     /// <summary>
@@ -36,7 +36,7 @@ public class RoleRepository : IRoleRepository
     /// <returns>An enumerable collection of all roles.</returns>
     public async Task<IEnumerable<Role>> GetAllAsync()
     {
-        return await _context.Roles.ToListAsync();
+        return await _context.Roles.Where(r => r.DeletedAt == null).ToListAsync();
     }
 
     /// <summary>
@@ -68,7 +68,8 @@ public class RoleRepository : IRoleRepository
         var role = await GetByIdAsync(id);
         if (role != null)
         {
-            _context.Roles.Remove(role);
+            role.DeletedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified);
+            _context.Roles.Update(role);
         }
     }
 }

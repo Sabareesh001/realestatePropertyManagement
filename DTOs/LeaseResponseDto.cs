@@ -3,12 +3,12 @@ using System;
 namespace propertyManagement.DTOs;
 
 /// <summary>
-/// Data Transfer Object representing a lease proposal in API responses.
+/// Data Transfer Object representing a lease in API responses.
 /// </summary>
-public class LeaseProposalResponseDto
+public class LeaseResponseDto
 {
     /// <summary>
-    /// Gets or sets the unique identifier of the lease proposal.
+    /// Gets or sets the unique identifier of the lease.
     /// </summary>
     public Guid Id { get; set; }
 
@@ -23,6 +23,11 @@ public class LeaseProposalResponseDto
     public int? PropertyId { get; set; }
 
     /// <summary>
+    /// Gets or sets the associated proposal (rent request) identifier.
+    /// </summary>
+    public Guid? ProposalId { get; set; }
+
+    /// <summary>
     /// Gets or sets the lease start date.
     /// </summary>
     public DateOnly? StartDate { get; set; }
@@ -33,17 +38,17 @@ public class LeaseProposalResponseDto
     public DateOnly? EndDate { get; set; }
 
     /// <summary>
-    /// Gets or sets the proposed monthly rent.
+    /// Gets or sets the monthly rent.
     /// </summary>
     public decimal? MonthlyRent { get; set; }
 
     /// <summary>
-    /// Gets or sets the proposed upfront payment.
+    /// Gets or sets the upfront payment.
     /// </summary>
     public decimal? UpfrontPayment { get; set; }
 
     /// <summary>
-    /// Gets or sets the proposed security deposit.
+    /// Gets or sets the security deposit.
     /// </summary>
     public decimal? SecurityDeposit { get; set; }
 
@@ -53,23 +58,27 @@ public class LeaseProposalResponseDto
     public int? StatusId { get; set; }
 
     /// <summary>
-    /// Gets or sets the detailed tenant information.
+    /// Gets or sets the name of the status.
     /// </summary>
-    public TenantDetailsDto? Tenant { get; set; }
+    public string? StatusName { get; set; }
 
     /// <summary>
-    /// Gets or sets the admin reviewer's identifier.
+    /// Gets or sets the URL of the agreement template document.
     /// </summary>
-    public Guid? ReviewedBy { get; set; }
-
+    public string? AgreementDocumentUrl { get; set; }
 
     /// <summary>
-    /// Gets or sets the review timestamp.
+    /// Gets or sets the URL of the tenant-signed agreement document.
     /// </summary>
-    public DateTime? ReviewedAt { get; set; }
+    public string? SignedAgreementDocumentUrl { get; set; }
 
     /// <summary>
     /// Gets or sets the creation timestamp.
     /// </summary>
     public DateTime? CreatedAt { get; set; }
+
+    /// <summary>
+    /// Gets or sets the last updated timestamp.
+    /// </summary>
+    public DateTime? UpdatedAt { get; set; }
 }

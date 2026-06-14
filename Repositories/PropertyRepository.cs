@@ -32,8 +32,8 @@ public class PropertyRepository : IPropertyRepository
     public async Task<Property?> GetByIdAsync(int id)
     {
         return await _context.Properties
-            .Include(p => p.PropertyImages)
-            .FirstOrDefaultAsync(p => p.Id == id);
+            .Include(p => p.PropertyImages.Where(pi => pi.DeletedAt == null))
+            .FirstOrDefaultAsync(p => p.Id == id && p.DeletedAt == null);
     }
 
     /// <summary>
@@ -43,7 +43,8 @@ public class PropertyRepository : IPropertyRepository
     public async Task<IEnumerable<Property>> GetAllAsync()
     {
         return await _context.Properties
-            .Include(p => p.PropertyImages)
+            .Include(p => p.PropertyImages.Where(pi => pi.DeletedAt == null))
+            .Where(p => p.DeletedAt == null)
             .ToListAsync();
     }
 
@@ -78,7 +79,8 @@ public class PropertyRepository : IPropertyRepository
         var property = await GetByIdAsync(id);
         if (property != null)
         {
-            _context.Properties.Remove(property);
+            property.DeletedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified);
+            _context.Properties.Update(property);
         }
     }
 
@@ -90,8 +92,8 @@ public class PropertyRepository : IPropertyRepository
     public async Task<IEnumerable<Property>> GetPropertiesByOwnerIdAsync(Guid ownerId)
     {
         return await _context.Properties
-            .Include(p => p.PropertyImages)
-            .Where(p => p.OwnerId == ownerId)
+            .Include(p => p.PropertyImages.Where(pi => pi.DeletedAt == null))
+            .Where(p => p.OwnerId == ownerId && p.DeletedAt == null)
             .ToListAsync();
     }
 }

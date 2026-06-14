@@ -13,28 +13,27 @@ public class CreateLeaseProposalDto
     public int PropertyId { get; set; }
 
     /// <summary>
-    /// Gets or sets the lease start date.
+    /// Gets or sets the preferred lease start date.
     /// </summary>
-    public DateOnly StartDate { get; set; }
+    public DateOnly? StartDate { get; set; }
 
     /// <summary>
-    /// Gets or sets the lease end date.
+    /// Gets or sets the preferred lease end date.
     /// </summary>
-    public DateOnly EndDate { get; set; }
+    public DateOnly? EndDate { get; set; }
 
     /// <summary>
     /// Gets or sets the proposed monthly rent.
     /// </summary>
-    public decimal MonthlyRent { get; set; }
+    public decimal? MonthlyRent { get; set; }
 
     /// <summary>
     /// Gets or sets the proposed upfront payment.
     /// </summary>
-    public decimal UpfrontPayment { get; set; }
+    public decimal? UpfrontPayment { get; set; }
 
     /// <summary>
     /// Gets or sets the proposed security deposit.
     /// </summary>
-    public decimal SecurityDeposit { get; set; }
-
+    public decimal? SecurityDeposit { get; set; }
 }

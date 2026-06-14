@@ -34,13 +34,13 @@ public class BankAccountRepository : IBankAccountRepository
     /// <inheritdoc />
     public async Task<BankAccount?> GetByIdAsync(Guid id)
     {
-        return await _context.BankAccounts.FindAsync(id);
+        return await _context.BankAccounts.FirstOrDefaultAsync(ba => ba.Id == id && ba.DeletedAt == null);
     }
 
     /// <inheritdoc />
     public async Task<IEnumerable<BankAccount>> GetAllAsync()
     {
-        return await _context.BankAccounts.ToListAsync();
+        return await _context.BankAccounts.Where(ba => ba.DeletedAt == null).ToListAsync();
     }
 
     /// <inheritdoc />
@@ -56,7 +56,8 @@ public class BankAccountRepository : IBankAccountRepository
         var bankAccount = await GetByIdAsync(id);
         if (bankAccount != null)
         {
-            _context.BankAccounts.Remove(bankAccount);
+            bankAccount.DeletedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified);
+            _context.BankAccounts.Update(bankAccount);
         }
     }
 
@@ -64,7 +65,7 @@ public class BankAccountRepository : IBankAccountRepository
     public async Task<IEnumerable<BankAccount>> GetBankAccountsByUserIdAsync(Guid userId)
     {
         return await _context.UserBankAccounts
-            .Where(uba => uba.UserId == userId)
+            .Where(uba => uba.UserId == userId && uba.BankAccount.DeletedAt == null)
             .Select(uba => uba.BankAccount)
             .ToListAsync();
     }

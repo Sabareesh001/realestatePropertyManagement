@@ -581,6 +581,8 @@ public partial class PropertyManagementDbContext : DbContext
             entity.Property(e => e.UpfrontPayment)
                 .HasPrecision(12, 2)
                 .HasColumnName("upfront_payment");
+            entity.Property(e => e.AgreementDocumentId).HasColumnName("agreement_document_id");
+            entity.Property(e => e.SignedAgreementDocumentId).HasColumnName("signed_agreement_document_id");
 
             entity.HasOne(d => d.PropertyNavigation).WithMany(p => p.Leases)
                 .HasForeignKey(d => d.PropertyId)
@@ -597,6 +599,15 @@ public partial class PropertyManagementDbContext : DbContext
             entity.HasOne(d => d.Tenant).WithMany(p => p.Leases)
                 .HasForeignKey(d => d.TenantId)
                 .HasConstraintName("leases_tenant_id_fkey");
+
+            entity.HasOne(d => d.AgreementDocument).WithMany()
+                .HasForeignKey(d => d.AgreementDocumentId)
+                .HasConstraintName("leases_agreement_document_id_fkey");
+
+            entity.HasOne(d => d.SignedAgreementDocument).WithMany()
+                .HasForeignKey(d => d.SignedAgreementDocumentId)
+                .HasConstraintName("leases_signed_agreement_document_id_fkey");
+
 
             entity.HasMany(d => d.Documents).WithMany(p => p.Leases)
                 .UsingEntity<Dictionary<string, object>>(

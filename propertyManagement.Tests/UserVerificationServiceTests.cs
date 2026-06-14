@@ -220,6 +220,7 @@ public class UserVerificationServiceTests
         // Arrange
         var tenantId = Guid.NewGuid();
         _mockVerificationRepository.Setup(r => r.IsUserVerifiedAsync(tenantId)).ReturnsAsync(true);
+        _mockPropertyRepository.Setup(r => r.GetByIdAsync(1)).ReturnsAsync(new Property { Id = 1 });
 
         var proposalDto = new CreateLeaseProposalDto
         {

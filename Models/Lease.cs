@@ -25,7 +25,28 @@ public partial class Lease
 
     public int? StatusId { get; set; }
 
+    /// <summary>
+    /// Gets or sets the identifier of the agreement template document.
+    /// </summary>
+    public Guid? AgreementDocumentId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the identifier of the tenant-signed agreement document.
+    /// </summary>
+    public Guid? SignedAgreementDocumentId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the agreement template document associated with the lease.
+    /// </summary>
+    public virtual Document? AgreementDocument { get; set; }
+
+    /// <summary>
+    /// Gets or sets the tenant-signed agreement document associated with the lease.
+    /// </summary>
+    public virtual Document? SignedAgreementDocument { get; set; }
+
     public virtual Property? PropertyNavigation { get; set; }
+
 
     public virtual LeaseProposal? Proposal { get; set; }
 

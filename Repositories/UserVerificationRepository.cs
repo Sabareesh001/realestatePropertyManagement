@@ -34,7 +34,7 @@ public class UserVerificationRepository : IUserVerificationRepository
         return await _context.UserVerifications
             .Include(uv => uv.UserVerificationDocuments)
                 .ThenInclude(uvd => uvd.Document)
-            .FirstOrDefaultAsync(uv => uv.Id == id);
+            .FirstOrDefaultAsync(uv => uv.Id == id && uv.DeletedAt == null);
     }
 
     /// <summary>
@@ -46,6 +46,7 @@ public class UserVerificationRepository : IUserVerificationRepository
         return await _context.UserVerifications
             .Include(uv => uv.UserVerificationDocuments)
                 .ThenInclude(uvd => uvd.Document)
+            .Where(uv => uv.DeletedAt == null)
             .ToListAsync();
     }
 
@@ -80,7 +81,8 @@ public class UserVerificationRepository : IUserVerificationRepository
         var verification = await GetByIdAsync(id);
         if (verification != null)
         {
-            _context.UserVerifications.Remove(verification);
+            verification.DeletedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified);
+            _context.UserVerifications.Update(verification);
         }
     }
 
@@ -93,7 +95,7 @@ public class UserVerificationRepository : IUserVerificationRepository
         return await _context.UserVerifications
             .Include(uv => uv.UserVerificationDocuments)
                 .ThenInclude(uvd => uvd.Document)
-            .Where(uv => uv.Status == "Pending")
+            .Where(uv => uv.Status == "Pending" && uv.DeletedAt == null)
             .OrderBy(uv => uv.CreatedAt)
             .ToListAsync();
     }
@@ -108,7 +110,7 @@ public class UserVerificationRepository : IUserVerificationRepository
         return await _context.UserVerifications
             .Include(uv => uv.UserVerificationDocuments)
                 .ThenInclude(uvd => uvd.Document)
-            .Where(uv => uv.UserId == userId)
+            .Where(uv => uv.UserId == userId && uv.DeletedAt == null)
             .OrderByDescending(uv => uv.CreatedAt)
             .FirstOrDefaultAsync();
     }
@@ -121,6 +123,6 @@ public class UserVerificationRepository : IUserVerificationRepository
     public async Task<bool> IsUserVerifiedAsync(Guid userId)
     {
         return await _context.UserVerifications
-            .AnyAsync(uv => uv.UserId == userId && uv.Status == "Verified");
+            .AnyAsync(uv => uv.UserId == userId && uv.Status == "Verified" && uv.DeletedAt == null);
     }
 }

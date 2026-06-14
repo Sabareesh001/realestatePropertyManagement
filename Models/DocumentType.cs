@@ -29,6 +29,12 @@ public partial class DocumentType
     public const int LeaseAgreement = 4;
 
     /// <summary>
+    /// The unique identifier for the Signed Lease Agreement document type.
+    /// </summary>
+    public const int SignedLeaseAgreement = 5;
+
+
+    /// <summary>
     /// Gets or sets the unique identifier of the document type.
     /// </summary>
     public int Id { get; set; }

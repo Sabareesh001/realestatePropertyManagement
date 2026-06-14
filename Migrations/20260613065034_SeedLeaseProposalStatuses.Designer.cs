@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using propertyManagement.Data;
@@ -11,9 +12,11 @@ using propertyManagement.Data;
 namespace propertyManagement.Migrations
 {
     [DbContext(typeof(PropertyManagementDbContext))]
-    partial class PropertyManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260613065034_SeedLeaseProposalStatuses")]
+    partial class SeedLeaseProposalStatuses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1268,12 +1271,6 @@ namespace propertyManagement.Migrations
                             Id = 4,
                             CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Lease Agreement"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Signed Lease Agreement"
                         });
                 });
 
@@ -1283,10 +1280,6 @@ namespace propertyManagement.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
-
-                    b.Property<Guid?>("AgreementDocumentId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("agreement_document_id");
 
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("timestamp without time zone")
@@ -1318,10 +1311,6 @@ namespace propertyManagement.Migrations
                         .HasColumnType("numeric(12,2)")
                         .HasColumnName("security_deposit");
 
-                    b.Property<Guid?>("SignedAgreementDocumentId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("signed_agreement_document_id");
-
                     b.Property<DateOnly?>("StartDate")
                         .HasColumnType("date")
                         .HasColumnName("start_date");
@@ -1346,13 +1335,9 @@ namespace propertyManagement.Migrations
                     b.HasKey("Id")
                         .HasName("leases_pkey");
 
-                    b.HasIndex("AgreementDocumentId");
-
                     b.HasIndex("PropertyId");
 
                     b.HasIndex("ProposalId");
-
-                    b.HasIndex("SignedAgreementDocumentId");
 
                     b.HasIndex("StatusId");
 
@@ -1469,56 +1454,6 @@ namespace propertyManagement.Migrations
                         .IsUnique();
 
                     b.ToTable("lease_statuses", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "DRAFT"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "SUBMITTED"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "PENDING_SIGNATURE"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "TENANT_SIGNED"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "ACTIVE"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "REJECTED"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "TERMINATED"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "EXPIRED"
-                        });
                 });
 
             modelBuilder.Entity("propertyManagement.Models.OwnerProfile", b =>
@@ -2100,25 +2035,37 @@ namespace propertyManagement.Migrations
                         {
                             Id = 3,
                             CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "APPROVED"
+                            Name = "UNDER_REVIEW"
                         },
                         new
                         {
                             Id = 4,
                             CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "REJECTED"
+                            Name = "APPROVED"
                         },
                         new
                         {
                             Id = 5,
                             CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "EXPIRED"
+                            Name = "REJECTED"
                         },
                         new
                         {
                             Id = 6,
                             CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "CANCELLED"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "EXPIRED"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "NEGOTIATED"
                         });
                 });
 
@@ -2810,11 +2757,6 @@ namespace propertyManagement.Migrations
 
             modelBuilder.Entity("propertyManagement.Models.Lease", b =>
                 {
-                    b.HasOne("propertyManagement.Models.Document", "AgreementDocument")
-                        .WithMany()
-                        .HasForeignKey("AgreementDocumentId")
-                        .HasConstraintName("leases_agreement_document_id_fkey");
-
                     b.HasOne("propertyManagement.Models.Property", "PropertyNavigation")
                         .WithMany("Leases")
                         .HasForeignKey("PropertyId")
@@ -2824,11 +2766,6 @@ namespace propertyManagement.Migrations
                         .WithMany("Leases")
                         .HasForeignKey("ProposalId")
                         .HasConstraintName("leases_proposal_id_fkey");
-
-                    b.HasOne("propertyManagement.Models.Document", "SignedAgreementDocument")
-                        .WithMany()
-                        .HasForeignKey("SignedAgreementDocumentId")
-                        .HasConstraintName("leases_signed_agreement_document_id_fkey");
 
                     b.HasOne("propertyManagement.Models.LeaseStatus", "Status")
                         .WithMany("Leases")
@@ -2840,13 +2777,9 @@ namespace propertyManagement.Migrations
                         .HasForeignKey("TenantId")
                         .HasConstraintName("leases_tenant_id_fkey");
 
-                    b.Navigation("AgreementDocument");
-
                     b.Navigation("PropertyNavigation");
 
                     b.Navigation("Proposal");
-
-                    b.Navigation("SignedAgreementDocument");
 
                     b.Navigation("Status");
 

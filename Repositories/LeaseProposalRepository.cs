@@ -30,7 +30,7 @@ public class LeaseProposalRepository : ILeaseProposalRepository
     /// <returns>The lease proposal entity if found.</returns>
     public async Task<LeaseProposal?> GetByIdAsync(Guid id)
     {
-        return await _context.LeaseProposals.FindAsync(id);
+        return await _context.LeaseProposals.FirstOrDefaultAsync(lp => lp.Id == id && lp.DeletedAt == null);
     }
 
     /// <summary>
@@ -39,7 +39,7 @@ public class LeaseProposalRepository : ILeaseProposalRepository
     /// <returns>A collection of lease proposals.</returns>
     public async Task<IEnumerable<LeaseProposal>> GetAllAsync()
     {
-        return await _context.LeaseProposals.ToListAsync();
+        return await _context.LeaseProposals.Where(lp => lp.DeletedAt == null).ToListAsync();
     }
 
     /// <summary>
@@ -73,7 +73,61 @@ public class LeaseProposalRepository : ILeaseProposalRepository
         var proposal = await GetByIdAsync(id);
         if (proposal != null)
         {
-            _context.LeaseProposals.Remove(proposal);
+            proposal.DeletedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified);
+            _context.LeaseProposals.Update(proposal);
         }
     }
+
+    /// <summary>
+    /// Retrieves all lease proposals submitted by a specific tenant, eager loading property information.
+    /// </summary>
+    /// <param name="tenantId">The unique identifier of the tenant.</param>
+    /// <returns>A collection of lease proposals.</returns>
+    public async Task<IEnumerable<LeaseProposal>> GetProposalsByTenantIdAsync(Guid tenantId)
+    {
+        return await _context.LeaseProposals
+            .Include(p => p.Property)
+            .Include(p => p.Status)
+            .Where(p => p.TenantId == tenantId && p.DeletedAt == null && (p.Property == null || p.Property.DeletedAt == null))
+            .ToListAsync();
+    }
+
+    /// <summary>
+    /// Retrieves all lease proposals received for properties owned by a specific owner, eager loading tenant details.
+    /// </summary>
+    /// <param name="ownerId">The unique identifier of the owner.</param>
+    /// <returns>A collection of lease proposals.</returns>
+    public async Task<IEnumerable<LeaseProposal>> GetProposalsByOwnerIdAsync(Guid ownerId)
+    {
+        return await _context.LeaseProposals
+            .Include(p => p.Property)
+            .Include(p => p.Status)
+            .Include(p => p.Tenant)
+                .ThenInclude(t => t!.UserProfile)
+                    .ThenInclude(up => up!.TenantProfile)
+            .Where(p => p.Property != null && p.Property.OwnerId == ownerId && p.DeletedAt == null && p.Property.DeletedAt == null && p.StatusId != ProposalStatus.Draft)
+            .ToListAsync();
+    }
+
+    /// <summary>
+    /// Checks if there is any overlapping lease proposal for a given property that is not rejected, cancelled, or expired.
+    /// </summary>
+    /// <param name="propertyId">The unique identifier of the property.</param>
+    /// <param name="startDate">The proposed lease start date.</param>
+    /// <param name="endDate">The proposed lease end date.</param>
+    /// <returns>True if an overlapping active proposal exists; otherwise false.</returns>
+    public async Task<bool> HasOverlappingProposalAsync(int propertyId, DateOnly startDate, DateOnly endDate)
+    {
+        return await _context.LeaseProposals
+            .AnyAsync(lp => lp.PropertyId == propertyId &&
+                            lp.DeletedAt == null &&
+                            lp.StatusId != ProposalStatus.Rejected &&
+                            lp.StatusId != ProposalStatus.Cancelled &&
+                            lp.StatusId != ProposalStatus.Expired &&
+                            lp.StartDate != null &&
+                            lp.EndDate != null &&
+                            lp.StartDate <= endDate &&
+                            lp.EndDate >= startDate);
+    }
 }
+

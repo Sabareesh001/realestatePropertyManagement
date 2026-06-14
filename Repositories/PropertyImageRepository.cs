@@ -35,13 +35,13 @@ public class PropertyImageRepository : IPropertyImageRepository
     /// <inheritdoc />
     public async Task<PropertyImage?> GetByIdAsync(Guid id)
     {
-        return await _context.PropertyImages.FindAsync(id);
+        return await _context.PropertyImages.FirstOrDefaultAsync(pi => pi.Id == id && pi.DeletedAt == null);
     }
 
     /// <inheritdoc />
     public async Task<IEnumerable<PropertyImage>> GetAllAsync()
     {
-        return await _context.PropertyImages.ToListAsync();
+        return await _context.PropertyImages.Where(pi => pi.DeletedAt == null).ToListAsync();
     }
 
     /// <inheritdoc />
@@ -58,7 +58,8 @@ public class PropertyImageRepository : IPropertyImageRepository
         var propertyImage = await GetByIdAsync(id);
         if (propertyImage != null)
         {
-            _context.PropertyImages.Remove(propertyImage);
+            propertyImage.DeletedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified);
+            _context.PropertyImages.Update(propertyImage);
         }
     }
 
@@ -66,7 +67,7 @@ public class PropertyImageRepository : IPropertyImageRepository
     public async Task<IEnumerable<PropertyImage>> GetByPropertyIdAsync(int propertyId)
     {
         return await _context.PropertyImages
-            .Where(pi => pi.PropertyId == propertyId)
+            .Where(pi => pi.PropertyId == propertyId && pi.DeletedAt == null)
             .OrderBy(pi => pi.DisplayOrder)
             .ToListAsync();
     }

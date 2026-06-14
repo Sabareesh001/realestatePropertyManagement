@@ -42,8 +42,12 @@ builder.Services.AddScoped<IPropertyService, PropertyService>();
 // Register Lease Proposal Service
 builder.Services.AddScoped<ILeaseProposalService, LeaseProposalService>();
 
+// Register Lease Service
+builder.Services.AddScoped<ILeaseService, LeaseService>();
+
 // Register Bank Account Service
 builder.Services.AddScoped<IBankAccountService, BankAccountService>();
+
 
 // Register JWT Service
 builder.Services.AddScoped<IJwtService, JwtService>();
