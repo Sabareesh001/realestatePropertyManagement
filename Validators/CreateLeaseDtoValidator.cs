@@ -21,6 +21,9 @@ public class CreateLeaseDtoValidator : AbstractValidator<CreateLeaseDto>
         RuleFor(x => x.PropertyId)
             .GreaterThan(0).WithMessage("Property ID must be greater than zero.");
 
+        RuleFor(x => x.ProposalId)
+            .NotEmpty().WithMessage("Proposal ID is required.");
+
         RuleFor(x => x.StartDate)
             .NotEmpty().WithMessage("Start date is required.");
 
@@ -37,8 +40,5 @@ public class CreateLeaseDtoValidator : AbstractValidator<CreateLeaseDto>
         RuleFor(x => x.SecurityDeposit)
             .GreaterThanOrEqualTo(0).WithMessage("Security deposit cannot be negative.");
 
-        RuleFor(x => x.AgreementDocumentUrl)
-            .NotEmpty().WithMessage("Agreement document URL is required when submitting a lease.")
-            .When(x => x.StatusId == LeaseStatus.Submitted);
     }
 }

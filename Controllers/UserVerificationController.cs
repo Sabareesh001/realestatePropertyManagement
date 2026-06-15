@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using propertyManagement.DTOs;
 using propertyManagement.Services;
-using propertyManagement.Filters;
 
 namespace propertyManagement.Controllers;
 
@@ -66,7 +65,7 @@ public class UserVerificationController : BaseApiController
     /// <returns>A collection of pending user verification requests.</returns>
     /// <response code="200">Pending verifications retrieved successfully.</response>
     /// <response code="403">If user is not an administrator.</response>
-    [AuthorizeRoles("Admin")]
+    [Authorize(Roles = "Admin")]
     [HttpGet("pending")]
     public async Task<ActionResult<IEnumerable<UserVerificationResponseDto>>> GetPendingVerifications()
     {
@@ -83,7 +82,7 @@ public class UserVerificationController : BaseApiController
     /// <response code="200">Verification approved successfully.</response>
     /// <response code="400">If the request is not pending or invalid.</response>
     /// <response code="403">If user is not an administrator.</response>
-    [AuthorizeRoles("Admin")]
+    [Authorize(Roles = "Admin")]
     [HttpPost("{id}/verify")]
     public async Task<ActionResult<UserVerificationResponseDto>> Verify(Guid id, [FromBody] VerifyRequestDto dto)
     {
@@ -101,7 +100,7 @@ public class UserVerificationController : BaseApiController
     /// <response code="200">Verification rejected successfully.</response>
     /// <response code="400">If the request is not pending or invalid.</response>
     /// <response code="403">If user is not an administrator.</response>
-    [AuthorizeRoles("Admin")]
+    [Authorize(Roles = "Admin")]
     [HttpPost("{id}/reject")]
     public async Task<ActionResult<UserVerificationResponseDto>> Reject(Guid id, [FromBody] VerifyRequestDto dto)
     {

@@ -35,12 +35,12 @@ public class CreateLeaseDtoValidatorTests
         {
             TenantId = Guid.NewGuid(),
             PropertyId = 1,
+            ProposalId = Guid.NewGuid(),
             StartDate = DateOnly.FromDateTime(DateTime.Today),
             EndDate = DateOnly.FromDateTime(DateTime.Today.AddMonths(12)),
             MonthlyRent = 1500,
             UpfrontPayment = 3000,
-            SecurityDeposit = 1500,
-            StatusId = LeaseStatus.Draft
+            SecurityDeposit = 1500
         };
 
         var result = await _validator.ValidateAsync(dto);
@@ -49,27 +49,26 @@ public class CreateLeaseDtoValidatorTests
     }
 
     /// <summary>
-    /// Verifies that a missing agreement document url fails validation when submitted.
+    /// Verifies that an empty proposal ID fails validation.
     /// </summary>
     [Test]
-    public async Task Validate_SubmittedLeaseMissingAgreementDoc_Fails()
+    public async Task Validate_EmptyProposalId_Fails()
     {
         var dto = new CreateLeaseDto
         {
             TenantId = Guid.NewGuid(),
             PropertyId = 1,
+            ProposalId = Guid.Empty,
             StartDate = DateOnly.FromDateTime(DateTime.Today),
             EndDate = DateOnly.FromDateTime(DateTime.Today.AddMonths(12)),
             MonthlyRent = 1500,
             UpfrontPayment = 3000,
-            SecurityDeposit = 1500,
-            StatusId = LeaseStatus.Submitted,
-            AgreementDocumentUrl = ""
+            SecurityDeposit = 1500
         };
 
         var result = await _validator.ValidateAsync(dto);
 
         Assert.That(result.IsValid, Is.False);
-        Assert.That(result.Errors.Any(e => e.ErrorMessage.Contains("Agreement document URL is required when submitting a lease.")), Is.True);
+        Assert.That(result.Errors.Any(e => e.ErrorMessage.Contains("Proposal ID is required.")), Is.True);
     }
 }

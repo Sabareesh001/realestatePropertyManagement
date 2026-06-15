@@ -41,6 +41,11 @@ public interface IUnitOfWork : IDisposable
     ILeaseRepository Leases { get; }
 
     /// <summary>
+    /// Gets the Document repository.
+    /// </summary>
+    IDocumentRepository Documents { get; }
+
+    /// <summary>
     /// Gets the BankAccount repository.
     /// </summary>
     IBankAccountRepository BankAccounts { get; }

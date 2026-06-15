@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using propertyManagement.DTOs;
 using propertyManagement.Services;
-using propertyManagement.Filters;
 
 namespace propertyManagement.Controllers;
 
@@ -36,7 +35,7 @@ public class PropertyController : BaseApiController
     /// <response code="201">Property successfully created.</response>
     /// <response code="400">If user is not verified or request is invalid.</response>
     /// <response code="401">If user is unauthorized.</response>
-    [AuthorizeRoles("Owner")]
+    [Authorize(Roles = "Owner")]
     [HttpPost]
     public async Task<ActionResult<PropertyResponseDto>> CreateProperty([FromBody] CreatePropertyDto dto)
     {
@@ -78,7 +77,7 @@ public class PropertyController : BaseApiController
     /// <response code="200">Returns the list of owner's properties.</response>
     /// <response code="401">If the user is not authenticated.</response>
     /// <response code="403">If the user is not in the Owner role.</response>
-    [AuthorizeRoles("Owner")]
+    [Authorize(Roles = "Owner")]
     [HttpGet("my")]
     public async Task<ActionResult<IEnumerable<PropertyResponseDto>>> GetMyProperties()
     {
@@ -99,7 +98,7 @@ public class PropertyController : BaseApiController
     /// <response code="401">If the user is not authenticated.</response>
     /// <response code="403">If the user is not the owner of the property.</response>
     /// <response code="404">If the property is not found.</response>
-    [AuthorizeRoles("Owner")]
+    [Authorize(Roles = "Owner")]
     [HttpPut("{id:int}")]
     public async Task<ActionResult<PropertyResponseDto>> UpdateProperty(int id, [FromBody] UpdatePropertyDto dto)
     {
@@ -117,7 +116,7 @@ public class PropertyController : BaseApiController
     /// <response code="401">If the user is not authenticated.</response>
     /// <response code="403">If the user is not the owner of the property.</response>
     /// <response code="404">If the property is not found.</response>
-    [AuthorizeRoles("Owner")]
+    [Authorize(Roles = "Owner")]
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteProperty(int id)
     {

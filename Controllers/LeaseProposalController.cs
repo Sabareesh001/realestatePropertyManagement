@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using propertyManagement.DTOs;
 using propertyManagement.Services;
-using propertyManagement.Filters;
 
 namespace propertyManagement.Controllers;
 
@@ -74,7 +73,7 @@ public class LeaseProposalController : BaseApiController
     /// <response code="401">If user is unauthorized.</response>
     /// <response code="403">If user is not the owner of the property.</response>
     /// <response code="404">If the lease proposal or property is not found.</response>
-    [AuthorizeRoles("Owner")]
+    [Authorize(Roles = "Owner")]
     [HttpPut("{id:guid}/accept")]
     public async Task<ActionResult<LeaseProposalResponseDto>> AcceptProposal(Guid id)
     {
@@ -93,7 +92,7 @@ public class LeaseProposalController : BaseApiController
     /// <response code="401">If user is unauthorized.</response>
     /// <response code="403">If user is not the owner of the property.</response>
     /// <response code="404">If the lease proposal or property is not found.</response>
-    [AuthorizeRoles("Owner")]
+    [Authorize(Roles = "Owner")]
     [HttpPut("{id:guid}/reject")]
     public async Task<ActionResult<LeaseProposalResponseDto>> RejectProposal(Guid id)
     {
@@ -112,7 +111,7 @@ public class LeaseProposalController : BaseApiController
     /// <response code="401">If user is unauthorized.</response>
     /// <response code="403">If user is not the tenant associated with the proposal.</response>
     /// <response code="404">If the lease proposal is not found.</response>
-    [AuthorizeRoles("Tenant")]
+    [Authorize(Roles = "Tenant")]
     [HttpPut("{id:guid}/cancel")]
     public async Task<ActionResult<LeaseProposalResponseDto>> CancelProposal(Guid id)
     {
@@ -127,7 +126,7 @@ public class LeaseProposalController : BaseApiController
     /// <returns>A list of submitted lease proposals.</returns>
     /// <response code="200">Lease proposals retrieved successfully.</response>
     /// <response code="401">If user is unauthorized.</response>
-    [AuthorizeRoles("Tenant")]
+    [Authorize(Roles = "Tenant")]
     [HttpGet("my-requests")]
     public async Task<ActionResult<IEnumerable<LeaseProposalResponseDto>>> GetMyRequests()
     {
@@ -143,7 +142,7 @@ public class LeaseProposalController : BaseApiController
     /// <response code="200">Lease proposals retrieved successfully.</response>
     /// <response code="401">If user is unauthorized.</response>
     /// <response code="403">If user is not in the Owner role.</response>
-    [AuthorizeRoles("Owner")]
+    [Authorize(Roles = "Owner")]
     [HttpGet("received-requests")]
     public async Task<ActionResult<IEnumerable<LeaseProposalResponseDto>>> GetReceivedRequests()
     {

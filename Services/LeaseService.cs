@@ -52,9 +52,15 @@ public class LeaseService : ILeaseService
             throw new InvalidOperationException("Tenant must be verified to rent a property.");
         }
 
-        if (dto.StatusId == LeaseStatus.Submitted && string.IsNullOrEmpty(dto.AgreementDocumentUrl))
+        var proposal = await _unitOfWork.LeaseProposals.GetByIdAsync(dto.ProposalId);
+        if (proposal == null)
         {
-            throw new InvalidOperationException("Agreement document is mandatory when submitting a lease.");
+            throw new InvalidOperationException("Lease proposal not found.");
+        }
+
+        if (proposal.PropertyId != dto.PropertyId || proposal.TenantId != dto.TenantId)
+        {
+            throw new InvalidOperationException("Lease proposal does not match the specified property or tenant.");
         }
 
         var lease = new Lease
@@ -68,7 +74,7 @@ public class LeaseService : ILeaseService
             MonthlyRent = dto.MonthlyRent,
             UpfrontPayment = dto.UpfrontPayment,
             SecurityDeposit = dto.SecurityDeposit,
-            StatusId = dto.StatusId,
+            StatusId = LeaseStatus.Draft,
             CreatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified)
         };
 
@@ -83,6 +89,21 @@ public class LeaseService : ILeaseService
             };
         }
 
+        if (dto.Documents != null)
+        {
+            foreach (var docDto in dto.Documents)
+            {
+                lease.Documents.Add(new Document
+                {
+                    Id = Guid.NewGuid(),
+                    DocumentTypeId = docDto.DocumentTypeId,
+                    DocumentNumber = docDto.DocumentNumber,
+                    DocumentUrl = docDto.DocumentUrl,
+                    CreatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified)
+                });
+            }
+        }
+
         await _unitOfWork.Leases.CreateAsync(lease);
         await _unitOfWork.SaveChangesAsync();
 
@@ -95,7 +116,7 @@ public class LeaseService : ILeaseService
     /// </summary>
     public async Task<LeaseResponseDto> UpdateLeaseAsync(Guid ownerId, Guid leaseId, UpdateLeaseDto dto)
     {
-        var lease = await _unitOfWork.Leases.GetByIdAsync(leaseId);
+        var lease = await _unitOfWork.Leases.GetByIdWithDocumentsAsync(leaseId);
         if (lease == null || lease.PropertyNavigation?.OwnerId != ownerId)
         {
             throw new InvalidOperationException("Lease not found or you are not the owner of the property.");
@@ -111,11 +132,13 @@ public class LeaseService : ILeaseService
         if (dto.MonthlyRent.HasValue) lease.MonthlyRent = dto.MonthlyRent.Value;
         if (dto.UpfrontPayment.HasValue) lease.UpfrontPayment = dto.UpfrontPayment.Value;
         if (dto.SecurityDeposit.HasValue) lease.SecurityDeposit = dto.SecurityDeposit.Value;
-        if (dto.StatusId.HasValue) lease.StatusId = dto.StatusId.Value;
-
-        if (lease.StatusId == LeaseStatus.Submitted && lease.AgreementDocumentId == null && string.IsNullOrEmpty(dto.AgreementDocumentUrl))
+        if (dto.StatusId.HasValue)
         {
-            throw new InvalidOperationException("Agreement document is mandatory when submitting a lease.");
+            if (dto.StatusId.Value == LeaseStatus.Submitted)
+            {
+                throw new InvalidOperationException("Please use the submit endpoint to submit the lease.");
+            }
+            lease.StatusId = dto.StatusId.Value;
         }
 
         if (!string.IsNullOrEmpty(dto.AgreementDocumentUrl))
@@ -127,13 +150,33 @@ public class LeaseService : ILeaseService
             }
             else
             {
-                lease.AgreementDocument = new Document
+                var newDoc = new Document
                 {
                     Id = Guid.NewGuid(),
                     DocumentTypeId = DocumentType.LeaseAgreement,
                     DocumentUrl = dto.AgreementDocumentUrl,
                     CreatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified)
                 };
+                lease.AgreementDocument = newDoc;
+                await _unitOfWork.Documents.CreateAsync(newDoc);
+            }
+        }
+
+        if (dto.Documents != null)
+        {
+            lease.Documents.Clear();
+            foreach (var docDto in dto.Documents)
+            {
+                var newDoc = new Document
+                {
+                    Id = Guid.NewGuid(),
+                    DocumentTypeId = docDto.DocumentTypeId,
+                    DocumentNumber = docDto.DocumentNumber,
+                    DocumentUrl = docDto.DocumentUrl,
+                    CreatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified)
+                };
+                lease.Documents.Add(newDoc);
+                await _unitOfWork.Documents.CreateAsync(newDoc);
             }
         }
 
@@ -167,9 +210,9 @@ public class LeaseService : ILeaseService
             {
                 lease.StatusId = LeaseStatus.PendingSignature;
 
-                if (lease.ProposalId.HasValue)
+                if (lease.ProposalId != Guid.Empty)
                 {
-                    var proposal = await _unitOfWork.LeaseProposals.GetByIdAsync(lease.ProposalId.Value);
+                    var proposal = await _unitOfWork.LeaseProposals.GetByIdAsync(lease.ProposalId);
                     if (proposal != null)
                     {
                         proposal.StatusId = ProposalStatus.Approved;
@@ -183,9 +226,9 @@ public class LeaseService : ILeaseService
             {
                 lease.StatusId = LeaseStatus.Rejected;
 
-                if (lease.ProposalId.HasValue)
+                if (lease.ProposalId != Guid.Empty)
                 {
-                    var proposal = await _unitOfWork.LeaseProposals.GetByIdAsync(lease.ProposalId.Value);
+                    var proposal = await _unitOfWork.LeaseProposals.GetByIdAsync(lease.ProposalId);
                     if (proposal != null)
                     {
                         proposal.StatusId = ProposalStatus.Rejected;
@@ -231,13 +274,15 @@ public class LeaseService : ILeaseService
             throw new InvalidOperationException("Signed agreement document URL is mandatory.");
         }
 
-        lease.SignedAgreementDocument = new Document
+        var signedDoc = new Document
         {
             Id = Guid.NewGuid(),
             DocumentTypeId = DocumentType.SignedLeaseAgreement,
             DocumentUrl = dto.SignedAgreementDocumentUrl,
             CreatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified)
         };
+        lease.SignedAgreementDocument = signedDoc;
+        await _unitOfWork.Documents.CreateAsync(signedDoc);
 
         lease.StatusId = LeaseStatus.TenantSigned;
 
@@ -303,7 +348,7 @@ public class LeaseService : ILeaseService
     /// <summary>
     /// Retrieves a specific lease details, validating role-based authorization.
     /// </summary>
-    public async Task<LeaseResponseDto> GetLeaseByIdAsync(Guid leaseId, Guid userId, string role)
+    public async Task<LeaseResponseDto> GetLeaseByIdAsync(Guid leaseId, Guid userId, IEnumerable<string> roles)
     {
         var lease = await _unitOfWork.Leases.GetByIdAsync(leaseId);
         if (lease == null)
@@ -311,17 +356,17 @@ public class LeaseService : ILeaseService
             throw new KeyNotFoundException("Lease not found.");
         }
 
-        if (role == "Admin")
+        if (roles.Contains("Admin"))
         {
             return MapToResponseDto(lease);
         }
 
-        if (role == "Owner" && lease.PropertyNavigation?.OwnerId == userId)
+        if (roles.Contains("Owner") && lease.PropertyNavigation?.OwnerId == userId)
         {
             return MapToResponseDto(lease);
         }
 
-        if (role == "Tenant" && lease.TenantId == userId)
+        if (roles.Contains("Tenant") && lease.TenantId == userId)
         {
             // Tenant cannot see draft or submitted leases (only pending signature, signed, active, etc.)
             if (lease.StatusId == LeaseStatus.Draft || lease.StatusId == LeaseStatus.Submitted)
@@ -337,29 +382,31 @@ public class LeaseService : ILeaseService
     /// <summary>
     /// Retrieves all leases associated with the user based on their role.
     /// </summary>
-    public async Task<IEnumerable<LeaseResponseDto>> GetMyLeasesAsync(Guid userId, string role)
+    public async Task<IEnumerable<LeaseResponseDto>> GetMyLeasesAsync(Guid userId, IEnumerable<string> roles)
     {
-        if (role == "Admin")
+        if (roles.Contains("Admin"))
         {
             var leases = await _unitOfWork.Leases.GetAllAsync();
             return leases.Select(MapToResponseDto).ToList();
         }
 
-        if (role == "Owner")
+        var allLeases = await _unitOfWork.Leases.GetAllAsync();
+        var result = new List<Lease>();
+
+        if (roles.Contains("Owner"))
         {
-            var leases = await _unitOfWork.Leases.GetAllAsync();
-            var ownerLeases = leases.Where(l => l.PropertyNavigation?.OwnerId == userId);
-            return ownerLeases.Select(MapToResponseDto).ToList();
+            var ownerLeases = allLeases.Where(l => l.PropertyNavigation?.OwnerId == userId);
+            result.AddRange(ownerLeases);
         }
 
-        if (role == "Tenant")
+        if (roles.Contains("Tenant"))
         {
-            var leases = await _unitOfWork.Leases.GetAllAsync();
-            var tenantLeases = leases.Where(l => l.TenantId == userId && l.StatusId != LeaseStatus.Draft && l.StatusId != LeaseStatus.Submitted);
-            return tenantLeases.Select(MapToResponseDto).ToList();
+            var tenantLeases = allLeases.Where(l => l.TenantId == userId && l.StatusId != LeaseStatus.Draft && l.StatusId != LeaseStatus.Submitted);
+            result.AddRange(tenantLeases);
         }
 
-        return Enumerable.Empty<LeaseResponseDto>();
+        var distinctLeases = result.GroupBy(l => l.Id).Select(g => g.First());
+        return distinctLeases.Select(MapToResponseDto).ToList();
     }
 
     /// <summary>
@@ -380,10 +427,120 @@ public class LeaseService : ILeaseService
             SecurityDeposit = lease.SecurityDeposit,
             StatusId = lease.StatusId,
             StatusName = lease.Status?.Name,
-            AgreementDocumentUrl = lease.AgreementDocument?.DocumentUrl,
-            SignedAgreementDocumentUrl = lease.SignedAgreementDocument?.DocumentUrl,
+            AgreementDocumentUrl = lease.AgreementDocument != null && lease.AgreementDocument.DeletedAt == null ? lease.AgreementDocument.DocumentUrl : null,
+            SignedAgreementDocumentUrl = lease.SignedAgreementDocument != null && lease.SignedAgreementDocument.DeletedAt == null ? lease.SignedAgreementDocument.DocumentUrl : null,
             CreatedAt = lease.CreatedAt,
             UpdatedAt = lease.UpdatedAt
         };
+    }
+
+    /// <summary>
+    /// Retrieves all additional documents associated with a specific lease.
+    /// </summary>
+    public async Task<IEnumerable<DocumentResponseDto>> GetLeaseDocumentsAsync(Guid leaseId, Guid userId, IEnumerable<string> roles)
+    {
+        var lease = await _unitOfWork.Leases.GetByIdWithDocumentsAsync(leaseId);
+        if (lease == null)
+        {
+            throw new KeyNotFoundException("Lease not found.");
+        }
+
+        bool isAuthorized = false;
+
+        if (roles.Contains("Admin"))
+        {
+            isAuthorized = true;
+        }
+        else if (roles.Contains("Owner") && lease.PropertyNavigation?.OwnerId == userId)
+        {
+            isAuthorized = true;
+        }
+        else if (roles.Contains("Tenant") && lease.TenantId == userId)
+        {
+            // Tenant cannot see documents of draft or submitted leases
+            if (lease.StatusId == LeaseStatus.Draft || lease.StatusId == LeaseStatus.Submitted)
+            {
+                throw new UnauthorizedAccessException("You are not authorized to view documents for this lease in its current state.");
+            }
+            isAuthorized = true;
+        }
+
+        if (!isAuthorized)
+        {
+            throw new UnauthorizedAccessException("You are not authorized to view documents for this lease.");
+        }
+
+        var result = new List<DocumentResponseDto>();
+
+        if (lease.AgreementDocument != null && lease.AgreementDocument.DeletedAt == null)
+        {
+            result.Add(new DocumentResponseDto
+            {
+                Id = lease.AgreementDocument.Id,
+                DocumentTypeId = lease.AgreementDocument.DocumentTypeId,
+                DocumentNumber = lease.AgreementDocument.DocumentNumber,
+                DocumentUrl = lease.AgreementDocument.DocumentUrl
+            });
+        }
+
+        if (lease.SignedAgreementDocument != null && lease.SignedAgreementDocument.DeletedAt == null)
+        {
+            result.Add(new DocumentResponseDto
+            {
+                Id = lease.SignedAgreementDocument.Id,
+                DocumentTypeId = lease.SignedAgreementDocument.DocumentTypeId,
+                DocumentNumber = lease.SignedAgreementDocument.DocumentNumber,
+                DocumentUrl = lease.SignedAgreementDocument.DocumentUrl
+            });
+        }
+
+        if (lease.Documents != null)
+        {
+            result.AddRange(lease.Documents
+                .Where(d => d.DeletedAt == null)
+                .Select(d => new DocumentResponseDto
+                {
+                    Id = d.Id,
+                    DocumentTypeId = d.DocumentTypeId,
+                    DocumentNumber = d.DocumentNumber,
+                    DocumentUrl = d.DocumentUrl
+                }));
+        }
+
+        return result.GroupBy(d => d.Id).Select(g => g.First()).ToList();
+    }
+
+    /// <summary>
+    /// Submits a lease template for verification (called by the owner).
+    /// </summary>
+    /// <param name="ownerId">The identifier of the owner submitting the lease.</param>
+    /// <param name="leaseId">The identifier of the lease to submit.</param>
+    /// <returns>A response DTO representing the submitted lease.</returns>
+    /// <exception cref="InvalidOperationException">Thrown when lease is not found, owner mismatch, lease not in Draft, or agreement document is missing.</exception>
+    public async Task<LeaseResponseDto> SubmitLeaseAsync(Guid ownerId, Guid leaseId)
+    {
+        var lease = await _unitOfWork.Leases.GetByIdWithDocumentsAsync(leaseId);
+        if (lease == null || lease.PropertyNavigation?.OwnerId != ownerId)
+        {
+            throw new InvalidOperationException("Lease not found or you are not the owner of the property.");
+        }
+
+        if (lease.StatusId != LeaseStatus.Draft)
+        {
+            throw new InvalidOperationException("Only leases in Draft status can be submitted.");
+        }
+
+        if (lease.AgreementDocument == null || lease.AgreementDocument.DeletedAt != null || string.IsNullOrEmpty(lease.AgreementDocument.DocumentUrl))
+        {
+            throw new InvalidOperationException("Please upload an agreement document before submitting the lease.");
+        }
+
+        lease.StatusId = LeaseStatus.Submitted;
+
+        await _unitOfWork.Leases.UpdateAsync(lease);
+        await _unitOfWork.SaveChangesAsync();
+
+        var updatedLease = await _unitOfWork.Leases.GetByIdAsync(lease.Id);
+        return MapToResponseDto(updatedLease ?? lease);
     }
 }

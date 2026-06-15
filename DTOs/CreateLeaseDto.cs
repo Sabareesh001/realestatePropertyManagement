@@ -18,9 +18,9 @@ public class CreateLeaseDto
     public int PropertyId { get; set; }
 
     /// <summary>
-    /// Gets or sets the optional rent request (proposal) identifier associated with this lease.
+    /// Gets or sets the rent request (proposal) identifier associated with this lease.
     /// </summary>
-    public Guid? ProposalId { get; set; }
+    public Guid ProposalId { get; set; }
 
     /// <summary>
     /// Gets or sets the lease start date.
@@ -47,13 +47,14 @@ public class CreateLeaseDto
     /// </summary>
     public decimal SecurityDeposit { get; set; }
 
-    /// <summary>
-    /// Gets or sets the initial status of the lease (e.g. Draft = 1, Submitted = 2).
-    /// </summary>
-    public int StatusId { get; set; }
 
     /// <summary>
     /// Gets or sets the URL of the agreement document. Required if submitting the lease.
     /// </summary>
     public string? AgreementDocumentUrl { get; set; }
+
+    /// <summary>
+    /// Gets or sets the optional collection of additional documents associated with the lease.
+    /// </summary>
+    public List<LeaseDocumentDto>? Documents { get; set; }
 }

@@ -571,7 +571,9 @@ public partial class PropertyManagementDbContext : DbContext
                 .HasPrecision(12, 2)
                 .HasColumnName("monthly_rent");
             entity.Property(e => e.PropertyId).HasColumnName("property_id");
-            entity.Property(e => e.ProposalId).HasColumnName("proposal_id");
+            entity.Property(e => e.ProposalId)
+                .HasColumnName("proposal_id")
+                .IsRequired();
             entity.Property(e => e.SecurityDeposit)
                 .HasPrecision(12, 2)
                 .HasColumnName("security_deposit");

@@ -91,4 +91,21 @@ public class LeaseRepository : ILeaseRepository
             _context.Leases.Update(lease);
         }
     }
+
+    /// <summary>
+    /// Retrieves a lease by its identifier, eager loading its associated documents.
+    /// </summary>
+    /// <param name="id">The lease identifier.</param>
+    /// <returns>The lease entity with documents loaded if found; otherwise null.</returns>
+    public async Task<Lease?> GetByIdWithDocumentsAsync(Guid id)
+    {
+        return await _context.Leases
+            .Include(l => l.Tenant)
+            .Include(l => l.PropertyNavigation)
+            .Include(l => l.Status)
+            .Include(l => l.AgreementDocument)
+            .Include(l => l.SignedAgreementDocument)
+            .Include(l => l.Documents)
+            .FirstOrDefaultAsync(l => l.Id == id && l.DeletedAt == null && (l.PropertyNavigation == null || l.PropertyNavigation.DeletedAt == null));
+    }
 }

@@ -41,4 +41,9 @@ public class UpdateLeaseDto
     /// Gets or sets the URL of the agreement document.
     /// </summary>
     public string? AgreementDocumentUrl { get; set; }
+
+    /// <summary>
+    /// Gets or sets the optional collection of additional documents associated with the lease.
+    /// </summary>
+    public List<LeaseDocumentDto>? Documents { get; set; }
 }

@@ -28,6 +28,14 @@ public interface ILeaseService
     Task<LeaseResponseDto> UpdateLeaseAsync(Guid ownerId, Guid leaseId, UpdateLeaseDto dto);
 
     /// <summary>
+    /// Submits a lease template for verification (called by the owner).
+    /// </summary>
+    /// <param name="ownerId">The identifier of the owner submitting the lease.</param>
+    /// <param name="leaseId">The identifier of the lease to submit.</param>
+    /// <returns>A response DTO representing the submitted lease.</returns>
+    Task<LeaseResponseDto> SubmitLeaseAsync(Guid ownerId, Guid leaseId);
+
+    /// <summary>
     /// Verifies/approves or rejects a submitted lease agreement template (called by an admin).
     /// </summary>
     /// <param name="adminId">The unique identifier of the admin verifying the lease.</param>
@@ -59,15 +67,24 @@ public interface ILeaseService
     /// </summary>
     /// <param name="leaseId">The unique identifier of the lease.</param>
     /// <param name="userId">The unique identifier of the user requesting details.</param>
-    /// <param name="role">The role of the requesting user (Tenant, Owner, Admin).</param>
+    /// <param name="roles">The roles of the requesting user (Tenant, Owner, Admin).</param>
     /// <returns>A response DTO representing the lease.</returns>
-    Task<LeaseResponseDto> GetLeaseByIdAsync(Guid leaseId, Guid userId, string role);
+    Task<LeaseResponseDto> GetLeaseByIdAsync(Guid leaseId, Guid userId, IEnumerable<string> roles);
 
     /// <summary>
-    /// Retrieves all leases associated with the user based on their role.
+    /// Retrieves all leases associated with the user based on their roles.
     /// </summary>
     /// <param name="userId">The unique identifier of the user.</param>
-    /// <param name="role">The role of the user (Tenant, Owner, Admin).</param>
+    /// <param name="roles">The roles of the user (Tenant, Owner, Admin).</param>
     /// <returns>A collection of lease response DTOs.</returns>
-    Task<IEnumerable<LeaseResponseDto>> GetMyLeasesAsync(Guid userId, string role);
+    Task<IEnumerable<LeaseResponseDto>> GetMyLeasesAsync(Guid userId, IEnumerable<string> roles);
+
+    /// <summary>
+    /// Retrieves all additional documents associated with a specific lease.
+    /// </summary>
+    /// <param name="leaseId">The unique identifier of the lease.</param>
+    /// <param name="userId">The unique identifier of the user requesting documents.</param>
+    /// <param name="roles">The roles of the requesting user.</param>
+    /// <returns>A collection of document response DTOs.</returns>
+    Task<IEnumerable<DocumentResponseDto>> GetLeaseDocumentsAsync(Guid leaseId, Guid userId, IEnumerable<string> roles);
 }

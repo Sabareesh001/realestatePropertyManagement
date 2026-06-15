@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using propertyManagement.DTOs;
 using propertyManagement.Services;
-using propertyManagement.Filters;
 
 namespace propertyManagement.Controllers;
 
@@ -37,7 +36,7 @@ public class LeaseController : BaseApiController
     /// <response code="400">If validation fails or user is not verified.</response>
     /// <response code="401">If user is unauthorized.</response>
     /// <response code="403">If user is not in the Owner role.</response>
-    [AuthorizeRoles("Owner")]
+    [Authorize(Roles = "Owner")]
     [HttpPost]
     public async Task<ActionResult<LeaseResponseDto>> CreateLease([FromBody] CreateLeaseDto dto)
     {
@@ -57,12 +56,31 @@ public class LeaseController : BaseApiController
     /// <response code="401">If user is unauthorized.</response>
     /// <response code="403">If user is not in the Owner role.</response>
     /// <response code="404">If the lease was not found.</response>
-    [AuthorizeRoles("Owner")]
+    [Authorize(Roles = "Owner")]
     [HttpPut("{id:guid}")]
     public async Task<ActionResult<LeaseResponseDto>> UpdateLease(Guid id, [FromBody] UpdateLeaseDto dto)
     {
         var ownerId = GetCurrentUserId();
         var result = await _leaseService.UpdateLeaseAsync(ownerId, id, dto);
+        return Ok(result);
+    }
+
+    /// <summary>
+    /// Submits a lease template for verification (called by the owner).
+    /// </summary>
+    /// <param name="id">The unique identifier of the lease to submit.</param>
+    /// <returns>The submitted lease details.</returns>
+    /// <response code="200">Lease submitted successfully.</response>
+    /// <response code="400">If validation fails or required fields are missing.</response>
+    /// <response code="401">If user is unauthorized.</response>
+    /// <response code="403">If user is not in the Owner role.</response>
+    /// <response code="404">If the lease was not found.</response>
+    [Authorize(Roles = "Owner")]
+    [HttpPut("{id:guid}/submit")]
+    public async Task<ActionResult<LeaseResponseDto>> SubmitLease(Guid id)
+    {
+        var ownerId = GetCurrentUserId();
+        var result = await _leaseService.SubmitLeaseAsync(ownerId, id);
         return Ok(result);
     }
 
@@ -76,7 +94,7 @@ public class LeaseController : BaseApiController
     /// <response code="401">If user is unauthorized.</response>
     /// <response code="403">If user is not in the Admin role.</response>
     /// <response code="404">If the lease was not found.</response>
-    [AuthorizeRoles("Admin")]
+    [Authorize(Roles = "Admin")]
     [HttpPut("{id:guid}/verify-template")]
     public async Task<ActionResult<LeaseResponseDto>> VerifyTemplate(Guid id, [FromQuery] bool approve = true)
     {
@@ -96,7 +114,7 @@ public class LeaseController : BaseApiController
     /// <response code="401">If user is unauthorized.</response>
     /// <response code="403">If user is not in the Tenant role.</response>
     /// <response code="404">If the lease was not found.</response>
-    [AuthorizeRoles("Tenant")]
+    [Authorize(Roles = "Tenant")]
     [HttpPut("{id:guid}/sign")]
     public async Task<ActionResult<LeaseResponseDto>> SignLease(Guid id, [FromBody] SignLeaseDto dto)
     {
@@ -115,7 +133,7 @@ public class LeaseController : BaseApiController
     /// <response code="401">If user is unauthorized.</response>
     /// <response code="403">If user is not in the Admin role.</response>
     /// <response code="404">If the lease was not found.</response>
-    [AuthorizeRoles("Admin")]
+    [Authorize(Roles = "Admin")]
     [HttpPut("{id:guid}/verify-signed")]
     public async Task<ActionResult<LeaseResponseDto>> VerifySigned(Guid id, [FromQuery] bool approve = true)
     {
@@ -138,8 +156,8 @@ public class LeaseController : BaseApiController
     public async Task<ActionResult<LeaseResponseDto>> GetLeaseById(Guid id)
     {
         var userId = GetCurrentUserId();
-        var role = User.FindFirst(ClaimTypes.Role)?.Value ?? string.Empty;
-        var result = await _leaseService.GetLeaseByIdAsync(id, userId, role);
+        var roles = User.FindAll(ClaimTypes.Role).Select(c => c.Value).ToList();
+        var result = await _leaseService.GetLeaseByIdAsync(id, userId, roles);
         return Ok(result);
     }
 
@@ -154,8 +172,27 @@ public class LeaseController : BaseApiController
     public async Task<ActionResult<IEnumerable<LeaseResponseDto>>> GetMyLeases()
     {
         var userId = GetCurrentUserId();
-        var role = User.FindFirst(ClaimTypes.Role)?.Value ?? string.Empty;
-        var result = await _leaseService.GetMyLeasesAsync(userId, role);
+        var roles = User.FindAll(ClaimTypes.Role).Select(c => c.Value).ToList();
+        var result = await _leaseService.GetMyLeasesAsync(userId, roles);
+        return Ok(result);
+    }
+
+    /// <summary>
+    /// Retrieves all additional documents associated with a specific lease.
+    /// </summary>
+    /// <param name="id">The unique identifier of the lease.</param>
+    /// <returns>A list of documents associated with the lease.</returns>
+    /// <response code="200">Documents retrieved successfully.</response>
+    /// <response code="401">If user is unauthorized.</response>
+    /// <response code="403">If user has no access to this lease's documents.</response>
+    /// <response code="404">If the lease was not found.</response>
+    [Authorize]
+    [HttpGet("{id:guid}/documents")]
+    public async Task<ActionResult<IEnumerable<DocumentResponseDto>>> GetLeaseDocuments(Guid id)
+    {
+        var userId = GetCurrentUserId();
+        var roles = User.FindAll(ClaimTypes.Role).Select(c => c.Value).ToList();
+        var result = await _leaseService.GetLeaseDocumentsAsync(id, userId, roles);
         return Ok(result);
     }
 }

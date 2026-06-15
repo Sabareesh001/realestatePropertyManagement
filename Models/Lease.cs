@@ -11,7 +11,10 @@ public partial class Lease
 
     public int? PropertyId { get; set; }
 
-    public Guid? ProposalId { get; set; }
+    /// <summary>
+    /// Gets or sets the identifier of the lease proposal associated with this lease.
+    /// </summary>
+    public Guid ProposalId { get; set; }
 
     public DateOnly? StartDate { get; set; }
 

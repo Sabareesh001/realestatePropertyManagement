@@ -25,7 +25,7 @@ public class LeaseResponseDto
     /// <summary>
     /// Gets or sets the associated proposal (rent request) identifier.
     /// </summary>
-    public Guid? ProposalId { get; set; }
+    public Guid ProposalId { get; set; }
 
     /// <summary>
     /// Gets or sets the lease start date.
