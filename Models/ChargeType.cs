@@ -1,10 +1,40 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace propertyManagement.Models;
 
 public partial class ChargeType
 {
+    /// <summary>
+    /// Charge type for monthly rent.
+    /// </summary>
+    public const int MonthlyRent = 1;
+
+    /// <summary>
+    /// Charge type for security deposit.
+    /// </summary>
+    public const int SecurityDeposit = 2;
+
+    /// <summary>
+    /// Charge type for upfront payment.
+    /// </summary>
+    public const int UpfrontPayment = 3;
+
+    /// <summary>
+    /// Charge type for maintenance fees.
+    /// </summary>
+    public const int Maintenance = 4;
+
+    /// <summary>
+    /// Charge type for penalty charges.
+    /// </summary>
+    public const int Penalty = 5;
+
+    /// <summary>
+    /// Charge type for miscellaneous/other charges.
+    /// </summary>
+    public const int Other = 6;
+
     public int Id { get; set; }
 
     public string? Name { get; set; }

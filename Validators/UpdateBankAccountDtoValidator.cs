@@ -1,5 +1,6 @@
 using FluentValidation;
 using propertyManagement.DTOs;
+using propertyManagement.Extensions;
 
 namespace propertyManagement.Validators;
 
@@ -15,18 +16,17 @@ public class UpdateBankAccountDtoValidator : AbstractValidator<UpdateBankAccount
     {
         RuleFor(x => x.BankName)
             .NotEmpty().WithMessage("Bank name is required.")
-            .MaximumLength(100).WithMessage("Bank name cannot exceed 100 characters.");
+            .MinimumLength(2).WithMessage("Bank name must be at least 2 characters.")
+            .MaximumLength(100).WithMessage("Bank name cannot exceed 100 characters.")
+            .Matches(@"^[a-zA-Z\s\-\.&]+$").WithMessage("Bank name can only contain letters, spaces, hyphens, periods, and ampersands.");
 
         RuleFor(x => x.AccountNumber)
-            .NotEmpty().WithMessage("Account number is required.")
-            .MaximumLength(50).WithMessage("Account number cannot exceed 50 characters.");
+            .ValidBankAccountNumber();
 
         RuleFor(x => x.AccountHolderName)
-            .NotEmpty().WithMessage("Account holder name is required.")
-            .MaximumLength(100).WithMessage("Account holder name cannot exceed 100 characters.");
+            .ValidPersonName("Account holder name");
 
         RuleFor(x => x.IfscCode)
-            .NotEmpty().WithMessage("IFSC code is required.")
-            .MaximumLength(20).WithMessage("IFSC code cannot exceed 20 characters.");
+            .ValidIfscCode();
     }
 }

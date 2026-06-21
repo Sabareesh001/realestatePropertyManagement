@@ -17,7 +17,8 @@ public class LoginDtoValidator : AbstractValidator<LoginDto>
         RuleFor(x => x.Email)
             .ValidEmail();
 
+        // Login only needs NotEmpty — complexity checks would reject valid stored passwords
         RuleFor(x => x.Password)
-            .ValidPassword();
+            .NotEmpty().WithMessage("Password is required.");
     }
 }

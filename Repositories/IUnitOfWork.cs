@@ -57,6 +57,16 @@ public interface IUnitOfWork : IDisposable
     IPropertyImageRepository PropertyImages { get; }
 
     /// <summary>
+    /// Gets the Charge repository.
+    /// </summary>
+    IChargeRepository Charges { get; }
+
+    /// <summary>
+    /// Gets the Payment repository.
+    /// </summary>
+    IPaymentRepository Payments { get; }
+
+    /// <summary>
     /// Saves all changes made to the database.
     /// </summary>
     /// <returns>The number of state entries written to the database.</returns>

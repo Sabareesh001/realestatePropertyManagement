@@ -27,8 +27,16 @@ public class UpdateLeaseDtoValidator : AbstractValidator<UpdateLeaseDto>
             .GreaterThanOrEqualTo(0).WithMessage("Security deposit cannot be negative.")
             .When(x => x.SecurityDeposit.HasValue);
 
+        RuleFor(x => x.StartDate)
+            .Must(date => date >= DateOnly.FromDateTime(DateTime.Today))
+            .WithMessage("Start date cannot be in the past.")
+            .When(x => x.StartDate.HasValue);
+
         RuleFor(x => x.EndDate)
-            .GreaterThan(x => x.StartDate ?? DateOnly.MinValue).WithMessage("End date must be after the start date.")
+            .GreaterThan(x => x.StartDate ?? DateOnly.MinValue)
+            .WithMessage("End date must be after the start date.")
+            .Must((dto, endDate) => endDate >= (dto.StartDate ?? DateOnly.MinValue).AddMonths(1))
+            .WithMessage("Lease duration must be at least 1 month.")
             .When(x => x.StartDate.HasValue && x.EndDate.HasValue);
 
         RuleFor(x => x.AgreementDocumentUrl)

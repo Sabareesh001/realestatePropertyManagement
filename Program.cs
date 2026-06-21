@@ -11,6 +11,17 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var frontendUrl = builder.Configuration["FrontendUrl"] ?? "http://localhost:4200";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+        policy.WithOrigins(frontendUrl)
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials());
+});
+
 // Add services to the container.
 
 builder.Services.AddControllers(options =>
@@ -47,6 +58,9 @@ builder.Services.AddScoped<ILeaseService, LeaseService>();
 
 // Register Bank Account Service
 builder.Services.AddScoped<IBankAccountService, BankAccountService>();
+
+// Register Charge & Payment Service
+builder.Services.AddScoped<IChargePaymentService, ChargePaymentService>();
 
 
 // Register JWT Service
@@ -110,6 +124,8 @@ if (app.Environment.IsDevelopment())
 app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowFrontend");
 
 app.UseAuthentication();
 app.UseAuthorization();

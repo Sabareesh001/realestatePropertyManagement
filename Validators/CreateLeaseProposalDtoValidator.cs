@@ -45,6 +45,12 @@ public class CreateLeaseProposalDtoValidator : AbstractValidator<CreateLeaseProp
                 return endDate.Value > dto.StartDate.Value;
             })
             .WithMessage("End date must be after start date.")
+            .Must((dto, endDate) =>
+            {
+                if (!endDate.HasValue || !dto.StartDate.HasValue) return true;
+                return endDate.Value >= dto.StartDate.Value.AddMonths(1);
+            })
+            .WithMessage("Lease proposal duration must be at least 1 month.")
             .When(x => x.EndDate.HasValue && x.StartDate.HasValue);
     }
 }

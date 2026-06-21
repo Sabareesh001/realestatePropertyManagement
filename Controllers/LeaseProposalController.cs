@@ -55,7 +55,7 @@ public class LeaseProposalController : BaseApiController
     /// <response code="403">If user is not authorized to submit this proposal.</response>
     /// <response code="404">If lease proposal is not found.</response>
     [Authorize]
-    [HttpPost("{id}/submit")]
+    [HttpPost("{id:guid}/submit")]
     public async Task<ActionResult<LeaseProposalResponseDto>> SubmitLeaseProposal(Guid id)
     {
         var userId = GetCurrentUserId();

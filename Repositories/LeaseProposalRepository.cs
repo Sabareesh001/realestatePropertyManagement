@@ -110,20 +110,21 @@ public class LeaseProposalRepository : ILeaseProposalRepository
     }
 
     /// <summary>
-    /// Checks if there is any overlapping lease proposal for a given property that is not rejected, cancelled, or expired.
+    /// Checks if there is an approved lease proposal for a given property that overlaps with the specified date range.
+    /// Only an approved proposal blocks new proposals, since multiple tenants should be able to compete
+    /// (submit proposals) for the same property simultaneously. Once a proposal is approved, the property
+    /// is considered spoken for and no further overlapping proposals are accepted.
     /// </summary>
     /// <param name="propertyId">The unique identifier of the property.</param>
     /// <param name="startDate">The proposed lease start date.</param>
     /// <param name="endDate">The proposed lease end date.</param>
-    /// <returns>True if an overlapping active proposal exists; otherwise false.</returns>
+    /// <returns>True if an approved overlapping proposal exists; otherwise false.</returns>
     public async Task<bool> HasOverlappingProposalAsync(int propertyId, DateOnly startDate, DateOnly endDate)
     {
         return await _context.LeaseProposals
             .AnyAsync(lp => lp.PropertyId == propertyId &&
                             lp.DeletedAt == null &&
-                            lp.StatusId != ProposalStatus.Rejected &&
-                            lp.StatusId != ProposalStatus.Cancelled &&
-                            lp.StatusId != ProposalStatus.Expired &&
+                            lp.StatusId == ProposalStatus.Approved &&
                             lp.StartDate != null &&
                             lp.EndDate != null &&
                             lp.StartDate <= endDate &&

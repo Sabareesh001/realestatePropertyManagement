@@ -27,16 +27,22 @@ public class RegisterDtoValidator : AbstractValidator<RegisterDto>
             .ValidPassword();
 
         RuleFor(x => x.FirstName)
-            .NotEmpty().WithMessage("First name is required.");
+            .ValidPersonName("First name");
 
         RuleFor(x => x.LastName)
-            .NotEmpty().WithMessage("Last name is required.");
+            .ValidPersonName("Last name");
 
         RuleFor(x => x.Phone)
-            .NotEmpty().WithMessage("Phone number is required.");
+            .ValidPhone();
 
         RuleFor(x => x.DateOfBirth)
-            .NotEmpty().WithMessage("Date of birth is required.");
+            .NotEmpty().WithMessage("Date of birth is required.")
+            .Must(dob => dob < DateOnly.FromDateTime(DateTime.Today))
+            .WithMessage("Date of birth cannot be today or a future date.")
+            .Must(dob => dob >= new DateOnly(1900, 1, 1))
+            .WithMessage("Date of birth must be a realistic date (1900 or later).")
+            .Must(dob => dob <= DateOnly.FromDateTime(DateTime.Today.AddYears(-18)))
+            .WithMessage("User must be at least 18 years old.");
 
         RuleFor(x => x.RoleId)
             .NotEmpty().WithMessage("RoleId is required.")

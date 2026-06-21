@@ -1,6 +1,5 @@
 using FluentValidation;
 using propertyManagement.DTOs;
-using System;
 
 namespace propertyManagement.Validators;
 

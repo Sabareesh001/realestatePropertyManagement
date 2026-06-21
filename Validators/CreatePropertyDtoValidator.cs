@@ -1,5 +1,6 @@
 using FluentValidation;
 using propertyManagement.DTOs;
+using propertyManagement.Extensions;
 using propertyManagement.Repositories;
 using System;
 
@@ -22,11 +23,16 @@ public class CreatePropertyDtoValidator : AbstractValidator<CreatePropertyDto>
         _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
 
         RuleFor(x => x.Title)
-            .NotEmpty().WithMessage("Title is required.")
-            .MaximumLength(150).WithMessage("Title cannot exceed 150 characters.");
+            .ValidPropertyTitle();
+
+        RuleFor(x => x.Description)
+            .MaximumLength(2000).WithMessage("Description cannot exceed 2000 characters.")
+            .When(x => !string.IsNullOrEmpty(x.Description));
 
         RuleFor(x => x.AddressLine)
-            .NotEmpty().WithMessage("Address line is required.");
+            .NotEmpty().WithMessage("Address line is required.")
+            .MinimumLength(5).WithMessage("Address line must be at least 5 characters.")
+            .MaximumLength(300).WithMessage("Address line cannot exceed 300 characters.");
 
         RuleFor(x => x.CityId)
             .GreaterThan(0).WithMessage("City ID must be greater than zero.")

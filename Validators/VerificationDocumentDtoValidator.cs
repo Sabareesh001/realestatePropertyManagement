@@ -15,11 +15,13 @@ public class VerificationDocumentDtoValidator : AbstractValidator<VerificationDo
     {
         RuleFor(x => x.DocumentTypeId)
             .InclusiveBetween(1, 4)
-            .WithMessage("Document type must be valid");
+            .WithMessage("Document type must be valid (1–4).");
 
         RuleFor(x => x.DocumentNumber)
             .NotEmpty().WithMessage("Document number is required.")
-            .MaximumLength(50).WithMessage("Document number cannot exceed 50 characters.");
+            .MinimumLength(4).WithMessage("Document number must be at least 4 characters.")
+            .MaximumLength(50).WithMessage("Document number cannot exceed 50 characters.")
+            .Matches(@"^[a-zA-Z0-9\-]+$").WithMessage("Document number can only contain letters, digits, and hyphens.");
 
         RuleFor(x => x.DocumentUrl)
             .NotEmpty().WithMessage("Document URL is required.");

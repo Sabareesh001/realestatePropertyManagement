@@ -19,6 +19,8 @@ public class UnitOfWork : IUnitOfWork
     private IDocumentRepository? _documentRepository;
     private IBankAccountRepository? _bankAccountRepository;
     private IPropertyImageRepository? _propertyImageRepository;
+    private IChargeRepository? _chargeRepository;
+    private IPaymentRepository? _paymentRepository;
     private IDbContextTransaction? _transaction;
 
     /// <summary>
@@ -79,6 +81,16 @@ public class UnitOfWork : IUnitOfWork
     /// Gets the PropertyImage repository instance.
     /// </summary>
     public IPropertyImageRepository PropertyImages => _propertyImageRepository ??= new PropertyImageRepository(_context);
+
+    /// <summary>
+    /// Gets the Charge repository instance.
+    /// </summary>
+    public IChargeRepository Charges => _chargeRepository ??= new ChargeRepository(_context);
+
+    /// <summary>
+    /// Gets the Payment repository instance.
+    /// </summary>
+    public IPaymentRepository Payments => _paymentRepository ??= new PaymentRepository(_context);
 
     /// <summary>
     /// Saves all changes made within the context to the database.

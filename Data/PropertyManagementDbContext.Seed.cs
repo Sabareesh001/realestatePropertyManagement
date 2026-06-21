@@ -179,5 +179,47 @@ public partial class PropertyManagementDbContext
             new LeaseStatus { Id = LeaseStatus.Expired, Name = "EXPIRED", CreatedAt = seedTime }
         );
 
+        // Seed ChargeType
+        modelBuilder.Entity<ChargeType>().HasData(
+            new ChargeType { Id = ChargeType.MonthlyRent, Name = "Monthly Rent", CreatedAt = seedTime },
+            new ChargeType { Id = ChargeType.SecurityDeposit, Name = "Security Deposit", CreatedAt = seedTime },
+            new ChargeType { Id = ChargeType.UpfrontPayment, Name = "Upfront Payment", CreatedAt = seedTime },
+            new ChargeType { Id = ChargeType.Maintenance, Name = "Maintenance", CreatedAt = seedTime },
+            new ChargeType { Id = ChargeType.Penalty, Name = "Penalty", CreatedAt = seedTime },
+            new ChargeType { Id = ChargeType.Other, Name = "Other", CreatedAt = seedTime }
+        );
+
+        // Seed ChargeStatus
+        modelBuilder.Entity<ChargeStatus>().HasData(
+            new ChargeStatus { Id = ChargeStatus.Pending, Name = "PENDING", CreatedAt = seedTime },
+            new ChargeStatus { Id = ChargeStatus.PartiallyPaid, Name = "PARTIALLY_PAID", CreatedAt = seedTime },
+            new ChargeStatus { Id = ChargeStatus.Paid, Name = "PAID", CreatedAt = seedTime },
+            new ChargeStatus { Id = ChargeStatus.Overdue, Name = "OVERDUE", CreatedAt = seedTime },
+            new ChargeStatus { Id = ChargeStatus.Cancelled, Name = "CANCELLED", CreatedAt = seedTime }
+        );
+
+        // Seed PaymentStatus
+        modelBuilder.Entity<PaymentStatus>().HasData(
+            new PaymentStatus { Id = PaymentStatus.Pending, Name = "PENDING", CreatedAt = seedTime },
+            new PaymentStatus { Id = PaymentStatus.Completed, Name = "COMPLETED", CreatedAt = seedTime },
+            new PaymentStatus { Id = PaymentStatus.Failed, Name = "FAILED", CreatedAt = seedTime },
+            new PaymentStatus { Id = PaymentStatus.Refunded, Name = "REFUNDED", CreatedAt = seedTime }
+        );
+
+        // Seed PaymentMethod
+        modelBuilder.Entity<PaymentMethod>().HasData(
+            new PaymentMethod { Id = 1, Name = "Cash", Category = "Offline", CreatedAt = seedTime },
+            new PaymentMethod { Id = 2, Name = "Bank Transfer", Category = "Online", CreatedAt = seedTime },
+            new PaymentMethod { Id = 3, Name = "UPI", Category = "Online", CreatedAt = seedTime },
+            new PaymentMethod { Id = 4, Name = "Credit Card", Category = "Online", CreatedAt = seedTime },
+            new PaymentMethod { Id = 5, Name = "Debit Card", Category = "Online", CreatedAt = seedTime },
+            new PaymentMethod { Id = 6, Name = "Cheque", Category = "Offline", CreatedAt = seedTime }
+        );
+
+        // Seed Currency
+        modelBuilder.Entity<Currency>().HasData(
+            new Currency { Id = 1, Code = "INR", Name = "Indian Rupee", CreatedAt = seedTime }
+        );
+
     }
 }
