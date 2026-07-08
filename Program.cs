@@ -13,6 +13,13 @@ using propertyManagement.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var webRootPath = Path.Combine(builder.Environment.ContentRootPath, "wwwroot");
+if (!Directory.Exists(webRootPath))
+{
+    Directory.CreateDirectory(webRootPath);
+}
+builder.Environment.WebRootPath = webRootPath;
+
 var frontendUrl = builder.Configuration["FrontendUrl"] ?? "http://localhost:4200";
 
 builder.Services.AddCors(options =>
@@ -34,7 +41,7 @@ builder.Services.AddControllers(options =>
 // Register FluentValidation validators
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
 
 // Configure DbContext with PostgreSQL
 builder.Services.AddDbContext<PropertyManagementDbContext>(options =>
@@ -82,7 +89,11 @@ builder.Services.AddScoped<IStripeConnectService, StripeConnectService>();
 // IStripeClient holds the API key + HTTP client; IStripeGateway groups all Stripe SDK
 // service classes (Accounts, PaymentIntents, Transfers, etc.) the same way
 // IUnitOfWork groups database repositories.
-var stripeSecretKey = builder.Configuration["Stripe:SecretKey"] ?? string.Empty;
+var stripeSecretKey = builder.Configuration["Stripe:SecretKey"];
+if (string.IsNullOrEmpty(stripeSecretKey))
+{
+    stripeSecretKey = "sk_test_dummy";
+}
 builder.Services.AddSingleton<Stripe.IStripeClient>(new Stripe.StripeClient(stripeSecretKey));
 builder.Services.AddSingleton<IStripeGateway, StripeGateway>();
 
@@ -145,7 +156,6 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
