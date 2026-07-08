@@ -38,6 +38,15 @@ public class SiteVisitController : ControllerBase
         return Ok(response);
     }
 
+    [HttpPut("{visitId}/cancel")]
+    [Authorize(Roles = "Tenant")]
+    public async Task<IActionResult> CancelVisit(Guid visitId, [FromBody] CancelSiteVisitDto dto)
+    {
+        var tenantId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var response = await _siteVisitService.CancelVisitAsync(tenantId, visitId, dto.Remarks ?? "Cancelled by tenant");
+        return Ok(response);
+    }
+
     [HttpGet("my-requests")]
     [Authorize(Roles = "Tenant")]
     public async Task<IActionResult> GetMyRequests()

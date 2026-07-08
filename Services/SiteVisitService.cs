@@ -88,7 +88,7 @@ public class SiteVisitService : ISiteVisitService
             throw new UnauthorizedAccessException("You are not authorized to update this site visit.");
 
         visit.StatusId = dto.StatusId;
-        visit.Remarks = dto.Remarks;
+        visit.Remarks = dto.StatusId == 3 ? $"Cancelled by Owner: {dto.Remarks}" : dto.Remarks;
         visit.UpdatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified);
 
         await _context.SaveChangesAsync();
@@ -101,6 +101,38 @@ public class SiteVisitService : ISiteVisitService
             dto.StatusId == 2 ? 1 : 3, // info or warning
             $"Site Visit {statusName}",
             $"Your site visit request for {visit.Property.Title} on {visit.VisitDate:g} has been {statusName.ToLower()}."
+        );
+
+        return await GetVisitByIdAsync(visit.Id);
+    }
+
+    public async Task<SiteVisitResponseDto> CancelVisitAsync(Guid tenantId, Guid visitId, string remarks)
+    {
+        var visit = await _context.SiteVisits
+            .Include(v => v.Property)
+            .Include(v => v.Owner)
+            .FirstOrDefaultAsync(v => v.Id == visitId && v.DeletedAt == null);
+
+        if (visit == null)
+            throw new KeyNotFoundException("Site visit not found.");
+
+        if (visit.TenantId != tenantId)
+            throw new UnauthorizedAccessException("You are not authorized to cancel this site visit.");
+
+        visit.StatusId = 3; // Cancelled
+        visit.Remarks = $"Cancelled by Tenant: {remarks}";
+        visit.UpdatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified);
+
+        await _context.SaveChangesAsync();
+
+        var tenant = await _context.Users.FindAsync(tenantId);
+
+        // Notify Owner
+        await _notificationService.NotifyAsync(
+            new[] { visit.OwnerId },
+            3, // warning
+            "Site Visit Cancelled",
+            $"{tenant?.FirstName} {tenant?.LastName} has cancelled their site visit request for {visit.Property.Title} on {visit.VisitDate:g}. Reason: {remarks}"
         );
 
         return await GetVisitByIdAsync(visit.Id);
