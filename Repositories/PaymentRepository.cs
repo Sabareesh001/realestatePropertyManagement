@@ -54,10 +54,21 @@ public class PaymentRepository : IPaymentRepository
     }
 
     /// <summary>
+    /// Retrieves a payment by its Stripe PaymentIntent identifier.
+    /// </summary>
+    public async Task<Payment?> GetByStripePaymentIntentIdAsync(string paymentIntentId)
+    {
+        return await _context.Payments
+            .Include(p => p.ChargePayments)
+                .ThenInclude(cp => cp.Charge)
+                    .ThenInclude(c => c.ChargePayments)
+                        .ThenInclude(cp2 => cp2.Payment)
+            .FirstOrDefaultAsync(p => p.StripePaymentIntentId == paymentIntentId && p.DeletedAt == null);
+    }
+
+    /// <summary>
     /// Retrieves all payments associated with a specific lease via charge-payment relationships.
     /// </summary>
-    /// <param name="leaseId">The lease identifier.</param>
-    /// <returns>A collection of payments linked to the specified lease.</returns>
     public async Task<IEnumerable<Payment>> GetByLeaseIdAsync(Guid leaseId)
     {
         return await _context.Payments
@@ -69,6 +80,38 @@ public class PaymentRepository : IPaymentRepository
             .Where(p => p.DeletedAt == null &&
                 p.ChargePayments.Any(cp =>
                     cp.Charge.Leases.Any(l => l.Id == leaseId)))
+            .ToListAsync();
+    }
+
+    /// <summary>
+    /// Retrieves every payment across all leases for the admin dashboard, eager loading lease,
+    /// property, owner and tenant context. Results are ordered newest first.
+    /// </summary>
+    /// <param name="from">Optional inclusive lower bound (UTC) on the payment creation date.</param>
+    /// <param name="to">Optional inclusive upper bound (UTC) on the payment creation date.</param>
+    /// <returns>A collection of payments with full context.</returns>
+    public async Task<IEnumerable<Payment>> GetAllForAdminAsync(DateTime? from, DateTime? to)
+    {
+        var fromDate = from.HasValue ? DateTime.SpecifyKind(from.Value, DateTimeKind.Unspecified) : (DateTime?)null;
+        var toDate = to.HasValue ? DateTime.SpecifyKind(to.Value, DateTimeKind.Unspecified) : (DateTime?)null;
+
+        return await _context.Payments
+            .Include(p => p.PaymentMethod)
+            .Include(p => p.Status)
+            .Include(p => p.Currency)
+            .Include(p => p.ChargePayments)
+                .ThenInclude(cp => cp.Charge)
+                    .ThenInclude(c => c.Leases)
+                        .ThenInclude(l => l.PropertyNavigation)
+                            .ThenInclude(pr => pr!.Owner)
+            .Include(p => p.ChargePayments)
+                .ThenInclude(cp => cp.Charge)
+                    .ThenInclude(c => c.Leases)
+                        .ThenInclude(l => l.Tenant)
+            .Where(p => p.DeletedAt == null
+                        && (fromDate == null || p.CreatedAt >= fromDate)
+                        && (toDate == null || p.CreatedAt <= toDate))
+            .OrderByDescending(p => p.CreatedAt)
             .ToListAsync();
     }
 

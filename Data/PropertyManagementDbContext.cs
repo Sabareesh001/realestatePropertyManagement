@@ -33,6 +33,8 @@ public partial class PropertyManagementDbContext : DbContext
 
     public virtual DbSet<ComplaintType> ComplaintTypes { get; set; }
 
+    public virtual DbSet<ComplaintComment> ComplaintComments { get; set; }
+
     public virtual DbSet<Country> Countries { get; set; }
 
     public virtual DbSet<Currency> Currencies { get; set; }
@@ -48,6 +50,11 @@ public partial class PropertyManagementDbContext : DbContext
     public virtual DbSet<LeaseProposal> LeaseProposals { get; set; }
 
     public virtual DbSet<LeaseStatus> LeaseStatuses { get; set; }
+
+    /// <summary>
+    /// Gets or sets the database set for notifications.
+    /// </summary>
+    public virtual DbSet<Notification> Notifications { get; set; }
 
     public virtual DbSet<OwnerProfile> OwnerProfiles { get; set; }
 
@@ -308,19 +315,36 @@ public partial class PropertyManagementDbContext : DbContext
             entity.ToTable("complaints");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.ComplaintTypeId).HasColumnName("complaint_type_id");
-            entity.Property(e => e.Description).HasColumnName("description");
-            entity.Property(e => e.PriorityId).HasColumnName("priority_id");
+            entity.Property(e => e.LeaseId).HasColumnName("lease_id");
+            entity.Property(e => e.TenantId).HasColumnName("tenant_id");
             entity.Property(e => e.PropertyId).HasColumnName("property_id");
+            entity.Property(e => e.OwnerId).HasColumnName("owner_id");
+            entity.Property(e => e.ComplaintTypeId).HasColumnName("complaint_type_id");
+            entity.Property(e => e.StatusId).HasColumnName("status_id");
+            entity.Property(e => e.PriorityId).HasColumnName("priority_id");
+            entity.Property(e => e.Subject)
+                .HasMaxLength(150)
+                .HasColumnName("subject");
+            entity.Property(e => e.Description)
+                .HasMaxLength(2000)
+                .HasColumnName("description");
+            entity.Property(e => e.AttachmentUrl)
+                .HasMaxLength(500)
+                .HasColumnName("attachment_url");
+            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
             entity.Property(e => e.ResolvedAt)
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("resolved_at");
             entity.Property(e => e.ResolvedBy).HasColumnName("resolved_by");
-            entity.Property(e => e.StatusId).HasColumnName("status_id");
-            entity.Property(e => e.TenantId).HasColumnName("tenant_id");
-            entity.Property(e => e.Title)
-                .HasMaxLength(200)
-                .HasColumnName("title");
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
 
             entity.HasOne(d => d.ComplaintType).WithMany(p => p.Complaints)
                 .HasForeignKey(d => d.ComplaintTypeId)
@@ -345,16 +369,18 @@ public partial class PropertyManagementDbContext : DbContext
             entity.HasOne(d => d.Tenant).WithMany(p => p.ComplaintTenants)
                 .HasForeignKey(d => d.TenantId)
                 .HasConstraintName("complaints_tenant_id_fkey");
-        
-            entity.Property(e => e.CreatedAt)
-                .HasColumnType("timestamp without time zone")
-                .HasColumnName("created_at");
-            entity.Property(e => e.UpdatedAt)
-                .HasColumnType("timestamp without time zone")
-                .HasColumnName("updated_at");
-            entity.Property(e => e.DeletedAt)
-                .HasColumnType("timestamp without time zone")
-                .HasColumnName("deleted_at");
+
+            entity.HasOne(d => d.Lease).WithMany()
+                .HasForeignKey(d => d.LeaseId)
+                .HasConstraintName("complaints_lease_id_fkey");
+
+            entity.HasOne<User>().WithMany()
+                .HasForeignKey(d => d.OwnerId)
+                .HasConstraintName("complaints_owner_id_fkey");
+
+            entity.HasOne<User>().WithMany()
+                .HasForeignKey(d => d.CreatedBy)
+                .HasConstraintName("complaints_created_by_fkey");
         });
 
         modelBuilder.Entity<ComplaintPriority>(entity =>
@@ -828,6 +854,15 @@ public partial class PropertyManagementDbContext : DbContext
             entity.Property(e => e.DeletedAt)
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("deleted_at");
+            entity.Property(e => e.StripePaymentIntentId)
+                .HasColumnType("character varying")
+                .HasColumnName("stripe_payment_intent_id");
+            entity.Property(e => e.StripeTransferId)
+                .HasColumnType("character varying")
+                .HasColumnName("stripe_transfer_id");
+            entity.Property(e => e.PlatformFeeAmount)
+                .HasPrecision(12, 2)
+                .HasColumnName("platform_fee_amount");
         });
 
         modelBuilder.Entity<PaymentMethod>(entity =>
@@ -1248,6 +1283,18 @@ public partial class PropertyManagementDbContext : DbContext
             entity.Property(e => e.ActiveStatusId)
                 .HasColumnName("active_status_id")
                 .HasDefaultValue(1);
+            entity.Property(e => e.StripeAccountId)
+                .HasMaxLength(255)
+                .HasColumnName("stripe_account_id");
+            entity.Property(e => e.StripeChargesEnabled)
+                .HasColumnName("stripe_charges_enabled")
+                .HasDefaultValue(false);
+            entity.Property(e => e.StripePayoutsEnabled)
+                .HasColumnName("stripe_payouts_enabled")
+                .HasDefaultValue(false);
+            entity.Property(e => e.StripeDetailsSubmitted)
+                .HasColumnName("stripe_details_submitted")
+                .HasDefaultValue(false);
 
             entity.HasOne(d => d.VerificationStatus).WithMany(p => p.Users)
                 .HasForeignKey(d => d.VerificationStatusId)
@@ -1256,6 +1303,48 @@ public partial class PropertyManagementDbContext : DbContext
             entity.HasOne(d => d.ActiveStatus).WithMany(p => p.Users)
                 .HasForeignKey(d => d.ActiveStatusId)
                 .HasConstraintName("users_active_status_id_fkey");
+        });
+
+        modelBuilder.Entity<Notification>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("notifications_pkey");
+
+            entity.ToTable("notifications");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.RecipientId).HasColumnName("recipient_id");
+            entity.Property(e => e.TypeId).HasColumnName("type_id");
+            entity.Property(e => e.Title)
+                .HasMaxLength(200)
+                .HasColumnName("title");
+            entity.Property(e => e.Message)
+                .HasMaxLength(1000)
+                .HasColumnName("message");
+            entity.Property(e => e.RelatedEntityType)
+                .HasMaxLength(100)
+                .HasColumnName("related_entity_type");
+            entity.Property(e => e.RelatedEntityId).HasColumnName("related_entity_id");
+            entity.Property(e => e.IsRead)
+                .HasColumnName("is_read")
+                .HasDefaultValue(false);
+            entity.Property(e => e.ReadAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("read_at");
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at")
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("deleted_at");
+
+            entity.HasOne(d => d.Recipient).WithMany(p => p.Notifications)
+                .HasForeignKey(d => d.RecipientId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("notifications_recipient_id_fkey");
         });
 
         modelBuilder.Entity<UserProfile>(entity =>
@@ -1474,6 +1563,32 @@ public partial class PropertyManagementDbContext : DbContext
             entity.Property(e => e.DeletedAt)
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("deleted_at");
+        });
+
+        modelBuilder.Entity<ComplaintComment>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("complaint_comments_pkey");
+
+            entity.ToTable("complaint_comments");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.ComplaintId).HasColumnName("complaint_id");
+            entity.Property(e => e.AuthorId).HasColumnName("author_id");
+            entity.Property(e => e.Message)
+                .HasMaxLength(2000)
+                .HasColumnName("message");
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at");
+
+            entity.HasOne(d => d.Complaint).WithMany(p => p.Comments)
+                .HasForeignKey(d => d.ComplaintId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("complaint_comments_complaint_id_fkey");
+
+            entity.HasOne(d => d.Author).WithMany()
+                .HasForeignKey(d => d.AuthorId)
+                .HasConstraintName("complaint_comments_author_id_fkey");
         });
 
         OnModelCreatingPartial(modelBuilder);

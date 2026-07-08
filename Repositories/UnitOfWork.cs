@@ -21,6 +21,9 @@ public class UnitOfWork : IUnitOfWork
     private IPropertyImageRepository? _propertyImageRepository;
     private IChargeRepository? _chargeRepository;
     private IPaymentRepository? _paymentRepository;
+    private IComplaintRepository? _complaintRepository;
+    private IComplaintCommentRepository? _complaintCommentRepository;
+    private INotificationRepository? _notificationRepository;
     private IDbContextTransaction? _transaction;
 
     /// <summary>
@@ -91,6 +94,21 @@ public class UnitOfWork : IUnitOfWork
     /// Gets the Payment repository instance.
     /// </summary>
     public IPaymentRepository Payments => _paymentRepository ??= new PaymentRepository(_context);
+
+    /// <summary>
+    /// Gets the Complaint repository instance.
+    /// </summary>
+    public IComplaintRepository Complaints => _complaintRepository ??= new ComplaintRepository(_context);
+
+    /// <summary>
+    /// Gets the ComplaintComment repository instance.
+    /// </summary>
+    public IComplaintCommentRepository ComplaintComments => _complaintCommentRepository ??= new ComplaintCommentRepository(_context);
+
+    /// <summary>
+    /// Gets the Notification repository instance.
+    /// </summary>
+    public INotificationRepository Notifications => _notificationRepository ??= new NotificationRepository(_context);
 
     /// <summary>
     /// Saves all changes made within the context to the database.

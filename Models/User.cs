@@ -45,6 +45,14 @@ public partial class User
 
     public DateTime? DeletedAt { get; set; }
 
+    public string? StripeAccountId { get; set; }
+
+    public bool StripeChargesEnabled { get; set; }
+
+    public bool StripePayoutsEnabled { get; set; }
+
+    public bool StripeDetailsSubmitted { get; set; }
+
     public virtual ICollection<Complaint> ComplaintResolvedByNavigations { get; set; } = new List<Complaint>();
 
     public virtual ICollection<Complaint> ComplaintTenants { get; set; } = new List<Complaint>();
@@ -81,4 +89,9 @@ public partial class User
     /// Gets or sets the bank accounts associated with this user.
     /// </summary>
     public virtual ICollection<UserBankAccount> UserBankAccounts { get; set; } = new List<UserBankAccount>();
+
+    /// <summary>
+    /// Gets or sets the notifications addressed to this user.
+    /// </summary>
+    public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
 }

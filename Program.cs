@@ -3,11 +3,13 @@ using propertyManagement.Data;
 using propertyManagement.Repositories;
 using propertyManagement.Services;
 using propertyManagement.Filters;
+using propertyManagement.Models;
 using FluentValidation;
 using Serilog;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using propertyManagement.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,6 +64,27 @@ builder.Services.AddScoped<IBankAccountService, BankAccountService>();
 // Register Charge & Payment Service
 builder.Services.AddScoped<IChargePaymentService, ChargePaymentService>();
 
+// Register Admin Finance Service
+builder.Services.AddScoped<IAdminFinanceService, AdminFinanceService>();
+
+// Register Complaint Service
+builder.Services.AddScoped<IComplaintService, ComplaintService>();
+
+// Register SignalR and the Notification Service
+builder.Services.AddSignalR();
+builder.Services.AddScoped<INotificationService, NotificationService>();
+
+// Register Stripe Connect Service
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
+builder.Services.AddScoped<IStripeConnectService, StripeConnectService>();
+
+// Register Stripe client and gateway via DI.
+// IStripeClient holds the API key + HTTP client; IStripeGateway groups all Stripe SDK
+// service classes (Accounts, PaymentIntents, Transfers, etc.) the same way
+// IUnitOfWork groups database repositories.
+var stripeSecretKey = builder.Configuration["Stripe:SecretKey"] ?? string.Empty;
+builder.Services.AddSingleton<Stripe.IStripeClient>(new Stripe.StripeClient(stripeSecretKey));
+builder.Services.AddSingleton<IStripeGateway, StripeGateway>();
 
 // Register JWT Service
 builder.Services.AddScoped<IJwtService, JwtService>();
@@ -92,7 +115,13 @@ builder.Services.AddAuthentication(options =>
     {
         OnMessageReceived = context =>
         {
-            if (context.Request.Cookies.TryGetValue("jwt_token", out var token))
+            var accessToken = context.Request.Query["access_token"];
+            var path = context.HttpContext.Request.Path;
+            if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs"))
+            {
+                context.Token = accessToken;
+            }
+            else if (context.Request.Cookies.TryGetValue("jwt_token", out var token))
             {
                 context.Token = token;
             }
@@ -123,13 +152,17 @@ if (app.Environment.IsDevelopment())
 
 app.UseExceptionHandler();
 
-app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment())
+    app.UseHttpsRedirection();
 
 app.UseCors("AllowFrontend");
+
+app.UseStaticFiles();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<NotificationHub>("/hubs/notifications");
 
 app.Run();

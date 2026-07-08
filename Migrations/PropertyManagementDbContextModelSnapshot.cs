@@ -684,6 +684,11 @@ namespace propertyManagement.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
+                    b.Property<string>("AttachmentUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)")
+                        .HasColumnName("attachment_url");
+
                     b.Property<int?>("ComplaintTypeId")
                         .HasColumnType("integer")
                         .HasColumnName("complaint_type_id");
@@ -692,13 +697,26 @@ namespace propertyManagement.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
 
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("created_by");
+
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("deleted_at");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)")
                         .HasColumnName("description");
+
+                    b.Property<Guid?>("LeaseId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("lease_id");
+
+                    b.Property<Guid?>("OwnerId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("owner_id");
 
                     b.Property<int?>("PriorityId")
                         .HasColumnType("integer")
@@ -720,14 +738,14 @@ namespace propertyManagement.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("status_id");
 
+                    b.Property<string>("Subject")
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)")
+                        .HasColumnName("subject");
+
                     b.Property<Guid?>("TenantId")
                         .HasColumnType("uuid")
                         .HasColumnName("tenant_id");
-
-                    b.Property<string>("Title")
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)")
-                        .HasColumnName("title");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp without time zone")
@@ -737,6 +755,12 @@ namespace propertyManagement.Migrations
                         .HasName("complaints_pkey");
 
                     b.HasIndex("ComplaintTypeId");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("LeaseId");
+
+                    b.HasIndex("OwnerId");
 
                     b.HasIndex("PriorityId");
 
@@ -749,6 +773,41 @@ namespace propertyManagement.Migrations
                     b.HasIndex("TenantId");
 
                     b.ToTable("complaints", (string)null);
+                });
+
+            modelBuilder.Entity("propertyManagement.Models.ComplaintComment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("author_id");
+
+                    b.Property<Guid>("ComplaintId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("complaint_id");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)")
+                        .HasColumnName("message");
+
+                    b.HasKey("Id")
+                        .HasName("complaint_comments_pkey");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("ComplaintId");
+
+                    b.ToTable("complaint_comments", (string)null);
                 });
 
             modelBuilder.Entity("propertyManagement.Models.ComplaintPriority", b =>
@@ -1447,7 +1506,7 @@ namespace propertyManagement.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<DateTime?>("CreatedAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
 
@@ -1455,16 +1514,16 @@ namespace propertyManagement.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("deleted_at");
 
-                    b.Property<DateOnly?>("EndDate")
+                    b.Property<DateOnly>("EndDate")
                         .HasColumnType("date")
                         .HasColumnName("end_date");
 
-                    b.Property<decimal?>("MonthlyRent")
+                    b.Property<decimal>("MonthlyRent")
                         .HasPrecision(12, 2)
                         .HasColumnType("numeric(12,2)")
                         .HasColumnName("monthly_rent");
 
-                    b.Property<int?>("PropertyId")
+                    b.Property<int>("PropertyId")
                         .HasColumnType("integer")
                         .HasColumnName("property_id");
 
@@ -1476,20 +1535,20 @@ namespace propertyManagement.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("reviewed_by");
 
-                    b.Property<decimal?>("SecurityDeposit")
+                    b.Property<decimal>("SecurityDeposit")
                         .HasPrecision(12, 2)
                         .HasColumnType("numeric(12,2)")
                         .HasColumnName("security_deposit");
 
-                    b.Property<DateOnly?>("StartDate")
+                    b.Property<DateOnly>("StartDate")
                         .HasColumnType("date")
                         .HasColumnName("start_date");
 
-                    b.Property<int?>("StatusId")
+                    b.Property<int>("StatusId")
                         .HasColumnType("integer")
                         .HasColumnName("status_id");
 
-                    b.Property<Guid?>("TenantId")
+                    b.Property<Guid>("TenantId")
                         .HasColumnType("uuid")
                         .HasColumnName("tenant_id");
 
@@ -1497,7 +1556,7 @@ namespace propertyManagement.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("updated_at");
 
-                    b.Property<decimal?>("UpfrontPayment")
+                    b.Property<decimal>("UpfrontPayment")
                         .HasPrecision(12, 2)
                         .HasColumnType("numeric(12,2)")
                         .HasColumnName("upfront_payment");
@@ -1598,6 +1657,74 @@ namespace propertyManagement.Migrations
                             CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "EXPIRED"
                         });
+                });
+
+            modelBuilder.Entity("propertyManagement.Models.Notification", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
+
+                    b.Property<bool>("IsRead")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_read");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)")
+                        .HasColumnName("message");
+
+                    b.Property<DateTime?>("ReadAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("read_at");
+
+                    b.Property<Guid>("RecipientId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("recipient_id");
+
+                    b.Property<Guid?>("RelatedEntityId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("related_entity_id");
+
+                    b.Property<string>("RelatedEntityType")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("related_entity_type");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasColumnName("title");
+
+                    b.Property<int>("TypeId")
+                        .HasColumnType("integer")
+                        .HasColumnName("type_id");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("notifications_pkey");
+
+                    b.HasIndex("RecipientId");
+
+                    b.ToTable("notifications", (string)null);
                 });
 
             modelBuilder.Entity("propertyManagement.Models.OwnerProfile", b =>
@@ -1711,9 +1838,22 @@ namespace propertyManagement.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("payment_method_id");
 
+                    b.Property<decimal?>("PlatformFeeAmount")
+                        .HasPrecision(12, 2)
+                        .HasColumnType("numeric(12,2)")
+                        .HasColumnName("platform_fee_amount");
+
                     b.Property<int?>("StatusId")
                         .HasColumnType("integer")
                         .HasColumnName("status_id");
+
+                    b.Property<string>("StripePaymentIntentId")
+                        .HasColumnType("character varying")
+                        .HasColumnName("stripe_payment_intent_id");
+
+                    b.Property<string>("StripeTransferId")
+                        .HasColumnType("character varying")
+                        .HasColumnName("stripe_transfer_id");
 
                     b.Property<string>("TransactionRef")
                         .HasColumnType("character varying")
@@ -2472,6 +2612,29 @@ namespace propertyManagement.Migrations
                         .HasColumnType("character varying(20)")
                         .HasColumnName("phone");
 
+                    b.Property<string>("StripeAccountId")
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("stripe_account_id");
+
+                    b.Property<bool>("StripeChargesEnabled")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("stripe_charges_enabled");
+
+                    b.Property<bool>("StripeDetailsSubmitted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("stripe_details_submitted");
+
+                    b.Property<bool>("StripePayoutsEnabled")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("stripe_payouts_enabled");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("updated_at");
@@ -2899,6 +3062,21 @@ namespace propertyManagement.Migrations
                         .HasForeignKey("ComplaintTypeId")
                         .HasConstraintName("complaints_complaint_type_id_fkey");
 
+                    b.HasOne("propertyManagement.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .HasConstraintName("complaints_created_by_fkey");
+
+                    b.HasOne("propertyManagement.Models.Lease", "Lease")
+                        .WithMany()
+                        .HasForeignKey("LeaseId")
+                        .HasConstraintName("complaints_lease_id_fkey");
+
+                    b.HasOne("propertyManagement.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("OwnerId")
+                        .HasConstraintName("complaints_owner_id_fkey");
+
                     b.HasOne("propertyManagement.Models.ComplaintPriority", "Priority")
                         .WithMany("Complaints")
                         .HasForeignKey("PriorityId")
@@ -2926,6 +3104,8 @@ namespace propertyManagement.Migrations
 
                     b.Navigation("ComplaintType");
 
+                    b.Navigation("Lease");
+
                     b.Navigation("Priority");
 
                     b.Navigation("Property");
@@ -2935,6 +3115,27 @@ namespace propertyManagement.Migrations
                     b.Navigation("Status");
 
                     b.Navigation("Tenant");
+                });
+
+            modelBuilder.Entity("propertyManagement.Models.ComplaintComment", b =>
+                {
+                    b.HasOne("propertyManagement.Models.User", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("complaint_comments_author_id_fkey");
+
+                    b.HasOne("propertyManagement.Models.Complaint", "Complaint")
+                        .WithMany("Comments")
+                        .HasForeignKey("ComplaintId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("complaint_comments_complaint_id_fkey");
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Complaint");
                 });
 
             modelBuilder.Entity("propertyManagement.Models.District", b =>
@@ -3009,6 +3210,8 @@ namespace propertyManagement.Migrations
                     b.HasOne("propertyManagement.Models.Property", "Property")
                         .WithMany("LeaseProposals")
                         .HasForeignKey("PropertyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
                         .HasConstraintName("lease_proposals_property_id_fkey");
 
                     b.HasOne("propertyManagement.Models.User", "ReviewedByNavigation")
@@ -3019,11 +3222,15 @@ namespace propertyManagement.Migrations
                     b.HasOne("propertyManagement.Models.ProposalStatus", "Status")
                         .WithMany("LeaseProposals")
                         .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
                         .HasConstraintName("lease_proposals_status_id_fkey");
 
                     b.HasOne("propertyManagement.Models.User", "Tenant")
                         .WithMany("LeaseProposalTenants")
                         .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
                         .HasConstraintName("lease_proposals_tenant_id_fkey");
 
                     b.Navigation("Property");
@@ -3033,6 +3240,17 @@ namespace propertyManagement.Migrations
                     b.Navigation("Status");
 
                     b.Navigation("Tenant");
+                });
+
+            modelBuilder.Entity("propertyManagement.Models.Notification", b =>
+                {
+                    b.HasOne("propertyManagement.Models.User", "Recipient")
+                        .WithMany("Notifications")
+                        .HasForeignKey("RecipientId")
+                        .IsRequired()
+                        .HasConstraintName("notifications_recipient_id_fkey");
+
+                    b.Navigation("Recipient");
                 });
 
             modelBuilder.Entity("propertyManagement.Models.OwnerProfile", b =>
@@ -3293,6 +3511,11 @@ namespace propertyManagement.Migrations
                     b.Navigation("Properties");
                 });
 
+            modelBuilder.Entity("propertyManagement.Models.Complaint", b =>
+                {
+                    b.Navigation("Comments");
+                });
+
             modelBuilder.Entity("propertyManagement.Models.ComplaintPriority", b =>
                 {
                     b.Navigation("Complaints");
@@ -3415,6 +3638,8 @@ namespace propertyManagement.Migrations
                     b.Navigation("LeaseProposalTenants");
 
                     b.Navigation("Leases");
+
+                    b.Navigation("Notifications");
 
                     b.Navigation("Payments");
 

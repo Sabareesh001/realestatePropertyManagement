@@ -67,6 +67,21 @@ public interface IUnitOfWork : IDisposable
     IPaymentRepository Payments { get; }
 
     /// <summary>
+    /// Gets the Complaint repository.
+    /// </summary>
+    IComplaintRepository Complaints { get; }
+
+    /// <summary>
+    /// Gets the ComplaintComment repository.
+    /// </summary>
+    IComplaintCommentRepository ComplaintComments { get; }
+
+    /// <summary>
+    /// Gets the Notification repository.
+    /// </summary>
+    INotificationRepository Notifications { get; }
+
+    /// <summary>
     /// Saves all changes made to the database.
     /// </summary>
     /// <returns>The number of state entries written to the database.</returns>

@@ -49,14 +49,21 @@ public class UserRepository : IUserRepository
     /// <summary>
     /// Retrieves a user by their email address.
     /// </summary>
-    /// <param name="email">The email address of the user.</param>
-    /// <returns>The user entity if found; otherwise null.</returns>
     public async Task<User?> GetByEmailAsync(string email)
     {
         return await _context.Users
             .Include(u => u.UserRoles.Where(ur => ur.DeletedAt == null))
                 .ThenInclude(ur => ur.Role)
             .FirstOrDefaultAsync(u => u.Email == email && u.DeletedAt == null);
+    }
+
+    /// <summary>
+    /// Retrieves a user by their Stripe Connect account identifier.
+    /// </summary>
+    public async Task<User?> GetByStripeAccountIdAsync(string stripeAccountId)
+    {
+        return await _context.Users
+            .FirstOrDefaultAsync(u => u.StripeAccountId == stripeAccountId && u.DeletedAt == null);
     }
 
     /// <summary>
@@ -93,5 +100,31 @@ public class UserRepository : IUserRepository
             user.DeletedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified);
             _context.Users.Update(user);
         }
+    }
+
+    public async Task<bool> HasRoleAsync(Guid id,int roleId)
+    {
+        var user = await _context.Users
+            .Include(u => u.UserRoles.Where(ur => ur.DeletedAt == null))
+                .ThenInclude(ur => ur.Role)
+            .FirstOrDefaultAsync(u => u.Id == id && u.DeletedAt == null);
+
+        if (user != null)
+        {
+            var roles = user.UserRoles.Select(ur => ur.RoleId).ToList();
+            return roles.Contains(roleId);
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Retrieves the identifiers of all active users assigned to the given role.
+    /// </summary>
+    public async Task<IEnumerable<Guid>> GetUserIdsByRoleAsync(int roleId)
+    {
+        return await _context.Users
+            .Where(u => u.DeletedAt == null && u.UserRoles.Any(ur => ur.RoleId == roleId && ur.DeletedAt == null))
+            .Select(u => u.Id)
+            .ToListAsync();
     }
 }
