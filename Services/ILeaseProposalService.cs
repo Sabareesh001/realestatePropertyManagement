@@ -65,4 +65,9 @@ public interface ILeaseProposalService
     /// <exception cref="UnauthorizedAccessException">Thrown when the user is not the tenant who created the proposal.</exception>
     /// <exception cref="InvalidOperationException">Thrown when the proposal is not in Draft or Submitted status.</exception>
     Task<LeaseProposalResponseDto> CancelProposalAsync(Guid tenantId, Guid proposalId);
+
+    /// <summary>
+    /// Updates a draft lease proposal. Only allowed when status is Draft.
+    /// </summary>
+    Task<LeaseProposalResponseDto> UpdateLeaseProposalAsync(Guid tenantId, Guid proposalId, UpdateLeaseProposalDto dto);
 }

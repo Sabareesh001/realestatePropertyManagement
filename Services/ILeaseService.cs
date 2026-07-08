@@ -80,6 +80,18 @@ public interface ILeaseService
     Task<IEnumerable<LeaseResponseDto>> GetMyLeasesAsync(Guid userId, IEnumerable<string> roles);
 
     /// <summary>
+    /// Retrieves all lease templates awaiting admin verification (status = Submitted).
+    /// </summary>
+    /// <returns>A collection of lease response DTOs pending template verification.</returns>
+    Task<IEnumerable<LeaseResponseDto>> GetPendingTemplatesAsync();
+
+    /// <summary>
+    /// Retrieves all tenant-signed leases awaiting admin verification (status = TenantSigned).
+    /// </summary>
+    /// <returns>A collection of lease response DTOs pending signed agreement verification.</returns>
+    Task<IEnumerable<LeaseResponseDto>> GetPendingSignedLeasesAsync();
+
+    /// <summary>
     /// Retrieves all additional documents associated with a specific lease.
     /// </summary>
     /// <param name="leaseId">The unique identifier of the lease.</param>
@@ -87,4 +99,13 @@ public interface ILeaseService
     /// <param name="roles">The roles of the requesting user.</param>
     /// <returns>A collection of document response DTOs.</returns>
     Task<IEnumerable<DocumentResponseDto>> GetLeaseDocumentsAsync(Guid leaseId, Guid userId, IEnumerable<string> roles);
+
+    /// <summary>
+    /// Adds an agreement document to a lease on behalf of the tenant associated with it.
+    /// </summary>
+    /// <param name="tenantId">The unique identifier of the tenant uploading the document.</param>
+    /// <param name="leaseId">The unique identifier of the lease.</param>
+    /// <param name="dto">The document details to attach.</param>
+    /// <returns>A response DTO representing the newly attached document.</returns>
+    Task<DocumentResponseDto> AddTenantDocumentAsync(Guid tenantId, Guid leaseId, AddLeaseDocumentDto dto);
 }

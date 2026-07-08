@@ -14,14 +14,17 @@ namespace propertyManagement.Services;
 public class LeaseService : ILeaseService
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly INotificationService _notificationService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="LeaseService"/> class.
     /// </summary>
     /// <param name="unitOfWork">The unit of work for database operations.</param>
-    public LeaseService(IUnitOfWork unitOfWork)
+    /// <param name="notificationService">The notification service used to alert affected parties.</param>
+    public LeaseService(IUnitOfWork unitOfWork, INotificationService notificationService)
     {
         _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+        _notificationService = notificationService ?? throw new ArgumentNullException(nameof(notificationService));
     }
 
     /// <summary>
@@ -61,6 +64,18 @@ public class LeaseService : ILeaseService
         if (proposal.PropertyId != dto.PropertyId || proposal.TenantId != dto.TenantId)
         {
             throw new InvalidOperationException("Lease proposal does not match the specified property or tenant.");
+        }
+
+        var leaseExistsForProposal = await _unitOfWork.Leases.ExistsByProposalIdAsync(dto.ProposalId);
+        if (leaseExistsForProposal)
+        {
+            throw new InvalidOperationException("A lease draft already exists for this proposal.");
+        }
+
+        var overlaps = await _unitOfWork.Leases.HasOverlappingLeaseAsync(dto.PropertyId, dto.StartDate, dto.EndDate);
+        if (overlaps)
+        {
+            throw new InvalidOperationException("A lease already exists for this property during the specified period.");
         }
 
         var lease = new Lease
@@ -249,6 +264,21 @@ public class LeaseService : ILeaseService
             throw;
         }
 
+        if (lease.PropertyNavigation != null)
+        {
+            await _notificationService.NotifyAsync(
+                lease.TenantId.HasValue
+                    ? new[] { lease.PropertyNavigation.OwnerId, lease.TenantId.Value }
+                    : new[] { lease.PropertyNavigation.OwnerId },
+                approve ? NotificationType.LeaseTemplateApproved : NotificationType.LeaseTemplateRejected,
+                approve ? "Lease template approved" : "Lease template rejected",
+                approve
+                    ? "The admin approved the lease template. It is now ready for tenant signature."
+                    : "The admin rejected the lease template.",
+                relatedEntityType: "Lease",
+                relatedEntityId: lease.Id);
+        }
+
         var updatedLease = await _unitOfWork.Leases.GetByIdAsync(lease.Id);
         return MapToResponseDto(updatedLease ?? lease);
     }
@@ -288,6 +318,19 @@ public class LeaseService : ILeaseService
 
         await _unitOfWork.Leases.UpdateAsync(lease);
         await _unitOfWork.SaveChangesAsync();
+
+        if (lease.PropertyNavigation != null)
+        {
+            var adminIds = await _unitOfWork.Users.GetUserIdsByRoleAsync(Role.Admin);
+            var recipientIds = adminIds.Append(lease.PropertyNavigation.OwnerId).Distinct().ToList();
+            await _notificationService.NotifyAsync(
+                recipientIds,
+                NotificationType.LeaseSignedSubmitted,
+                "Lease signed by tenant",
+                "The tenant signed the lease agreement. It is now awaiting admin verification.",
+                relatedEntityType: "Lease",
+                relatedEntityId: lease.Id);
+        }
 
         var updatedLease = await _unitOfWork.Leases.GetByIdAsync(lease.Id);
         return MapToResponseDto(updatedLease ?? lease);
@@ -339,6 +382,21 @@ public class LeaseService : ILeaseService
         {
             await _unitOfWork.RollbackTransactionAsync();
             throw;
+        }
+
+        if (lease.PropertyNavigation != null)
+        {
+            await _notificationService.NotifyAsync(
+                lease.TenantId.HasValue
+                    ? new[] { lease.PropertyNavigation.OwnerId, lease.TenantId.Value }
+                    : new[] { lease.PropertyNavigation.OwnerId },
+                approve ? NotificationType.LeaseSignedApproved : NotificationType.LeaseSignedRejected,
+                approve ? "Lease activated" : "Signed lease rejected",
+                approve
+                    ? "The admin verified the signed lease agreement. The lease is now active."
+                    : "The admin rejected the signed lease agreement.",
+                relatedEntityType: "Lease",
+                relatedEntityId: lease.Id);
         }
 
         var updatedLease = await _unitOfWork.Leases.GetByIdAsync(lease.Id);
@@ -407,6 +465,24 @@ public class LeaseService : ILeaseService
 
         var distinctLeases = result.GroupBy(l => l.Id).Select(g => g.First());
         return distinctLeases.Select(MapToResponseDto).ToList();
+    }
+
+    /// <summary>
+    /// Retrieves all lease templates awaiting admin verification (status = Submitted).
+    /// </summary>
+    public async Task<IEnumerable<LeaseResponseDto>> GetPendingTemplatesAsync()
+    {
+        var leases = await _unitOfWork.Leases.GetPendingTemplatesAsync();
+        return leases.Select(MapToResponseDto).ToList();
+    }
+
+    /// <summary>
+    /// Retrieves all tenant-signed leases awaiting admin verification (status = TenantSigned).
+    /// </summary>
+    public async Task<IEnumerable<LeaseResponseDto>> GetPendingSignedLeasesAsync()
+    {
+        var leases = await _unitOfWork.Leases.GetPendingSignedLeasesAsync();
+        return leases.Select(MapToResponseDto).ToList();
     }
 
     /// <summary>
@@ -511,6 +587,46 @@ public class LeaseService : ILeaseService
     }
 
     /// <summary>
+    /// Adds an agreement document to a lease on behalf of the tenant associated with it.
+    /// </summary>
+    public async Task<DocumentResponseDto> AddTenantDocumentAsync(Guid tenantId, Guid leaseId, AddLeaseDocumentDto dto)
+    {
+        var lease = await _unitOfWork.Leases.GetByIdWithDocumentsAsync(leaseId);
+        if (lease == null || lease.TenantId != tenantId)
+        {
+            throw new InvalidOperationException("Lease not found or you are not the tenant associated with it.");
+        }
+
+        if (lease.StatusId == LeaseStatus.Draft || lease.StatusId == LeaseStatus.Submitted)
+        {
+            throw new InvalidOperationException("You cannot upload documents for this lease in its current state.");
+        }
+
+        var document = new Document
+        {
+            Id = Guid.NewGuid(),
+            DocumentTypeId = dto.DocumentTypeId,
+            DocumentNumber = dto.DocumentNumber,
+            DocumentUrl = dto.DocumentUrl,
+            CreatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified)
+        };
+
+        lease.Documents.Add(document);
+        await _unitOfWork.Documents.CreateAsync(document);
+
+        await _unitOfWork.Leases.UpdateAsync(lease);
+        await _unitOfWork.SaveChangesAsync();
+
+        return new DocumentResponseDto
+        {
+            Id = document.Id,
+            DocumentTypeId = document.DocumentTypeId,
+            DocumentNumber = document.DocumentNumber,
+            DocumentUrl = document.DocumentUrl
+        };
+    }
+
+    /// <summary>
     /// Submits a lease template for verification (called by the owner).
     /// </summary>
     /// <param name="ownerId">The identifier of the owner submitting the lease.</param>
@@ -539,6 +655,15 @@ public class LeaseService : ILeaseService
 
         await _unitOfWork.Leases.UpdateAsync(lease);
         await _unitOfWork.SaveChangesAsync();
+
+        var adminIds = await _unitOfWork.Users.GetUserIdsByRoleAsync(Role.Admin);
+        await _notificationService.NotifyAsync(
+            adminIds.ToList(),
+            NotificationType.LeaseSubmittedForApproval,
+            "Lease draft submitted for approval",
+            "An owner submitted a lease draft that is awaiting admin verification.",
+            relatedEntityType: "Lease",
+            relatedEntityId: lease.Id);
 
         var updatedLease = await _unitOfWork.Leases.GetByIdAsync(lease.Id);
         return MapToResponseDto(updatedLease ?? lease);

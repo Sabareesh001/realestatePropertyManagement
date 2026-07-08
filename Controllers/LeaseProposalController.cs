@@ -102,6 +102,26 @@ public class LeaseProposalController : BaseApiController
     }
 
     /// <summary>
+    /// Updates a draft lease proposal's terms (called by the tenant).
+    /// </summary>
+    /// <param name="id">The unique identifier of the lease proposal.</param>
+    /// <param name="dto">The updated proposal fields.</param>
+    /// <returns>The updated lease proposal details.</returns>
+    /// <response code="200">Lease proposal successfully updated.</response>
+    /// <response code="400">If proposal is not in Draft status.</response>
+    /// <response code="401">If user is unauthorized.</response>
+    /// <response code="403">If user is not the tenant associated with the proposal.</response>
+    /// <response code="404">If the lease proposal is not found.</response>
+    [Authorize]
+    [HttpPut("{id:guid}")]
+    public async Task<ActionResult<LeaseProposalResponseDto>> UpdateLeaseProposal(Guid id, [FromBody] UpdateLeaseProposalDto dto)
+    {
+        var userId = GetCurrentUserId();
+        var result = await _leaseProposalService.UpdateLeaseProposalAsync(userId, id, dto);
+        return Ok(result);
+    }
+
+    /// <summary>
     /// Cancels/withdraws a draft or submitted lease proposal (called by the tenant).
     /// </summary>
     /// <param name="id">The unique identifier of the lease proposal.</param>

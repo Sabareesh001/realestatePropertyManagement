@@ -108,4 +108,69 @@ public class LeaseRepository : ILeaseRepository
             .Include(l => l.Documents)
             .FirstOrDefaultAsync(l => l.Id == id && l.DeletedAt == null && (l.PropertyNavigation == null || l.PropertyNavigation.DeletedAt == null));
     }
+
+    /// <summary>
+    /// Retrieves all leases in Submitted status whose templates are awaiting admin verification.
+    /// </summary>
+    /// <returns>A collection of leases pending template verification.</returns>
+    public async Task<IEnumerable<Lease>> GetPendingTemplatesAsync()
+    {
+        return await _context.Leases
+            .Include(l => l.Tenant)
+            .Include(l => l.PropertyNavigation)
+            .Include(l => l.Status)
+            .Include(l => l.AgreementDocument)
+            .Include(l => l.SignedAgreementDocument)
+            .Where(l => l.StatusId == LeaseStatus.Submitted
+                        && l.DeletedAt == null
+                        && (l.PropertyNavigation == null || l.PropertyNavigation.DeletedAt == null))
+            .ToListAsync();
+    }
+
+    /// <summary>
+    /// Retrieves all leases in TenantSigned status whose signed agreements are awaiting admin verification.
+    /// </summary>
+    /// <returns>A collection of leases pending signed agreement verification.</returns>
+    public async Task<IEnumerable<Lease>> GetPendingSignedLeasesAsync()
+    {
+        return await _context.Leases
+            .Include(l => l.Tenant)
+            .Include(l => l.PropertyNavigation)
+            .Include(l => l.Status)
+            .Include(l => l.AgreementDocument)
+            .Include(l => l.SignedAgreementDocument)
+            .Where(l => l.StatusId == LeaseStatus.TenantSigned
+                        && l.DeletedAt == null
+                        && (l.PropertyNavigation == null || l.PropertyNavigation.DeletedAt == null))
+            .ToListAsync();
+    }
+
+    /// <summary>
+    /// Returns true when a non-terminal lease already exists for the given proposal.
+    /// </summary>
+    public async Task<bool> ExistsByProposalIdAsync(Guid proposalId)
+    {
+        int[] terminalStatuses = [LeaseStatus.Rejected, LeaseStatus.Terminated, LeaseStatus.Expired];
+        return await _context.Leases
+            .AnyAsync(l => l.ProposalId == proposalId
+                        && l.DeletedAt == null
+                        && !terminalStatuses.Contains(l.StatusId ?? 0));
+    }
+
+    /// <summary>
+    /// Returns true when a non-terminal lease on the given property overlaps the specified date range.
+    /// </summary>
+    public async Task<bool> HasOverlappingLeaseAsync(int propertyId, DateOnly startDate, DateOnly endDate, Guid? excludeLeaseId = null)
+    {
+        int[] terminalStatuses = [LeaseStatus.Rejected, LeaseStatus.Terminated, LeaseStatus.Expired];
+        return await _context.Leases
+            .AnyAsync(l => l.PropertyId == propertyId
+                        && l.DeletedAt == null
+                        && !terminalStatuses.Contains(l.StatusId ?? 0)
+                        && (excludeLeaseId == null || l.Id != excludeLeaseId)
+                        && l.StartDate != null
+                        && l.EndDate != null
+                        && l.StartDate <= endDate
+                        && l.EndDate >= startDate);
+    }
 }

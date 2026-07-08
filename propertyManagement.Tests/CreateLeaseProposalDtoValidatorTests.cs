@@ -34,7 +34,7 @@ public class CreateLeaseProposalDtoValidatorTests
         {
             PropertyId = 1,
             StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(1)),
-            EndDate = DateOnly.FromDateTime(DateTime.Today.AddDays(10)),
+            EndDate = DateOnly.FromDateTime(DateTime.Today.AddMonths(2)),
             MonthlyRent = 1200,
             UpfrontPayment = 2400,
             SecurityDeposit = 1500

@@ -143,6 +143,36 @@ public class LeaseController : BaseApiController
     }
 
     /// <summary>
+    /// Retrieves all lease templates pending admin verification (status = Submitted). Admin only.
+    /// </summary>
+    /// <returns>A list of leases awaiting template verification.</returns>
+    /// <response code="200">Pending lease templates retrieved successfully.</response>
+    /// <response code="401">If user is unauthorized.</response>
+    /// <response code="403">If user is not in the Admin role.</response>
+    [Authorize(Roles = "Admin")]
+    [HttpGet("pending-templates")]
+    public async Task<ActionResult<IEnumerable<LeaseResponseDto>>> GetPendingTemplates()
+    {
+        var result = await _leaseService.GetPendingTemplatesAsync();
+        return Ok(result);
+    }
+
+    /// <summary>
+    /// Retrieves all tenant-signed leases pending admin verification (status = TenantSigned). Admin only.
+    /// </summary>
+    /// <returns>A list of tenant-signed leases awaiting signed agreement verification.</returns>
+    /// <response code="200">Pending signed leases retrieved successfully.</response>
+    /// <response code="401">If user is unauthorized.</response>
+    /// <response code="403">If user is not in the Admin role.</response>
+    [Authorize(Roles = "Admin")]
+    [HttpGet("pending-signed")]
+    public async Task<ActionResult<IEnumerable<LeaseResponseDto>>> GetPendingSignedLeases()
+    {
+        var result = await _leaseService.GetPendingSignedLeasesAsync();
+        return Ok(result);
+    }
+
+    /// <summary>
     /// Retrieves a specific lease details, validating role-based authorization.
     /// </summary>
     /// <param name="id">The unique identifier of the lease.</param>
@@ -194,5 +224,25 @@ public class LeaseController : BaseApiController
         var roles = User.FindAll(ClaimTypes.Role).Select(c => c.Value).ToList();
         var result = await _leaseService.GetLeaseDocumentsAsync(id, userId, roles);
         return Ok(result);
+    }
+
+    /// <summary>
+    /// Uploads an agreement document to a lease (called by the tenant associated with it).
+    /// </summary>
+    /// <param name="id">The unique identifier of the lease.</param>
+    /// <param name="dto">The document details to attach.</param>
+    /// <returns>The created document details.</returns>
+    /// <response code="201">Document uploaded successfully.</response>
+    /// <response code="400">If validation fails or the lease is not in an eligible state.</response>
+    /// <response code="401">If user is unauthorized.</response>
+    /// <response code="403">If user is not in the Tenant role.</response>
+    /// <response code="404">If the lease was not found.</response>
+    [Authorize(Roles = "Tenant")]
+    [HttpPost("{id:guid}/documents")]
+    public async Task<ActionResult<DocumentResponseDto>> AddTenantDocument(Guid id, [FromBody] AddLeaseDocumentDto dto)
+    {
+        var tenantId = GetCurrentUserId();
+        var result = await _leaseService.AddTenantDocumentAsync(tenantId, id, dto);
+        return CreatedAtAction(nameof(GetLeaseDocuments), new { id }, result);
     }
 }

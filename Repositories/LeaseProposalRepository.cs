@@ -125,10 +125,21 @@ public class LeaseProposalRepository : ILeaseProposalRepository
             .AnyAsync(lp => lp.PropertyId == propertyId &&
                             lp.DeletedAt == null &&
                             lp.StatusId == ProposalStatus.Approved &&
-                            lp.StartDate != null &&
-                            lp.EndDate != null &&
                             lp.StartDate <= endDate &&
                             lp.EndDate >= startDate);
+    }
+
+    /// <summary>
+    /// Returns true when the tenant already has a lease proposal in Draft or Submitted status.
+    /// </summary>
+    /// <param name="tenantId">The unique identifier of the tenant.</param>
+    /// <returns>True if the tenant has a pending proposal; otherwise false.</returns>
+    public async Task<bool> HasActivePendingProposalAsync(Guid tenantId)
+    {
+        return await _context.LeaseProposals
+            .AnyAsync(lp => lp.TenantId == tenantId &&
+                            lp.DeletedAt == null &&
+                            (lp.StatusId == ProposalStatus.Draft || lp.StatusId == ProposalStatus.Submitted));
     }
 }
 

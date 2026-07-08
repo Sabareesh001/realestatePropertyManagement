@@ -14,14 +14,17 @@ namespace propertyManagement.Services;
 public class LeaseProposalService : ILeaseProposalService
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly INotificationService _notificationService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="LeaseProposalService"/> class.
     /// </summary>
     /// <param name="unitOfWork">The unit of work for database access.</param>
-    public LeaseProposalService(IUnitOfWork unitOfWork)
+    /// <param name="notificationService">The notification service used to alert affected parties.</param>
+    public LeaseProposalService(IUnitOfWork unitOfWork, INotificationService notificationService)
     {
         _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+        _notificationService = notificationService ?? throw new ArgumentNullException(nameof(notificationService));
     }
 
     /// <summary>
@@ -39,6 +42,12 @@ public class LeaseProposalService : ILeaseProposalService
             throw new InvalidOperationException("User must be verified to rent a property.");
         }
 
+        var hasPending = await _unitOfWork.LeaseProposals.HasActivePendingProposalAsync(tenantId);
+        if (hasPending)
+        {
+            throw new InvalidOperationException("You already have an active lease proposal. Cancel or complete it before submitting a new one.");
+        }
+
         var property = await _unitOfWork.Properties.GetByIdAsync(dto.PropertyId);
         if (property == null)
         {
@@ -50,13 +59,20 @@ public class LeaseProposalService : ILeaseProposalService
             throw new InvalidOperationException("Owner cannot lease their own property.");
         }
 
-        if (dto.StartDate.HasValue && dto.EndDate.HasValue)
+        if (property.VerificationStatusId != PropertyVerificationStatus.Verified)
         {
-            var isOverlapping = await _unitOfWork.LeaseProposals.HasOverlappingProposalAsync(dto.PropertyId, dto.StartDate.Value, dto.EndDate.Value);
-            if (isOverlapping)
-            {
-                throw new InvalidOperationException("A lease proposal already exists for this property during the specified time period.");
-            }
+            throw new InvalidOperationException("Property must be verified before a lease proposal can be created.");
+        }
+
+        if (property.AvailabilityStatusId != PropertyAvailabilityStatus.Available)
+        {
+            throw new InvalidOperationException("Property is not available for lease.");
+        }
+
+        var isOverlapping = await _unitOfWork.LeaseProposals.HasOverlappingProposalAsync(dto.PropertyId, dto.StartDate, dto.EndDate);
+        if (isOverlapping)
+        {
+            throw new InvalidOperationException("A lease proposal already exists for this property during the specified time period.");
         }
 
         var proposal = new LeaseProposal
@@ -152,6 +168,18 @@ public class LeaseProposalService : ILeaseProposalService
         // Eager load tenant information manually
         proposal.Tenant = await _unitOfWork.Users.GetByIdAsync(tenantId);
 
+        var property = await _unitOfWork.Properties.GetByIdAsync(proposal.PropertyId);
+        if (property != null)
+        {
+            await _notificationService.NotifyAsync(
+                new[] { property.OwnerId },
+                NotificationType.ProposalSubmitted,
+                "New lease proposal received",
+                "A tenant submitted a lease proposal for one of your properties.",
+                relatedEntityType: "LeaseProposal",
+                relatedEntityId: proposal.Id);
+        }
+
         return MapToResponseDto(proposal);
     }
 
@@ -173,12 +201,7 @@ public class LeaseProposalService : ILeaseProposalService
             throw new KeyNotFoundException("Lease proposal not found.");
         }
 
-        if (!proposal.PropertyId.HasValue)
-        {
-            throw new KeyNotFoundException("Property associated with the proposal not found.");
-        }
-
-        var property = await _unitOfWork.Properties.GetByIdAsync(proposal.PropertyId.Value);
+        var property = await _unitOfWork.Properties.GetByIdAsync(proposal.PropertyId);
         if (property == null)
         {
             throw new KeyNotFoundException("Property not found.");
@@ -202,10 +225,17 @@ public class LeaseProposalService : ILeaseProposalService
         await _unitOfWork.LeaseProposals.UpdateAsync(proposal);
         await _unitOfWork.SaveChangesAsync();
 
-        if (proposal.TenantId.HasValue)
-        {
-            proposal.Tenant = await _unitOfWork.Users.GetByIdAsync(proposal.TenantId.Value);
-        }
+        proposal.Tenant = await _unitOfWork.Users.GetByIdAsync(proposal.TenantId);
+
+        await _notificationService.NotifyAsync(
+            new[] { proposal.TenantId },
+            accept ? NotificationType.ProposalApproved : NotificationType.ProposalRejected,
+            accept ? "Lease proposal approved" : "Lease proposal rejected",
+            accept
+                ? "The property owner approved your lease proposal."
+                : "The property owner rejected your lease proposal.",
+            relatedEntityType: "LeaseProposal",
+            relatedEntityId: proposal.Id);
 
         return MapToResponseDto(proposal);
     }
@@ -238,6 +268,42 @@ public class LeaseProposalService : ILeaseProposalService
         }
 
         proposal.StatusId = ProposalStatus.Cancelled;
+        proposal.UpdatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified);
+
+        await _unitOfWork.LeaseProposals.UpdateAsync(proposal);
+        await _unitOfWork.SaveChangesAsync();
+
+        proposal.Tenant = await _unitOfWork.Users.GetByIdAsync(tenantId);
+
+        return MapToResponseDto(proposal);
+    }
+
+    /// <summary>
+    /// Updates a draft lease proposal. Only allowed when status is Draft.
+    /// </summary>
+    public async Task<LeaseProposalResponseDto> UpdateLeaseProposalAsync(Guid tenantId, Guid proposalId, UpdateLeaseProposalDto dto)
+    {
+        var proposal = await _unitOfWork.LeaseProposals.GetByIdAsync(proposalId);
+        if (proposal == null)
+        {
+            throw new KeyNotFoundException("Lease proposal not found.");
+        }
+
+        if (proposal.TenantId != tenantId)
+        {
+            throw new UnauthorizedAccessException("You are not authorized to edit this proposal.");
+        }
+
+        if (proposal.StatusId != ProposalStatus.Draft)
+        {
+            throw new InvalidOperationException("Only draft proposals can be edited.");
+        }
+
+        proposal.StartDate = dto.StartDate;
+        proposal.EndDate = dto.EndDate;
+        proposal.MonthlyRent = dto.MonthlyRent;
+        proposal.UpfrontPayment = dto.UpfrontPayment;
+        proposal.SecurityDeposit = dto.SecurityDeposit;
         proposal.UpdatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified);
 
         await _unitOfWork.LeaseProposals.UpdateAsync(proposal);

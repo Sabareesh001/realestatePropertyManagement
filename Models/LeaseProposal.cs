@@ -7,27 +7,27 @@ public partial class LeaseProposal
 {
     public Guid Id { get; set; } = Guid.NewGuid();
 
-    public Guid? TenantId { get; set; }
+    public Guid TenantId { get; set; }
 
-    public int? PropertyId { get; set; }
+    public int PropertyId { get; set; }
 
-    public DateOnly? StartDate { get; set; }
+    public DateOnly StartDate { get; set; }
 
-    public DateOnly? EndDate { get; set; }
+    public DateOnly EndDate { get; set; }
 
-    public decimal? MonthlyRent { get; set; }
+    public decimal MonthlyRent { get; set; }
 
-    public decimal? UpfrontPayment { get; set; }
+    public decimal UpfrontPayment { get; set; }
 
-    public decimal? SecurityDeposit { get; set; }
+    public decimal SecurityDeposit { get; set; }
 
-    public int? StatusId { get; set; }
+    public int StatusId { get; set; }
 
     public Guid? ReviewedBy { get; set; }
 
     public DateTime? ReviewedAt { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; }
 
     public virtual ICollection<Lease> Leases { get; set; } = new List<Lease>();
 

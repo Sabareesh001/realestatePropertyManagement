@@ -24,6 +24,7 @@ public class LeaseServiceTests
     private Mock<IUserVerificationRepository> _mockUserVerificationRepository;
     private Mock<ILeaseProposalRepository> _mockLeaseProposalRepository;
     private Mock<IDocumentRepository> _mockDocumentRepository;
+    private Mock<INotificationService> _mockNotificationService;
     private LeaseService _leaseService;
 
     /// <summary>
@@ -39,6 +40,7 @@ public class LeaseServiceTests
         _mockUserVerificationRepository = new Mock<IUserVerificationRepository>();
         _mockLeaseProposalRepository = new Mock<ILeaseProposalRepository>();
         _mockDocumentRepository = new Mock<IDocumentRepository>();
+        _mockNotificationService = new Mock<INotificationService>();
 
         _mockUnitOfWork.Setup(u => u.Leases).Returns(_mockLeaseRepository.Object);
         _mockUnitOfWork.Setup(u => u.Properties).Returns(_mockPropertyRepository.Object);
@@ -50,7 +52,10 @@ public class LeaseServiceTests
         _mockDocumentRepository.Setup(r => r.CreateAsync(It.IsAny<Document>()))
             .ReturnsAsync((Document doc) => doc);
 
-        _leaseService = new LeaseService(_mockUnitOfWork.Object);
+        _mockUserRepository.Setup(r => r.GetUserIdsByRoleAsync(It.IsAny<int>()))
+            .ReturnsAsync(Array.Empty<Guid>());
+
+        _leaseService = new LeaseService(_mockUnitOfWork.Object, _mockNotificationService.Object);
     }
 
     /// <summary>

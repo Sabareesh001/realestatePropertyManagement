@@ -5,18 +5,15 @@ using System;
 namespace propertyManagement.Validators;
 
 /// <summary>
-/// Validator for CreateLeaseProposalDto to ensure lease proposal inputs are valid.
+/// Validator for <see cref="UpdateLeaseProposalDto"/> to ensure updated lease proposal inputs are valid.
 /// </summary>
-public class CreateLeaseProposalDtoValidator : AbstractValidator<CreateLeaseProposalDto>
+public class UpdateLeaseProposalDtoValidator : AbstractValidator<UpdateLeaseProposalDto>
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="CreateLeaseProposalDtoValidator"/> class and defines validation rules.
+    /// Initializes a new instance of the <see cref="UpdateLeaseProposalDtoValidator"/> class and defines validation rules.
     /// </summary>
-    public CreateLeaseProposalDtoValidator()
+    public UpdateLeaseProposalDtoValidator()
     {
-        RuleFor(x => x.PropertyId)
-            .GreaterThan(0).WithMessage("Property ID must be greater than zero.");
-
         RuleFor(x => x.MonthlyRent)
             .GreaterThanOrEqualTo(0).WithMessage("Monthly rent cannot be negative.");
 

@@ -22,6 +22,7 @@ public class LeaseProposalServiceTests
     private Mock<IUserVerificationRepository> _mockUserVerificationRepository;
     private Mock<IUserRepository> _mockUserRepository;
     private Mock<IPropertyRepository> _mockPropertyRepository;
+    private Mock<INotificationService> _mockNotificationService;
     private LeaseProposalService _leaseProposalService;
 
     /// <summary>
@@ -35,13 +36,14 @@ public class LeaseProposalServiceTests
         _mockUserVerificationRepository = new Mock<IUserVerificationRepository>();
         _mockUserRepository = new Mock<IUserRepository>();
         _mockPropertyRepository = new Mock<IPropertyRepository>();
+        _mockNotificationService = new Mock<INotificationService>();
 
         _mockUnitOfWork.Setup(u => u.LeaseProposals).Returns(_mockLeaseProposalRepository.Object);
         _mockUnitOfWork.Setup(u => u.UserVerifications).Returns(_mockUserVerificationRepository.Object);
         _mockUnitOfWork.Setup(u => u.Users).Returns(_mockUserRepository.Object);
         _mockUnitOfWork.Setup(u => u.Properties).Returns(_mockPropertyRepository.Object);
 
-        _leaseProposalService = new LeaseProposalService(_mockUnitOfWork.Object);
+        _leaseProposalService = new LeaseProposalService(_mockUnitOfWork.Object, _mockNotificationService.Object);
     }
 
     /// <summary>
@@ -54,7 +56,12 @@ public class LeaseProposalServiceTests
         var propertyId = 1;
 
         _mockUserVerificationRepository.Setup(r => r.IsUserVerifiedAsync(tenantId)).ReturnsAsync(true);
-        _mockPropertyRepository.Setup(r => r.GetByIdAsync(propertyId)).ReturnsAsync(new Property { Id = propertyId });
+        _mockPropertyRepository.Setup(r => r.GetByIdAsync(propertyId)).ReturnsAsync(new Property
+        {
+            Id = propertyId,
+            VerificationStatusId = PropertyVerificationStatus.Verified,
+            AvailabilityStatusId = PropertyAvailabilityStatus.Available
+        });
         _mockUserRepository.Setup(r => r.GetByIdAsync(tenantId)).ReturnsAsync(new User { Id = tenantId, FirstName = "John", LastName = "Doe" });
 
         var dto = new CreateLeaseProposalDto
@@ -105,6 +112,56 @@ public class LeaseProposalServiceTests
         var ex = Assert.ThrowsAsync<InvalidOperationException>(async () =>
             await _leaseProposalService.CreateLeaseProposalAsync(tenantId, dto));
         Assert.That(ex.Message, Is.EqualTo("Owner cannot lease their own property."));
+    }
+
+    /// <summary>
+    /// Verifies that creating a lease proposal for an unverified property throws an InvalidOperationException.
+    /// </summary>
+    [Test]
+    public void CreateLeaseProposalAsync_UnverifiedProperty_ThrowsInvalidOperationException()
+    {
+        var tenantId = Guid.NewGuid();
+        var propertyId = 1;
+
+        _mockUserVerificationRepository.Setup(r => r.IsUserVerifiedAsync(tenantId)).ReturnsAsync(true);
+        _mockPropertyRepository.Setup(r => r.GetByIdAsync(propertyId)).ReturnsAsync(new Property
+        {
+            Id = propertyId,
+            OwnerId = Guid.NewGuid(),
+            VerificationStatusId = PropertyVerificationStatus.Submitted,
+            AvailabilityStatusId = PropertyAvailabilityStatus.Available
+        });
+
+        var dto = new CreateLeaseProposalDto { PropertyId = propertyId };
+
+        var ex = Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            await _leaseProposalService.CreateLeaseProposalAsync(tenantId, dto));
+        Assert.That(ex.Message, Is.EqualTo("Property must be verified before a lease proposal can be created."));
+    }
+
+    /// <summary>
+    /// Verifies that creating a lease proposal for an unavailable property throws an InvalidOperationException.
+    /// </summary>
+    [Test]
+    public void CreateLeaseProposalAsync_UnavailableProperty_ThrowsInvalidOperationException()
+    {
+        var tenantId = Guid.NewGuid();
+        var propertyId = 1;
+
+        _mockUserVerificationRepository.Setup(r => r.IsUserVerifiedAsync(tenantId)).ReturnsAsync(true);
+        _mockPropertyRepository.Setup(r => r.GetByIdAsync(propertyId)).ReturnsAsync(new Property
+        {
+            Id = propertyId,
+            OwnerId = Guid.NewGuid(),
+            VerificationStatusId = PropertyVerificationStatus.Verified,
+            AvailabilityStatusId = PropertyAvailabilityStatus.Occupied
+        });
+
+        var dto = new CreateLeaseProposalDto { PropertyId = propertyId };
+
+        var ex = Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            await _leaseProposalService.CreateLeaseProposalAsync(tenantId, dto));
+        Assert.That(ex.Message, Is.EqualTo("Property is not available for lease."));
     }
 
     /// <summary>
@@ -456,8 +513,14 @@ public class LeaseProposalServiceTests
         var endDate = DateOnly.FromDateTime(DateTime.Today.AddMonths(6));
 
         _mockUserVerificationRepository.Setup(r => r.IsUserVerifiedAsync(tenantId)).ReturnsAsync(true);
-        _mockPropertyRepository.Setup(r => r.GetByIdAsync(propertyId)).ReturnsAsync(new Property { Id = propertyId, OwnerId = Guid.NewGuid() });
-        
+        _mockPropertyRepository.Setup(r => r.GetByIdAsync(propertyId)).ReturnsAsync(new Property
+        {
+            Id = propertyId,
+            OwnerId = Guid.NewGuid(),
+            VerificationStatusId = PropertyVerificationStatus.Verified,
+            AvailabilityStatusId = PropertyAvailabilityStatus.Available
+        });
+
         // Mock overlap query to return true
         _mockLeaseProposalRepository.Setup(r => r.HasOverlappingProposalAsync(propertyId, startDate, endDate)).ReturnsAsync(true);
 

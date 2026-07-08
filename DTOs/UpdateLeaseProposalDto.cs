@@ -3,15 +3,10 @@ using System;
 namespace propertyManagement.DTOs;
 
 /// <summary>
-/// Data Transfer Object for creating a new lease proposal.
+/// Data Transfer Object for updating a draft lease proposal.
 /// </summary>
-public class CreateLeaseProposalDto
+public class UpdateLeaseProposalDto
 {
-    /// <summary>
-    /// Gets or sets the property identifier.
-    /// </summary>
-    public int PropertyId { get; set; }
-
     /// <summary>
     /// Gets or sets the preferred lease start date.
     /// </summary>

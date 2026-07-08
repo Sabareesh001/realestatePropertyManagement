@@ -30,5 +30,12 @@ public interface ILeaseProposalRepository : IRepository<LeaseProposal, Guid>
     /// <param name="endDate">The proposed lease end date.</param>
     /// <returns>True if an overlapping active proposal exists; otherwise false.</returns>
     Task<bool> HasOverlappingProposalAsync(int propertyId, DateOnly startDate, DateOnly endDate);
+
+    /// <summary>
+    /// Returns true when the tenant already has a lease proposal in Draft or Submitted status.
+    /// </summary>
+    /// <param name="tenantId">The unique identifier of the tenant.</param>
+    /// <returns>True if the tenant has a pending proposal; otherwise false.</returns>
+    Task<bool> HasActivePendingProposalAsync(Guid tenantId);
 }
 
