@@ -38,7 +38,27 @@ public class UserService : IUserService
             throw new InvalidOperationException("Email already exists");
         }
 
-        var role = await _unitOfWork.Roles.GetByIdAsync(registerDto.RoleId);
+        var tenantRole = await _unitOfWork.Roles.GetByIdAsync(Role.Tenant);
+        var userRoles = new List<UserRole>
+        {
+            new UserRole
+            {
+                RoleId = Role.Tenant,
+                Role = tenantRole,
+                CreatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified)
+            }
+        };
+
+        if (registerDto.RoleId != Role.Tenant)
+        {
+            var requestedRole = await _unitOfWork.Roles.GetByIdAsync(registerDto.RoleId);
+            userRoles.Add(new UserRole
+            {
+                RoleId = registerDto.RoleId,
+                Role = requestedRole,
+                CreatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified)
+            });
+        }
 
         var user = new User
         {
@@ -50,15 +70,7 @@ public class UserService : IUserService
             VerificationStatusId = UserVerificationStatus.Unverified,
             ActiveStatusId = UserActiveStatus.Active,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(registerDto.Password),
-            UserRoles = new List<UserRole>
-            {
-                new UserRole
-                {
-                    RoleId = registerDto.RoleId,
-                    Role = role,
-                    CreatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified)
-                }
-            }
+            UserRoles = userRoles
         };
 
         var createdUser = await _unitOfWork.Users.CreateAsync(user);

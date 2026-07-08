@@ -19,6 +19,7 @@ public class UserVerificationServiceTests
     private Mock<IUserVerificationRepository> _mockVerificationRepository;
     private Mock<IPropertyRepository> _mockPropertyRepository;
     private Mock<ILeaseProposalRepository> _mockLeaseProposalRepository;
+    private Mock<INotificationService> _mockNotificationService;
     private UserVerificationService _verificationService;
     private PropertyService _propertyService;
     private LeaseProposalService _leaseProposalService;
@@ -31,6 +32,7 @@ public class UserVerificationServiceTests
         _mockVerificationRepository = new Mock<IUserVerificationRepository>();
         _mockPropertyRepository = new Mock<IPropertyRepository>();
         _mockLeaseProposalRepository = new Mock<ILeaseProposalRepository>();
+        _mockNotificationService = new Mock<INotificationService>();
 
         _mockUnitOfWork.Setup(u => u.Users).Returns(_mockUserRepository.Object);
         _mockUnitOfWork.Setup(u => u.UserVerifications).Returns(_mockVerificationRepository.Object);
@@ -39,7 +41,7 @@ public class UserVerificationServiceTests
 
         _verificationService = new UserVerificationService(_mockUnitOfWork.Object);
         _propertyService = new PropertyService(_mockUnitOfWork.Object);
-        _leaseProposalService = new LeaseProposalService(_mockUnitOfWork.Object);
+        _leaseProposalService = new LeaseProposalService(_mockUnitOfWork.Object, _mockNotificationService.Object);
     }
 
     [Test]
@@ -220,7 +222,12 @@ public class UserVerificationServiceTests
         // Arrange
         var tenantId = Guid.NewGuid();
         _mockVerificationRepository.Setup(r => r.IsUserVerifiedAsync(tenantId)).ReturnsAsync(true);
-        _mockPropertyRepository.Setup(r => r.GetByIdAsync(1)).ReturnsAsync(new Property { Id = 1 });
+        _mockPropertyRepository.Setup(r => r.GetByIdAsync(1)).ReturnsAsync(new Property
+        {
+            Id = 1,
+            VerificationStatusId = PropertyVerificationStatus.Verified,
+            AvailabilityStatusId = PropertyAvailabilityStatus.Available
+        });
 
         var proposalDto = new CreateLeaseProposalDto
         {

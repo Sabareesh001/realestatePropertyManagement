@@ -71,10 +71,10 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Verifies that RegisterAsync successfully registers a new user.
+    /// Verifies that RegisterAsync assigns both Tenant and Owner roles when registering as Owner.
     /// </summary>
     [Test]
-    public async Task RegisterAsync_ValidUser_ReturnsUserResponseDto()
+    public async Task RegisterAsync_AsOwner_AssignsTenantAndOwnerRoles()
     {
         // Arrange
         var registerDto = new RegisterDto
@@ -85,14 +85,16 @@ public class UserServiceTests
             LastName = "Doe",
             Phone = "9876543210",
             DateOfBirth = new DateOnly(1992, 2, 2),
-            RoleId = 2
+            RoleId = Role.Owner
         };
 
-        var role = new Role { Id = 2, Name = "User" };
+        var tenantRole = new Role { Id = Role.Tenant, Name = "Tenant" };
+        var ownerRole = new Role { Id = Role.Owner, Name = "Owner" };
+
         _mockUserRepository.Setup(r => r.GetByEmailAsync(registerDto.Email))
             .ReturnsAsync((User?)null);
-        _mockRoleRepository.Setup(r => r.GetByIdAsync(registerDto.RoleId))
-            .ReturnsAsync(role);
+        _mockRoleRepository.Setup(r => r.GetByIdAsync(Role.Tenant)).ReturnsAsync(tenantRole);
+        _mockRoleRepository.Setup(r => r.GetByIdAsync(Role.Owner)).ReturnsAsync(ownerRole);
 
         User? savedUser = null;
         _mockUserRepository.Setup(r => r.CreateAsync(It.IsAny<User>()))
@@ -111,9 +113,9 @@ public class UserServiceTests
         Assert.That(result.LastName, Is.EqualTo(registerDto.LastName));
         Assert.That(result.Phone, Is.EqualTo(registerDto.Phone));
         Assert.That(result.DateOfBirth, Is.EqualTo(registerDto.DateOfBirth));
-        Assert.That(result.Role, Is.Not.Null);
-        Assert.That(result.Role.Id, Is.EqualTo(role.Id));
-        Assert.That(result.Role.Name, Is.EqualTo(role.Name));
+        Assert.That(result.Roles, Has.Count.EqualTo(2));
+        Assert.That(result.Roles.Any(r => r.Id == Role.Tenant), Is.True);
+        Assert.That(result.Roles.Any(r => r.Id == Role.Owner), Is.True);
 
         Assert.That(savedUser, Is.Not.Null);
         Assert.That(savedUser.VerificationStatusId, Is.EqualTo(UserVerificationStatus.Unverified));
@@ -121,7 +123,56 @@ public class UserServiceTests
         Assert.That(BCrypt.Net.BCrypt.Verify(registerDto.Password, savedUser.PasswordHash), Is.True);
 
         _mockUserRepository.Verify(r => r.GetByEmailAsync(registerDto.Email), Times.Once);
-        _mockRoleRepository.Verify(r => r.GetByIdAsync(registerDto.RoleId), Times.Once);
+        _mockRoleRepository.Verify(r => r.GetByIdAsync(Role.Tenant), Times.Once);
+        _mockRoleRepository.Verify(r => r.GetByIdAsync(Role.Owner), Times.Once);
+        _mockUserRepository.Verify(r => r.CreateAsync(It.IsAny<User>()), Times.Once);
+        _mockUnitOfWork.Verify(u => u.SaveChangesAsync(), Times.Once);
+    }
+
+    /// <summary>
+    /// Verifies that RegisterAsync assigns only the Tenant role when registering as Tenant.
+    /// </summary>
+    [Test]
+    public async Task RegisterAsync_AsTenant_AssignsOnlyTenantRole()
+    {
+        // Arrange
+        var registerDto = new RegisterDto
+        {
+            Email = "tenant@example.com",
+            Password = "SecurePassword123",
+            FirstName = "John",
+            LastName = "Smith",
+            Phone = "1234567890",
+            DateOfBirth = new DateOnly(1990, 5, 15),
+            RoleId = Role.Tenant
+        };
+
+        var tenantRole = new Role { Id = Role.Tenant, Name = "Tenant" };
+
+        _mockUserRepository.Setup(r => r.GetByEmailAsync(registerDto.Email))
+            .ReturnsAsync((User?)null);
+        _mockRoleRepository.Setup(r => r.GetByIdAsync(Role.Tenant)).ReturnsAsync(tenantRole);
+
+        User? savedUser = null;
+        _mockUserRepository.Setup(r => r.CreateAsync(It.IsAny<User>()))
+            .Callback<User>(u => { savedUser = u; u.Id = Guid.NewGuid(); })
+            .ReturnsAsync((User u) => u);
+
+        _mockUnitOfWork.Setup(u => u.SaveChangesAsync()).ReturnsAsync(1);
+
+        // Act
+        var result = await _userService.RegisterAsync(registerDto);
+
+        // Assert
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.Roles, Has.Count.EqualTo(1));
+        Assert.That(result.Roles.First().Id, Is.EqualTo(Role.Tenant));
+
+        Assert.That(savedUser, Is.Not.Null);
+        Assert.That(savedUser.UserRoles, Has.Count.EqualTo(1));
+
+        _mockRoleRepository.Verify(r => r.GetByIdAsync(Role.Tenant), Times.Once);
+        _mockRoleRepository.Verify(r => r.GetByIdAsync(Role.Owner), Times.Never);
         _mockUserRepository.Verify(r => r.CreateAsync(It.IsAny<User>()), Times.Once);
         _mockUnitOfWork.Verify(u => u.SaveChangesAsync(), Times.Once);
     }

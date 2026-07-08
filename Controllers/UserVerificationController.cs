@@ -17,14 +17,17 @@ namespace propertyManagement.Controllers;
 public class UserVerificationController : BaseApiController
 {
     private readonly IUserVerificationService _userVerificationService;
+    private readonly IWebHostEnvironment _env;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="UserVerificationController"/> class.
     /// </summary>
     /// <param name="userVerificationService">The user verification service.</param>
-    public UserVerificationController(IUserVerificationService userVerificationService)
+    /// <param name="env">The web host environment for resolving the web root path.</param>
+    public UserVerificationController(IUserVerificationService userVerificationService, IWebHostEnvironment env)
     {
         _userVerificationService = userVerificationService;
+        _env = env;
     }
 
     /// <summary>
@@ -107,6 +110,43 @@ public class UserVerificationController : BaseApiController
         var adminId = GetCurrentUserId();
         var result = await _userVerificationService.RejectVerificationAsync(adminId, id, dto);
         return Ok(result);
+    }
+
+    /// <summary>
+    /// Uploads a verification document PDF and returns a permanent URL.
+    /// </summary>
+    /// <param name="file">The PDF file to upload (max 10 MB).</param>
+    /// <returns>An object containing the URL of the stored document.</returns>
+    /// <response code="200">File uploaded successfully; returns <c>{ "url": "..." }</c>.</response>
+    /// <response code="400">If no file is provided, the file is not a PDF, or the file exceeds 10 MB.</response>
+    /// <response code="401">If the user is not authenticated.</response>
+    [Authorize]
+    [RequestSizeLimit(10 * 1024 * 1024)]
+    [RequestFormLimits(MultipartBodyLengthLimit = 10 * 1024 * 1024)]
+    [HttpPost("upload-document")]
+    public async Task<IActionResult> UploadDocument(IFormFile file)
+    {
+        if (file is null || file.Length == 0)
+            return BadRequest(new { detail = "No file was provided." });
+
+        if (file.ContentType != "application/pdf")
+            return BadRequest(new { detail = "Only PDF files are accepted." });
+
+        if (file.Length > 10 * 1024 * 1024)
+            return BadRequest(new { detail = "File size must not exceed 10 MB." });
+
+        var webRoot = _env.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+        var uploadsDir = Path.Combine(webRoot, "uploads", "verificationdocs");
+        Directory.CreateDirectory(uploadsDir);
+
+        var fileName = $"{Guid.NewGuid()}.pdf";
+        var filePath = Path.Combine(uploadsDir, fileName);
+
+        await using var stream = new FileStream(filePath, FileMode.Create);
+        await file.CopyToAsync(stream);
+
+        var url = $"{Request.Scheme}://{Request.Host}/uploads/verificationdocs/{fileName}";
+        return Ok(new { url });
     }
 
 }

@@ -119,7 +119,7 @@ public class UpdateBankAccountDtoValidatorTests
     }
 
     /// <summary>
-    /// Verifies that an account number exceeding 50 characters fails validation.
+    /// Verifies that an account number exceeding the allowed 9–18 digit range fails validation.
     /// </summary>
     [Test]
     public async Task Validate_AccountNumberTooLong_Fails()
@@ -139,7 +139,7 @@ public class UpdateBankAccountDtoValidatorTests
         // Assert
         Assert.That(result.IsValid, Is.False);
         var errors = result.Errors.Select(e => e.ErrorMessage).ToList();
-        Assert.That(errors, Contains.Item("Account number cannot exceed 50 characters."));
+        Assert.That(errors, Contains.Item("Account number must contain only digits and be between 9 and 18 digits long."));
     }
 
     /// <summary>
@@ -215,7 +215,7 @@ public class UpdateBankAccountDtoValidatorTests
     }
 
     /// <summary>
-    /// Verifies that an IFSC code exceeding 20 characters fails validation.
+    /// Verifies that an IFSC code that is not exactly 11 characters fails validation.
     /// </summary>
     [Test]
     public async Task Validate_IfscCodeTooLong_Fails()
@@ -235,6 +235,6 @@ public class UpdateBankAccountDtoValidatorTests
         // Assert
         Assert.That(result.IsValid, Is.False);
         var errors = result.Errors.Select(e => e.ErrorMessage).ToList();
-        Assert.That(errors, Contains.Item("IFSC code cannot exceed 20 characters."));
+        Assert.That(errors, Contains.Item("IFSC code must be exactly 11 characters."));
     }
 }

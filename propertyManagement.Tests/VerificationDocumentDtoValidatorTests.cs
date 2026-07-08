@@ -67,7 +67,7 @@ public class VerificationDocumentDtoValidatorTests
         // Assert
         Assert.That(result.IsValid, Is.False);
         var errors = result.Errors.Select(e => e.ErrorMessage).ToList();
-        Assert.That(errors, Contains.Item("Document type must be valid"));
+        Assert.That(errors, Contains.Item("Document type must be valid (1–4)."));
     }
 
     /// <summary>
