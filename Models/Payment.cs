@@ -42,4 +42,10 @@ public partial class Payment
     /// Gets or sets the date and time when the payment was soft deleted.
     /// </summary>
     public DateTime? DeletedAt { get; set; }
+
+    public string? StripePaymentIntentId { get; set; }
+
+    public string? StripeTransferId { get; set; }
+
+    public decimal? PlatformFeeAmount { get; set; }
 }

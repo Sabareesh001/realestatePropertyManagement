@@ -5,6 +5,8 @@ namespace propertyManagement.Models;
 
 public partial class PaymentMethod
 {
+    public const int Stripe = 7;
+
     public int Id { get; set; }
 
     public string Name { get; set; } = null!;

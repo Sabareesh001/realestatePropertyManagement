@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Stripe;
 
 /// <summary>
 /// Global exception handler that intercepts unhandled exceptions and formats them as standard ProblemDetails responses.
@@ -38,6 +39,14 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger) : IE
         {
             problemDetails.Status = StatusCodes.Status404NotFound;
             problemDetails.Title = "Not Found";
+        }
+        else if (exception is StripeException stripeEx)
+        {
+            // Card errors (e.g. declined) surface as a client error; all other Stripe errors are upstream failures
+            var isCardError = stripeEx.StripeError?.Type == "card_error";
+            problemDetails.Status = isCardError ? StatusCodes.Status400BadRequest : StatusCodes.Status502BadGateway;
+            problemDetails.Title = isCardError ? "Payment failed" : "Payment gateway error";
+            problemDetails.Detail = stripeEx.StripeError?.Message ?? stripeEx.Message;
         }
         
         httpContext.Response.StatusCode = problemDetails.Status.Value;
