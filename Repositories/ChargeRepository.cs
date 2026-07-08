@@ -89,6 +89,35 @@ public class ChargeRepository : IChargeRepository
     }
 
     /// <summary>
+    /// Retrieves every charge across all leases for the admin dashboard, eager loading lease,
+    /// property, owner and tenant context. Results are ordered newest first.
+    /// </summary>
+    /// <param name="from">Optional inclusive lower bound (UTC) on the charge creation date.</param>
+    /// <param name="to">Optional inclusive upper bound (UTC) on the charge creation date.</param>
+    /// <returns>A collection of charges with full context.</returns>
+    public async Task<IEnumerable<Charge>> GetAllForAdminAsync(DateTime? from, DateTime? to)
+    {
+        var fromDate = from.HasValue ? DateTime.SpecifyKind(from.Value, DateTimeKind.Unspecified) : (DateTime?)null;
+        var toDate = to.HasValue ? DateTime.SpecifyKind(to.Value, DateTimeKind.Unspecified) : (DateTime?)null;
+
+        return await _context.Charges
+            .Include(c => c.ChargeType)
+            .Include(c => c.Status)
+            .Include(c => c.ChargePayments)
+                .ThenInclude(cp => cp.Payment)
+            .Include(c => c.Leases)
+                .ThenInclude(l => l.PropertyNavigation)
+                    .ThenInclude(pr => pr!.Owner)
+            .Include(c => c.Leases)
+                .ThenInclude(l => l.Tenant)
+            .Where(c => c.DeletedAt == null
+                        && (fromDate == null || c.CreatedAt >= fromDate)
+                        && (toDate == null || c.CreatedAt <= toDate))
+            .OrderByDescending(c => c.CreatedAt)
+            .ToListAsync();
+    }
+
+    /// <summary>
     /// Creates a new charge record.
     /// </summary>
     /// <param name="entity">The charge to create.</param>
