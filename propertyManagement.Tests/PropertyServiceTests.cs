@@ -118,7 +118,8 @@ public class PropertyServiceTests
             CityId = 3,
             MonthlyRent = 1200,
             UpfrontPayment = 1200,
-            SecurityDeposit = 1200
+            SecurityDeposit = 1200,
+            VerificationStatusId = PropertyVerificationStatus.Verified
         };
         _mockPropertyRepository.Setup(r => r.GetByIdAsync(propertyId)).ReturnsAsync(property);
 
@@ -155,8 +156,8 @@ public class PropertyServiceTests
         // Arrange
         var properties = new List<Property>
         {
-            new() { Id = 1, OwnerId = Guid.NewGuid(), Title = "Prop 1", AddressLine = "Add 1" },
-            new() { Id = 2, OwnerId = Guid.NewGuid(), Title = "Prop 2", AddressLine = "Add 2" }
+            new() { Id = 1, OwnerId = Guid.NewGuid(), Title = "Prop 1", AddressLine = "Add 1", VerificationStatusId = PropertyVerificationStatus.Verified },
+            new() { Id = 2, OwnerId = Guid.NewGuid(), Title = "Prop 2", AddressLine = "Add 2", VerificationStatusId = PropertyVerificationStatus.Verified }
         };
         _mockPropertyRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(properties);
 

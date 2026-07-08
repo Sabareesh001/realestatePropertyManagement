@@ -86,4 +86,9 @@ public class PropertyResponseDto
     /// Gets or sets the list of images associated with the property.
     /// </summary>
     public System.Collections.Generic.ICollection<PropertyImageResponseDto> PropertyImages { get; set; } = new System.Collections.Generic.List<PropertyImageResponseDto>();
+
+    /// <summary>
+    /// Gets or sets the list of documents associated with the property.
+    /// </summary>
+    public System.Collections.Generic.ICollection<DocumentResponseDto> Documents { get; set; } = new System.Collections.Generic.List<DocumentResponseDto>();
 }

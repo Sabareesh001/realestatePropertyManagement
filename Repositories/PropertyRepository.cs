@@ -44,7 +44,7 @@ public class PropertyRepository : IPropertyRepository
     {
         return await _context.Properties
             .Include(p => p.PropertyImages.Where(pi => pi.DeletedAt == null))
-            .Where(p => p.DeletedAt == null)
+            .Where(p => p.DeletedAt == null && p.VerificationStatusId == PropertyVerificationStatus.Verified)
             .ToListAsync();
     }
 
@@ -95,5 +95,59 @@ public class PropertyRepository : IPropertyRepository
             .Include(p => p.PropertyImages.Where(pi => pi.DeletedAt == null))
             .Where(p => p.OwnerId == ownerId && p.DeletedAt == null)
             .ToListAsync();
+    }
+
+    /// <summary>
+    /// Retrieves all properties pending admin verification (status = Submitted).
+    /// </summary>
+    /// <returns>A collection of properties awaiting verification.</returns>
+    public async Task<IEnumerable<Property>> GetPendingVerificationAsync()
+    {
+        return await _context.Properties
+            .Include(p => p.PropertyImages.Where(pi => pi.DeletedAt == null))
+            .Where(p => p.VerificationStatusId == PropertyVerificationStatus.Submitted && p.DeletedAt == null)
+            .OrderBy(p => p.CreatedAt)
+            .ToListAsync();
+    }
+
+    /// <summary>
+    /// Retrieves a property by identifier, including its active images and active documents.
+    /// </summary>
+    /// <param name="id">The property identifier.</param>
+    /// <returns>The property entity with documents loaded, or <c>null</c> if not found.</returns>
+    public async Task<Property?> GetByIdWithDocumentsAsync(int id)
+    {
+        return await _context.Properties
+            .Include(p => p.PropertyImages.Where(pi => pi.DeletedAt == null))
+            .Include(p => p.Documents.Where(d => d.DeletedAt == null))
+            .FirstOrDefaultAsync(p => p.Id == id && p.DeletedAt == null);
+    }
+
+    /// <summary>
+    /// Inserts a row into the property_documents join table linking the given property and document.
+    /// </summary>
+    /// <param name="propertyId">The property identifier.</param>
+    /// <param name="documentId">The document identifier.</param>
+    public async Task LinkDocumentAsync(int propertyId, Guid documentId)
+    {
+        var joinEntry = new Dictionary<string, object>
+        {
+            { "PropertyId", propertyId },
+            { "DocumentId", documentId }
+        };
+        await _context.Set<Dictionary<string, object>>("PropertyDocument").AddAsync(joinEntry);
+    }
+
+    /// <summary>
+    /// Removes the row from the property_documents join table for the given property and document.
+    /// </summary>
+    /// <param name="propertyId">The property identifier.</param>
+    /// <param name="documentId">The document identifier.</param>
+    public async Task UnlinkDocumentAsync(int propertyId, Guid documentId)
+    {
+        var joinSet = _context.Set<Dictionary<string, object>>("PropertyDocument");
+        var entry = await joinSet.FindAsync(propertyId, documentId);
+        if (entry != null)
+            joinSet.Remove(entry);
     }
 }

@@ -79,13 +79,19 @@ public class PropertyService : IPropertyService
     }
 
     /// <inheritdoc />
-    public async Task<PropertyResponseDto> GetPropertyByIdAsync(int id)
+    public async Task<PropertyResponseDto> GetPropertyByIdAsync(int id, Guid? requestingUserId = null)
     {
         var property = await _unitOfWork.Properties.GetByIdAsync(id);
         if (property == null)
-        {
             throw new KeyNotFoundException("Property not found.");
-        }
+
+        var isVerified = property.VerificationStatusId == PropertyVerificationStatus.Verified;
+        var isOwner = requestingUserId.HasValue && property.OwnerId == requestingUserId.Value;
+        var isAdmin = requestingUserId.HasValue && await _unitOfWork.Users.HasRoleAsync(requestingUserId.Value, Role.Admin);
+
+        if (!isVerified && !isOwner && !isAdmin)
+            throw new KeyNotFoundException("Property not found.");
+
         return MapToResponseDto(property);
     }
 
@@ -93,7 +99,9 @@ public class PropertyService : IPropertyService
     public async Task<IEnumerable<PropertyResponseDto>> GetAllPropertiesAsync()
     {
         var properties = await _unitOfWork.Properties.GetAllAsync();
-        return properties.Select(MapToResponseDto);
+        return properties
+            .Where(p => p.VerificationStatusId == PropertyVerificationStatus.Verified)
+            .Select(MapToResponseDto);
     }
 
     /// <inheritdoc />
@@ -202,6 +210,144 @@ public class PropertyService : IPropertyService
         return properties.Select(MapToResponseDto);
     }
 
+    /// <inheritdoc />
+    public async Task<PropertyResponseDto> SubmitForVerificationAsync(Guid ownerId, int propertyId)
+    {
+        var property = await _unitOfWork.Properties.GetByIdWithDocumentsAsync(propertyId)
+            ?? throw new KeyNotFoundException("Property not found.");
+
+        if (property.OwnerId != ownerId)
+            throw new UnauthorizedAccessException("You do not have permission to submit this property.");
+
+        if (property.VerificationStatusId != PropertyVerificationStatus.Draft &&
+            property.VerificationStatusId != PropertyVerificationStatus.Rejected)
+            throw new InvalidOperationException("Only Draft or Rejected properties can be submitted for verification.");
+
+        var hasDeed = property.Documents.Any(d => d.DocumentTypeId == DocumentType.PropertyDeed && d.DeletedAt == null);
+        if (!hasDeed)
+            throw new InvalidOperationException("A property deed document must be attached before submitting for verification.");
+
+        property.VerificationStatusId = PropertyVerificationStatus.Submitted;
+        property.Remarks = null;
+        property.VerifiedBy = null;
+        await _unitOfWork.Properties.UpdateAsync(property);
+        await _unitOfWork.SaveChangesAsync();
+
+        return MapToResponseDto(property);
+    }
+
+    /// <inheritdoc />
+    public async Task<IEnumerable<PropertyResponseDto>> GetPendingVerificationAsync()
+    {
+        var properties = await _unitOfWork.Properties.GetPendingVerificationAsync();
+        return properties.Select(MapToResponseDto);
+    }
+
+    /// <inheritdoc />
+    public async Task<PropertyResponseDto> VerifyPropertyAsync(Guid adminId, int propertyId, bool approve, VerifyRequestDto dto)
+    {
+        var property = await _unitOfWork.Properties.GetByIdAsync(propertyId)
+            ?? throw new KeyNotFoundException("Property not found.");
+
+        if (property.VerificationStatusId != PropertyVerificationStatus.Submitted)
+            throw new InvalidOperationException("Only Submitted properties can be verified.");
+
+        property.VerificationStatusId = approve
+            ? PropertyVerificationStatus.Verified
+            : PropertyVerificationStatus.Rejected;
+
+        if (approve)
+            property.AvailabilityStatusId = PropertyAvailabilityStatus.Available;
+
+        property.VerifiedBy = adminId;
+        property.Remarks = dto.Remarks;
+
+        await _unitOfWork.Properties.UpdateAsync(property);
+        await _unitOfWork.SaveChangesAsync();
+
+        return MapToResponseDto(property);
+    }
+
+    /// <inheritdoc />
+    public async Task<DocumentResponseDto> AddDocumentAsync(Guid ownerId, int propertyId, AddPropertyDocumentDto dto)
+    {
+        var property = await _unitOfWork.Properties.GetByIdWithDocumentsAsync(propertyId)
+            ?? throw new KeyNotFoundException("Property not found.");
+
+        if (property.OwnerId != ownerId)
+            throw new UnauthorizedAccessException("You do not have permission to add documents to this property.");
+
+        var document = new Models.Document
+        {
+            Id = Guid.NewGuid(),
+            DocumentTypeId = dto.DocumentTypeId,
+            DocumentNumber = dto.DocumentNumber,
+            DocumentUrl = dto.DocumentUrl,
+            CreatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified)
+        };
+
+        await _unitOfWork.BeginTransactionAsync();
+        try
+        {
+            await _unitOfWork.Documents.CreateAsync(document);
+            await _unitOfWork.Properties.LinkDocumentAsync(property.Id, document.Id);
+            await _unitOfWork.CommitTransactionAsync();
+        }
+        catch
+        {
+            await _unitOfWork.RollbackTransactionAsync();
+            throw;
+        }
+
+        return MapToDocumentResponseDto(document);
+    }
+
+    /// <inheritdoc />
+    public async Task<IEnumerable<DocumentResponseDto>> GetDocumentsAsync(int propertyId)
+    {
+        var property = await _unitOfWork.Properties.GetByIdWithDocumentsAsync(propertyId)
+            ?? throw new KeyNotFoundException("Property not found.");
+
+        return property.Documents.Select(MapToDocumentResponseDto);
+    }
+
+    /// <inheritdoc />
+    public async Task RemoveDocumentAsync(Guid ownerId, int propertyId, Guid documentId)
+    {
+        var property = await _unitOfWork.Properties.GetByIdWithDocumentsAsync(propertyId)
+            ?? throw new KeyNotFoundException("Property not found.");
+
+        if (property.OwnerId != ownerId)
+            throw new UnauthorizedAccessException("You do not have permission to remove documents from this property.");
+
+        var document = property.Documents.FirstOrDefault(d => d.Id == documentId)
+            ?? throw new KeyNotFoundException("Document not found on this property.");
+
+        await _unitOfWork.BeginTransactionAsync();
+        try
+        {
+            await _unitOfWork.Properties.UnlinkDocumentAsync(property.Id, documentId);
+            await _unitOfWork.Documents.DeleteAsync(documentId);
+            await _unitOfWork.CommitTransactionAsync();
+        }
+        catch
+        {
+            await _unitOfWork.RollbackTransactionAsync();
+            throw;
+        }
+    }
+
+    private static DocumentResponseDto MapToDocumentResponseDto(Models.Document document)
+    {
+        return new DocumentResponseDto
+        {
+            Id = document.Id,
+            DocumentTypeId = document.DocumentTypeId,
+            DocumentNumber = document.DocumentNumber,
+            DocumentUrl = document.DocumentUrl
+        };
+    }
+
     private static PropertyResponseDto MapToResponseDto(Property property)
     {
         return new PropertyResponseDto
@@ -228,7 +374,9 @@ public class PropertyService : IPropertyService
                 ImageUrl = pi.ImageUrl,
                 Description = pi.Description,
                 DisplayOrder = pi.DisplayOrder
-            }).ToList() ?? new List<PropertyImageResponseDto>()
+            }).ToList() ?? new List<PropertyImageResponseDto>(),
+            Documents = property.Documents?.Where(d => d.DeletedAt == null)
+                .Select(MapToDocumentResponseDto).ToList() ?? new List<DocumentResponseDto>()
         };
     }
 }
