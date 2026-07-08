@@ -91,4 +91,9 @@ public class PropertyResponseDto
     /// Gets or sets the list of documents associated with the property.
     /// </summary>
     public System.Collections.Generic.ICollection<DocumentResponseDto> Documents { get; set; } = new System.Collections.Generic.List<DocumentResponseDto>();
+
+    public string? VisitPreferences { get; set; }
+    public string? SpecificVisitDays { get; set; }
+    public System.TimeSpan? VisitStartTime { get; set; }
+    public System.TimeSpan? VisitEndTime { get; set; }
 }

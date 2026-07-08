@@ -70,6 +70,10 @@ public partial class PropertyManagementDbContext : DbContext
 
     public virtual DbSet<Property> Properties { get; set; }
 
+    public virtual DbSet<SiteVisit> SiteVisits { get; set; }
+
+    public virtual DbSet<SiteVisitStatus> SiteVisitStatuses { get; set; }
+
     /// <summary>
     /// Gets or sets the database set for property images.
     /// </summary>
@@ -988,6 +992,10 @@ public partial class PropertyManagementDbContext : DbContext
                 .HasColumnName("upfront_payment");
             entity.Property(e => e.VerifiedBy).HasColumnName("verified_by");
             entity.Property(e => e.Remarks).HasColumnName("remarks");
+            entity.Property(e => e.VisitPreferences).HasColumnType("character varying(50)").HasColumnName("visit_preferences");
+            entity.Property(e => e.SpecificVisitDays).HasColumnType("character varying(200)").HasColumnName("specific_visit_days");
+            entity.Property(e => e.VisitStartTime).HasColumnType("time without time zone").HasColumnName("visit_start_time");
+            entity.Property(e => e.VisitEndTime).HasColumnType("time without time zone").HasColumnName("visit_end_time");
 
             entity.HasOne(d => d.City).WithMany(p => p.Properties)
                 .HasForeignKey(d => d.CityId)
@@ -1589,6 +1597,56 @@ public partial class PropertyManagementDbContext : DbContext
             entity.HasOne(d => d.Author).WithMany()
                 .HasForeignKey(d => d.AuthorId)
                 .HasConstraintName("complaint_comments_author_id_fkey");
+        });
+
+        modelBuilder.Entity<SiteVisitStatus>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("site_visit_statuses_pkey");
+            entity.ToTable("site_visit_statuses");
+            entity.HasIndex(e => e.Name, "site_visit_statuses_name_key").IsUnique();
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Name).HasColumnType("character varying(50)").HasColumnName("name");
+            entity.Property(e => e.CreatedAt).HasColumnType("timestamp without time zone").HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt).HasColumnType("timestamp without time zone").HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt).HasColumnType("timestamp without time zone").HasColumnName("deleted_at");
+
+            entity.HasData(
+                new SiteVisitStatus { Id = 1, Name = "Pending", CreatedAt = new DateTime(2026, 7, 8) },
+                new SiteVisitStatus { Id = 2, Name = "Approved", CreatedAt = new DateTime(2026, 7, 8) },
+                new SiteVisitStatus { Id = 3, Name = "Cancelled", CreatedAt = new DateTime(2026, 7, 8) }
+            );
+        });
+
+        modelBuilder.Entity<SiteVisit>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("site_visits_pkey");
+            entity.ToTable("site_visits");
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.PropertyId).HasColumnName("property_id");
+            entity.Property(e => e.TenantId).HasColumnName("tenant_id");
+            entity.Property(e => e.OwnerId).HasColumnName("owner_id");
+            entity.Property(e => e.VisitDate).HasColumnType("timestamp without time zone").HasColumnName("visit_date");
+            entity.Property(e => e.StatusId).HasColumnName("status_id");
+            entity.Property(e => e.Remarks).HasColumnType("character varying(500)").HasColumnName("remarks");
+            entity.Property(e => e.CreatedAt).HasColumnType("timestamp without time zone").HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt).HasColumnType("timestamp without time zone").HasColumnName("updated_at");
+            entity.Property(e => e.DeletedAt).HasColumnType("timestamp without time zone").HasColumnName("deleted_at");
+
+            entity.HasOne(d => d.Property).WithMany(p => p.SiteVisits)
+                .HasForeignKey(d => d.PropertyId)
+                .HasConstraintName("site_visits_property_id_fkey");
+
+            entity.HasOne(d => d.Tenant).WithMany(p => p.SiteVisitsAsTenant)
+                .HasForeignKey(d => d.TenantId)
+                .HasConstraintName("site_visits_tenant_id_fkey");
+
+            entity.HasOne(d => d.Owner).WithMany(p => p.SiteVisitsAsOwner)
+                .HasForeignKey(d => d.OwnerId)
+                .HasConstraintName("site_visits_owner_id_fkey");
+
+            entity.HasOne(d => d.Status).WithMany(p => p.SiteVisits)
+                .HasForeignKey(d => d.StatusId)
+                .HasConstraintName("site_visits_status_id_fkey");
         });
 
         OnModelCreatingPartial(modelBuilder);

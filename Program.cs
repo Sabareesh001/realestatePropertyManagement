@@ -77,6 +77,9 @@ builder.Services.AddScoped<IAdminFinanceService, AdminFinanceService>();
 // Register Complaint Service
 builder.Services.AddScoped<IComplaintService, ComplaintService>();
 
+// Register Site Visit Service
+builder.Services.AddScoped<ISiteVisitService, SiteVisitService>();
+
 // Register SignalR and the Notification Service
 builder.Services.AddSignalR();
 builder.Services.AddScoped<INotificationService, NotificationService>();

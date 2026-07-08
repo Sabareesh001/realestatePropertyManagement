@@ -47,6 +47,10 @@ public class PropertyService : IPropertyService
                 UpfrontPayment = dto.UpfrontPayment,
                 SecurityDeposit = dto.SecurityDeposit,
                 ThumbnailImgUrl = dto.ThumbnailImgUrl,
+                VisitPreferences = dto.VisitPreferences,
+                SpecificVisitDays = dto.SpecificVisitDays,
+                VisitStartTime = dto.VisitStartTime,
+                VisitEndTime = dto.VisitEndTime,
                 VerificationStatusId = PropertyVerificationStatus.Draft,
                 AvailabilityStatusId = PropertyAvailabilityStatus.Unavailable,
                 CreatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified)
@@ -129,6 +133,10 @@ public class PropertyService : IPropertyService
             property.UpfrontPayment = dto.UpfrontPayment;
             property.SecurityDeposit = dto.SecurityDeposit;
             property.ThumbnailImgUrl = dto.ThumbnailImgUrl;
+            property.VisitPreferences = dto.VisitPreferences;
+            property.SpecificVisitDays = dto.SpecificVisitDays;
+            property.VisitStartTime = dto.VisitStartTime;
+            property.VisitEndTime = dto.VisitEndTime;
             property.UpdatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified);
 
             if (dto.PropertyImages != null)
@@ -183,6 +191,29 @@ public class PropertyService : IPropertyService
             await _unitOfWork.RollbackTransactionAsync();
             throw;
         }
+    }
+
+    /// <inheritdoc />
+    public async Task<PropertyResponseDto> UpdatePropertyVisitPreferencesAsync(Guid userId, int id, UpdatePropertyVisitPreferencesDto dto)
+    {
+        var property = await _unitOfWork.Properties.GetByIdAsync(id)
+            ?? throw new KeyNotFoundException("Property not found.");
+
+        if (property.OwnerId != userId)
+        {
+            throw new UnauthorizedAccessException("You do not have permission to update this property.");
+        }
+
+        property.VisitPreferences = dto.VisitPreferences;
+        property.SpecificVisitDays = dto.SpecificVisitDays;
+        property.VisitStartTime = dto.VisitStartTime;
+        property.VisitEndTime = dto.VisitEndTime;
+        property.UpdatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified);
+
+        await _unitOfWork.Properties.UpdateAsync(property);
+        await _unitOfWork.SaveChangesAsync();
+
+        return MapToResponseDto(property);
     }
 
     /// <inheritdoc />
@@ -362,6 +393,10 @@ public class PropertyService : IPropertyService
             UpfrontPayment = property.UpfrontPayment,
             SecurityDeposit = property.SecurityDeposit,
             ThumbnailImgUrl = property.ThumbnailImgUrl,
+            VisitPreferences = property.VisitPreferences,
+            SpecificVisitDays = property.SpecificVisitDays,
+            VisitStartTime = property.VisitStartTime,
+            VisitEndTime = property.VisitEndTime,
             VerificationStatusId = property.VerificationStatusId,
             AvailabilityStatusId = property.AvailabilityStatusId,
             CreatedAt = property.CreatedAt,
