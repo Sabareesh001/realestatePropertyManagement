@@ -53,6 +53,21 @@ public partial class User
 
     public bool StripeDetailsSubmitted { get; set; }
 
+    /// <summary>
+    /// Gets or sets whether the user has verified their email address.
+    /// </summary>
+    public bool EmailVerified { get; set; }
+
+    /// <summary>
+    /// Gets or sets the pending email verification token hash, if a verification email has been sent and not yet confirmed.
+    /// </summary>
+    public string? EmailVerificationHash { get; set; }
+
+    /// <summary>
+    /// Gets or sets the expiry timestamp of the pending email verification token.
+    /// </summary>
+    public DateTime? EmailVerificationHashExpiresAt { get; set; }
+
     public virtual ICollection<Complaint> ComplaintResolvedByNavigations { get; set; } = new List<Complaint>();
 
     public virtual ICollection<Complaint> ComplaintTenants { get; set; } = new List<Complaint>();

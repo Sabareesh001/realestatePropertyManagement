@@ -71,6 +71,34 @@ public class UserController : BaseApiController
     }
 
     /// <summary>
+    /// Confirms a user's email address using the verification hash sent to them at registration.
+    /// </summary>
+    /// <param name="hash">The email verification hash from the verification link.</param>
+    /// <returns>A success message and the verification status.</returns>
+    /// <response code="200">Email successfully verified.</response>
+    /// <response code="400">The verification link has expired.</response>
+    /// <response code="404">The verification link is invalid or unknown.</response>
+    [HttpGet("verify-email/{hash}")]
+    public async Task<ActionResult> VerifyEmail(string hash)
+    {
+        await _userService.VerifyEmailAsync(hash);
+        return Ok(new { message = "Email verified successfully.", emailVerified = true });
+    }
+
+    /// <summary>
+    /// Resends the email verification link for an unverified account.
+    /// </summary>
+    /// <param name="resendVerificationDto">The email address to resend the verification link to.</param>
+    /// <returns>A generic success message, regardless of whether the email is registered or already verified.</returns>
+    /// <response code="200">Request processed.</response>
+    [HttpPost("resend-verification")]
+    public async Task<ActionResult> ResendVerification([FromBody] ResendVerificationDto resendVerificationDto)
+    {
+        await _userService.ResendVerificationEmailAsync(resendVerificationDto.Email);
+        return Ok(new { message = "If an account with that email exists and is not yet verified, a new verification link has been sent." });
+    }
+
+    /// <summary>
     /// Retrieves all users from the database.
     /// </summary>
     /// <returns>A list of all users.</returns>

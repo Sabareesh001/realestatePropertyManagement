@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Configuration;
 using propertyManagement.DTOs;
 using propertyManagement.Models;
 using propertyManagement.Repositories;
@@ -13,15 +16,23 @@ namespace propertyManagement.Services;
 /// </summary>
 public class UserService : IUserService
 {
+    private const int EmailVerificationTokenExpiryHours = 24;
+
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IEmailService _emailService;
+    private readonly string _frontendUrl;
 
     /// <summary>
     /// Initializes a new instance of the UserService class.
     /// </summary>
     /// <param name="unitOfWork">The unit of work for data access.</param>
-    public UserService(IUnitOfWork unitOfWork)
+    /// <param name="emailService">The email service used to send verification emails.</param>
+    /// <param name="configuration">The application configuration, used to build verification links.</param>
+    public UserService(IUnitOfWork unitOfWork, IEmailService emailService, IConfiguration configuration)
     {
         _unitOfWork = unitOfWork;
+        _emailService = emailService;
+        _frontendUrl = configuration["FrontendUrl"] ?? "http://localhost:4200";
     }
 
     /// <summary>
@@ -60,6 +71,8 @@ public class UserService : IUserService
             });
         }
 
+        var verificationHash = GenerateEmailVerificationHash();
+
         var user = new User
         {
             Email = registerDto.Email,
@@ -70,11 +83,16 @@ public class UserService : IUserService
             VerificationStatusId = UserVerificationStatus.Unverified,
             ActiveStatusId = UserActiveStatus.Active,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(registerDto.Password),
-            UserRoles = userRoles
+            UserRoles = userRoles,
+            EmailVerified = false,
+            EmailVerificationHash = verificationHash,
+            EmailVerificationHashExpiresAt = DateTime.SpecifyKind(DateTime.UtcNow.AddHours(EmailVerificationTokenExpiryHours), DateTimeKind.Unspecified)
         };
 
         var createdUser = await _unitOfWork.Users.CreateAsync(user);
         await _unitOfWork.SaveChangesAsync();
+
+        await _emailService.SendVerificationEmailAsync(createdUser.Email, createdUser.FirstName, BuildVerificationLink(verificationHash));
 
         return MapToUserResponseDto(createdUser);
     }
@@ -90,6 +108,11 @@ public class UserService : IUserService
         if (user == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, user.PasswordHash))
         {
             throw new InvalidOperationException("Invalid email or password");
+        }
+
+        if (!user.EmailVerified)
+        {
+            throw new EmailNotVerifiedException();
         }
 
         return MapToUserResponseDto(user);
@@ -213,6 +236,71 @@ public class UserService : IUserService
     }
 
     /// <summary>
+    /// Confirms a user's email address using the verification hash sent to them.
+    /// </summary>
+    /// <param name="hash">The email verification hash.</param>
+    /// <exception cref="KeyNotFoundException">Thrown when no user matches the given hash.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when the verification hash has expired.</exception>
+    public async Task VerifyEmailAsync(string hash)
+    {
+        var user = await _unitOfWork.Users.GetByEmailVerificationHashAsync(hash);
+        if (user == null)
+        {
+            throw new KeyNotFoundException("Invalid or unknown verification link.");
+        }
+
+        if (user.EmailVerificationHashExpiresAt == null || user.EmailVerificationHashExpiresAt < DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified))
+        {
+            throw new InvalidOperationException("Verification link has expired.");
+        }
+
+        user.EmailVerified = true;
+        user.EmailVerificationHash = null;
+        user.EmailVerificationHashExpiresAt = null;
+
+        await _unitOfWork.Users.UpdateAsync(user);
+        await _unitOfWork.SaveChangesAsync();
+    }
+
+    /// <summary>
+    /// Regenerates and resends the email verification link for the given email address, if it belongs to an unverified account.
+    /// </summary>
+    /// <param name="email">The email address to resend the verification link to.</param>
+    public async Task ResendVerificationEmailAsync(string email)
+    {
+        var user = await _unitOfWork.Users.GetByEmailAsync(email);
+        if (user == null || user.EmailVerified)
+        {
+            return;
+        }
+
+        var verificationHash = GenerateEmailVerificationHash();
+        user.EmailVerificationHash = verificationHash;
+        user.EmailVerificationHashExpiresAt = DateTime.SpecifyKind(DateTime.UtcNow.AddHours(EmailVerificationTokenExpiryHours), DateTimeKind.Unspecified);
+
+        await _unitOfWork.Users.UpdateAsync(user);
+        await _unitOfWork.SaveChangesAsync();
+
+        await _emailService.SendVerificationEmailAsync(user.Email, user.FirstName, BuildVerificationLink(verificationHash));
+    }
+
+    /// <summary>
+    /// Generates a cryptographically random, URL-safe email verification hash.
+    /// </summary>
+    private static string GenerateEmailVerificationHash()
+    {
+        return WebEncoders.Base64UrlEncode(RandomNumberGenerator.GetBytes(32));
+    }
+
+    /// <summary>
+    /// Builds the frontend email verification link for the given hash.
+    /// </summary>
+    private string BuildVerificationLink(string hash)
+    {
+        return $"{_frontendUrl.TrimEnd('/')}/auth/verify-email/{hash}";
+    }
+
+    /// <summary>
     /// Maps a User entity to a UserResponseDto.
     /// </summary>
     /// <param name="user">The user entity to map.</param>
@@ -242,7 +330,8 @@ public class UserService : IUserService
                 Name = ur.Role.Name
             }).ToList() ?? new List<RoleResponseDto>(),
             VerificationStatusId = user.VerificationStatusId,
-            ActiveStatusId = user.ActiveStatusId
+            ActiveStatusId = user.ActiveStatusId,
+            EmailVerified = user.EmailVerified
         };
     }
 }

@@ -67,6 +67,15 @@ public class UserRepository : IUserRepository
     }
 
     /// <summary>
+    /// Retrieves a user by their pending email verification hash.
+    /// </summary>
+    public async Task<User?> GetByEmailVerificationHashAsync(string hash)
+    {
+        return await _context.Users
+            .FirstOrDefaultAsync(u => u.EmailVerificationHash == hash && u.DeletedAt == null);
+    }
+
+    /// <summary>
     /// Creates a new user in the database.
     /// </summary>
     /// <param name="user">The user entity to create.</param>

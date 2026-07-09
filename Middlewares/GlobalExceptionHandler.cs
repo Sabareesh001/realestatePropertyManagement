@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using propertyManagement.Models;
 using Stripe;
 
 /// <summary>
@@ -29,6 +30,12 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger) : IE
         {
             problemDetails.Status = StatusCodes.Status400BadRequest;
             problemDetails.Title = "Invalid operation";
+        }
+        else if (exception is EmailNotVerifiedException)
+        {
+            problemDetails.Status = StatusCodes.Status403Forbidden;
+            problemDetails.Title = "Forbidden";
+            problemDetails.Extensions["errorCode"] = "EMAIL_NOT_VERIFIED";
         }
         else if (exception is UnauthorizedAccessException)
         {

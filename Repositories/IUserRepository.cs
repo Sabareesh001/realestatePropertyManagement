@@ -17,6 +17,11 @@ public interface IUserRepository : IRepository<User, Guid>
     /// </summary>
     Task<User?> GetByStripeAccountIdAsync(string stripeAccountId);
 
+    /// <summary>
+    /// Retrieves a user by their pending email verification hash.
+    /// </summary>
+    Task<User?> GetByEmailVerificationHashAsync(string hash);
+
     Task<bool> HasRoleAsync(Guid userId, int roleId);
 
     /// <summary>

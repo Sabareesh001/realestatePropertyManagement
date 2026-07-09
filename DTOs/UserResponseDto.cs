@@ -66,4 +66,9 @@ public class UserResponseDto
     /// The active status identifier of the user.
     /// </summary>
     public int? ActiveStatusId { get; set; }
+
+    /// <summary>
+    /// Whether the user has verified their email address.
+    /// </summary>
+    public bool EmailVerified { get; set; }
 }

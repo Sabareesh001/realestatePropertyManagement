@@ -54,4 +54,16 @@ public interface IUserService
     /// <param name="userId">The unique identifier of the user.</param>
     /// <returns>The updated user response.</returns>
     Task<UserResponseDto> AssignOwnerRoleAsync(Guid userId);
+
+    /// <summary>
+    /// Confirms a user's email address using the verification hash sent to them.
+    /// </summary>
+    /// <param name="hash">The email verification hash.</param>
+    Task VerifyEmailAsync(string hash);
+
+    /// <summary>
+    /// Regenerates and resends the email verification link for the given email address, if it belongs to an unverified account.
+    /// </summary>
+    /// <param name="email">The email address to resend the verification link to.</param>
+    Task ResendVerificationEmailAsync(string email);
 }
