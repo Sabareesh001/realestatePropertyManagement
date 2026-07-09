@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using propertyManagement.Data;
+using propertyManagement.DTOs;
+using propertyManagement.Extensions;
 using propertyManagement.Models;
 
 namespace propertyManagement.Repositories;
@@ -90,14 +92,14 @@ public class UserVerificationRepository : IUserVerificationRepository
     /// Retrieves all user verification requests with a status of Pending.
     /// </summary>
     /// <returns>A collection of pending user verification requests.</returns>
-    public async Task<IEnumerable<UserVerification>> GetPendingVerificationsAsync()
+    public async Task<PagedResultDto<UserVerification>> GetPendingVerificationsAsync(int pageNumber, int pageSize)
     {
         return await _context.UserVerifications
             .Include(uv => uv.UserVerificationDocuments)
                 .ThenInclude(uvd => uvd.Document)
             .Where(uv => uv.Status == "Pending" && uv.DeletedAt == null)
             .OrderBy(uv => uv.CreatedAt)
-            .ToListAsync();
+            .ToPagedResultAsync(pageNumber, pageSize);
     }
 
     /// <summary>

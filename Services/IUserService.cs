@@ -22,10 +22,11 @@ public interface IUserService
     Task<UserResponseDto> LoginAsync(LoginDto loginDto);
 
     /// <summary>
-    /// Retrieves all users from the database.
+    /// Retrieves a page of all users from the database.
     /// </summary>
-    /// <returns>A list of all users.</returns>
-    Task<IEnumerable<UserResponseDto>> GetAllUsersAsync();
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A paged result of users.</returns>
+    Task<PagedResultDto<UserResponseDto>> GetAllUsersAsync(PaginationParams pagination);
 
     /// <summary>
     /// Retrieves a user by their unique identifier.

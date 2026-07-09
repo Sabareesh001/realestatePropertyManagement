@@ -37,10 +37,11 @@ public interface IUserVerificationService
     Task<UserVerificationResponseDto> RejectVerificationAsync(Guid adminId, Guid verificationId, VerifyRequestDto dto);
 
     /// <summary>
-    /// Retrieves all user verification requests that are currently pending.
+    /// Retrieves a page of user verification requests that are currently pending.
     /// </summary>
-    /// <returns>A collection of pending user verification requests.</returns>
-    Task<IEnumerable<UserVerificationResponseDto>> GetPendingVerificationsAsync();
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A paged result of pending user verification requests.</returns>
+    Task<PagedResultDto<UserVerificationResponseDto>> GetPendingVerificationsAsync(PaginationParams pagination);
 
     /// <summary>
     /// Gets the current verification status for a specific user.

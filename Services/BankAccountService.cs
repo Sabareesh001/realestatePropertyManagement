@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using propertyManagement.DTOs;
+using propertyManagement.Extensions;
 using propertyManagement.Models;
 using propertyManagement.Repositories;
 
@@ -50,9 +51,9 @@ public class BankAccountService : IBankAccountService
     }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<BankAccountResponseDto>> GetUserBankAccountsAsync(Guid userId)
+    public async Task<PagedResultDto<BankAccountResponseDto>> GetUserBankAccountsAsync(Guid userId, PaginationParams pagination)
     {
-        var bankAccounts = await _unitOfWork.BankAccounts.GetBankAccountsByUserIdAsync(userId);
+        var bankAccounts = await _unitOfWork.BankAccounts.GetBankAccountsByUserIdAsync(userId, pagination.PageNumber, pagination.PageSize);
         return bankAccounts.Select(MapToResponseDto);
     }
 

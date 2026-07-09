@@ -29,10 +29,11 @@ public interface INotificationService
         Guid? relatedEntityId = null);
 
     /// <summary>
-    /// Retrieves all notifications addressed to the given user, newest first.
+    /// Retrieves a page of notifications addressed to the given user, newest first.
     /// </summary>
     /// <param name="userId">The recipient's user identifier.</param>
-    Task<IEnumerable<NotificationResponseDto>> GetMyNotificationsAsync(Guid userId);
+    /// <param name="pagination">The pagination parameters.</param>
+    Task<PagedResultDto<NotificationResponseDto>> GetMyNotificationsAsync(Guid userId, PaginationParams pagination);
 
     /// <summary>
     /// Marks a notification as read on behalf of its recipient.

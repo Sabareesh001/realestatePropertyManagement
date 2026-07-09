@@ -63,16 +63,17 @@ public class UserVerificationController : BaseApiController
     }
 
     /// <summary>
-    /// Retrieves all pending user verification requests (Admin only).
+    /// Retrieves a page of pending user verification requests (Admin only).
     /// </summary>
-    /// <returns>A collection of pending user verification requests.</returns>
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A paged result of pending user verification requests.</returns>
     /// <response code="200">Pending verifications retrieved successfully.</response>
     /// <response code="403">If user is not an administrator.</response>
     [Authorize(Roles = "Admin")]
     [HttpGet("pending")]
-    public async Task<ActionResult<IEnumerable<UserVerificationResponseDto>>> GetPendingVerifications()
+    public async Task<ActionResult<PagedResultDto<UserVerificationResponseDto>>> GetPendingVerifications([FromQuery] PaginationParams pagination)
     {
-        var verifications = await _userVerificationService.GetPendingVerificationsAsync();
+        var verifications = await _userVerificationService.GetPendingVerificationsAsync(pagination);
         return Ok(verifications);
     }
 

@@ -19,11 +19,12 @@ public interface IBankAccountService
     Task<BankAccountResponseDto> CreateBankAccountAsync(Guid userId, CreateBankAccountDto dto);
 
     /// <summary>
-    /// Retrieves all bank accounts for the user.
+    /// Retrieves a page of bank accounts for the user.
     /// </summary>
     /// <param name="userId">The unique identifier of the user.</param>
-    /// <returns>A collection of bank account responses.</returns>
-    Task<IEnumerable<BankAccountResponseDto>> GetUserBankAccountsAsync(Guid userId);
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A paged result of bank account responses.</returns>
+    Task<PagedResultDto<BankAccountResponseDto>> GetUserBankAccountsAsync(Guid userId, PaginationParams pagination);
 
     /// <summary>
     /// Retrieves a specific bank account for the user.

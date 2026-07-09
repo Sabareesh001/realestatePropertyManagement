@@ -19,18 +19,20 @@ public interface ILeaseProposalService
     Task<LeaseProposalResponseDto> CreateLeaseProposalAsync(Guid tenantId, CreateLeaseProposalDto dto);
 
     /// <summary>
-    /// Retrieves all lease proposals submitted by a specific tenant.
+    /// Retrieves a page of lease proposals submitted by a specific tenant.
     /// </summary>
     /// <param name="tenantId">The unique identifier of the tenant.</param>
-    /// <returns>A collection of lease proposal response DTOs.</returns>
-    Task<IEnumerable<LeaseProposalResponseDto>> GetMyRequestsAsync(Guid tenantId);
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A paged result of lease proposal response DTOs.</returns>
+    Task<PagedResultDto<LeaseProposalResponseDto>> GetMyRequestsAsync(Guid tenantId, PaginationParams pagination);
 
     /// <summary>
-    /// Retrieves all lease proposals received for properties owned by a specific owner.
+    /// Retrieves a page of lease proposals received for properties owned by a specific owner.
     /// </summary>
     /// <param name="ownerId">The unique identifier of the owner.</param>
-    /// <returns>A collection of lease proposal response DTOs containing tenant details.</returns>
-    Task<IEnumerable<LeaseProposalResponseDto>> GetReceivedRequestsAsync(Guid ownerId);
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A paged result of lease proposal response DTOs containing tenant details.</returns>
+    Task<PagedResultDto<LeaseProposalResponseDto>> GetReceivedRequestsAsync(Guid ownerId, PaginationParams pagination);
 
     /// <summary>
     /// Submits a draft lease proposal. Requires the tenant to be verified.

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using propertyManagement.DTOs;
+using propertyManagement.Extensions;
 using propertyManagement.Models;
 using propertyManagement.Repositories;
 
@@ -122,10 +123,10 @@ public class UserService : IUserService
     /// Retrieves all users from the database.
     /// </summary>
     /// <returns>A list of all users.</returns>
-    public async Task<IEnumerable<UserResponseDto>> GetAllUsersAsync()
+    public async Task<PagedResultDto<UserResponseDto>> GetAllUsersAsync(PaginationParams pagination)
     {
-        var users = await _unitOfWork.Users.GetAllAsync();
-        return users.Select(MapToUserResponseDto).ToList();
+        var users = await _unitOfWork.Users.GetAllAsync(pagination.PageNumber, pagination.PageSize);
+        return users.Select(MapToUserResponseDto);
     }
 
     /// <summary>

@@ -1,3 +1,4 @@
+using propertyManagement.DTOs;
 using propertyManagement.Models;
 
 namespace propertyManagement.Repositories;
@@ -7,6 +8,14 @@ namespace propertyManagement.Repositories;
 /// </summary>
 public interface IUserRepository : IRepository<User, Guid>
 {
+    /// <summary>
+    /// Retrieves a page of all users.
+    /// </summary>
+    /// <param name="pageNumber">The 1-based page number to retrieve.</param>
+    /// <param name="pageSize">The number of items per page.</param>
+    /// <returns>A paged result of users.</returns>
+    Task<PagedResultDto<User>> GetAllAsync(int pageNumber, int pageSize);
+
     /// <summary>
     /// Retrieves a user by their email address.
     /// </summary>

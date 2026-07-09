@@ -27,17 +27,18 @@ public class NotificationController : BaseApiController
     }
 
     /// <summary>
-    /// Retrieves all notifications addressed to the currently authenticated user, newest first.
+    /// Retrieves a page of notifications addressed to the currently authenticated user, newest first.
     /// </summary>
-    /// <returns>A list of notifications.</returns>
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A page of notifications.</returns>
     /// <response code="200">Notifications retrieved successfully.</response>
     /// <response code="401">If user is unauthorized.</response>
     [Authorize]
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<NotificationResponseDto>>> GetMyNotifications()
+    public async Task<ActionResult<PagedResultDto<NotificationResponseDto>>> GetMyNotifications([FromQuery] PaginationParams pagination)
     {
         var userId = GetCurrentUserId();
-        var result = await _notificationService.GetMyNotificationsAsync(userId);
+        var result = await _notificationService.GetMyNotificationsAsync(userId, pagination);
         return Ok(result);
     }
 

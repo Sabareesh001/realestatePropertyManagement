@@ -428,19 +428,26 @@ public class UserServiceTests
             new User { Id = Guid.NewGuid(), Email = "user1@example.com", FirstName = "User1", LastName = "One", UserRoles = null! },
             new User { Id = Guid.NewGuid(), Email = "user2@example.com", FirstName = "User2", LastName = "Two" }
         };
-        _mockUserRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(users);
+        _mockUserRepository.Setup(r => r.GetAllAsync(1, 20)).ReturnsAsync(new PagedResultDto<User>
+        {
+            Items = users,
+            PageNumber = 1,
+            PageSize = 20,
+            TotalCount = users.Count,
+            TotalPages = 1
+        });
 
         // Act
-        var result = await _userService.GetAllUsersAsync();
+        var result = await _userService.GetAllUsersAsync(new PaginationParams());
 
         // Assert
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.Count(), Is.EqualTo(2));
-        var list = result.ToList();
+        Assert.That(result.Items.Count(), Is.EqualTo(2));
+        var list = result.Items.ToList();
         Assert.That(list[0].Email, Is.EqualTo("user1@example.com"));
         Assert.That(list[1].Email, Is.EqualTo("user2@example.com"));
 
-        _mockUserRepository.Verify(r => r.GetAllAsync(), Times.Once);
+        _mockUserRepository.Verify(r => r.GetAllAsync(1, 20), Times.Once);
     }
 
     /// <summary>

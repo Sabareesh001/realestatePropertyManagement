@@ -99,16 +99,17 @@ public class UserController : BaseApiController
     }
 
     /// <summary>
-    /// Retrieves all users from the database.
+    /// Retrieves a page of users from the database.
     /// </summary>
-    /// <returns>A list of all users.</returns>
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A page of users.</returns>
     /// <response code="200">Users retrieved successfully.</response>
     /// <response code="500">An error occurred while processing the request.</response>
     [Authorize]
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<UserResponseDto>>> GetAllUsers()
+    public async Task<ActionResult<PagedResultDto<UserResponseDto>>> GetAllUsers([FromQuery] PaginationParams pagination)
     {
-        var userDtos = await _userService.GetAllUsersAsync();
+        var userDtos = await _userService.GetAllUsersAsync(pagination);
         return Ok(userDtos);
     }
 

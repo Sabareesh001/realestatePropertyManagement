@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using propertyManagement.DTOs;
+using propertyManagement.Extensions;
 using propertyManagement.Models;
 using propertyManagement.Repositories;
 
@@ -207,9 +208,9 @@ public class UserVerificationService : IUserVerificationService
     /// Retrieves all user verification requests that are currently pending.
     /// </summary>
     /// <returns>A collection of pending user verification requests.</returns>
-    public async Task<IEnumerable<UserVerificationResponseDto>> GetPendingVerificationsAsync()
+    public async Task<PagedResultDto<UserVerificationResponseDto>> GetPendingVerificationsAsync(PaginationParams pagination)
     {
-        var verifications = await _unitOfWork.UserVerifications.GetPendingVerificationsAsync();
+        var verifications = await _unitOfWork.UserVerifications.GetPendingVerificationsAsync(pagination.PageNumber, pagination.PageSize);
         return verifications.Select(MapToResponseDto);
     }
 

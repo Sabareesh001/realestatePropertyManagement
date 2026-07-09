@@ -143,32 +143,34 @@ public class LeaseController : BaseApiController
     }
 
     /// <summary>
-    /// Retrieves all lease templates pending admin verification (status = Submitted). Admin only.
+    /// Retrieves a page of lease templates pending admin verification (status = Submitted). Admin only.
     /// </summary>
-    /// <returns>A list of leases awaiting template verification.</returns>
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A page of leases awaiting template verification.</returns>
     /// <response code="200">Pending lease templates retrieved successfully.</response>
     /// <response code="401">If user is unauthorized.</response>
     /// <response code="403">If user is not in the Admin role.</response>
     [Authorize(Roles = "Admin")]
     [HttpGet("pending-templates")]
-    public async Task<ActionResult<IEnumerable<LeaseResponseDto>>> GetPendingTemplates()
+    public async Task<ActionResult<PagedResultDto<LeaseResponseDto>>> GetPendingTemplates([FromQuery] PaginationParams pagination)
     {
-        var result = await _leaseService.GetPendingTemplatesAsync();
+        var result = await _leaseService.GetPendingTemplatesAsync(pagination);
         return Ok(result);
     }
 
     /// <summary>
-    /// Retrieves all tenant-signed leases pending admin verification (status = TenantSigned). Admin only.
+    /// Retrieves a page of tenant-signed leases pending admin verification (status = TenantSigned). Admin only.
     /// </summary>
-    /// <returns>A list of tenant-signed leases awaiting signed agreement verification.</returns>
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A page of tenant-signed leases awaiting signed agreement verification.</returns>
     /// <response code="200">Pending signed leases retrieved successfully.</response>
     /// <response code="401">If user is unauthorized.</response>
     /// <response code="403">If user is not in the Admin role.</response>
     [Authorize(Roles = "Admin")]
     [HttpGet("pending-signed")]
-    public async Task<ActionResult<IEnumerable<LeaseResponseDto>>> GetPendingSignedLeases()
+    public async Task<ActionResult<PagedResultDto<LeaseResponseDto>>> GetPendingSignedLeases([FromQuery] PaginationParams pagination)
     {
-        var result = await _leaseService.GetPendingSignedLeasesAsync();
+        var result = await _leaseService.GetPendingSignedLeasesAsync(pagination);
         return Ok(result);
     }
 
@@ -192,37 +194,39 @@ public class LeaseController : BaseApiController
     }
 
     /// <summary>
-    /// Retrieves all leases associated with the user based on their role.
+    /// Retrieves a page of leases associated with the user based on their role.
     /// </summary>
-    /// <returns>A list of leases.</returns>
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A page of leases.</returns>
     /// <response code="200">Leases retrieved successfully.</response>
     /// <response code="401">If user is unauthorized.</response>
     [Authorize]
     [HttpGet("my-leases")]
-    public async Task<ActionResult<IEnumerable<LeaseResponseDto>>> GetMyLeases()
+    public async Task<ActionResult<PagedResultDto<LeaseResponseDto>>> GetMyLeases([FromQuery] PaginationParams pagination)
     {
         var userId = GetCurrentUserId();
         var roles = User.FindAll(ClaimTypes.Role).Select(c => c.Value).ToList();
-        var result = await _leaseService.GetMyLeasesAsync(userId, roles);
+        var result = await _leaseService.GetMyLeasesAsync(userId, roles, pagination);
         return Ok(result);
     }
 
     /// <summary>
-    /// Retrieves all additional documents associated with a specific lease.
+    /// Retrieves a page of additional documents associated with a specific lease.
     /// </summary>
     /// <param name="id">The unique identifier of the lease.</param>
-    /// <returns>A list of documents associated with the lease.</returns>
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A page of documents associated with the lease.</returns>
     /// <response code="200">Documents retrieved successfully.</response>
     /// <response code="401">If user is unauthorized.</response>
     /// <response code="403">If user has no access to this lease's documents.</response>
     /// <response code="404">If the lease was not found.</response>
     [Authorize]
     [HttpGet("{id:guid}/documents")]
-    public async Task<ActionResult<IEnumerable<DocumentResponseDto>>> GetLeaseDocuments(Guid id)
+    public async Task<ActionResult<PagedResultDto<DocumentResponseDto>>> GetLeaseDocuments(Guid id, [FromQuery] PaginationParams pagination)
     {
         var userId = GetCurrentUserId();
         var roles = User.FindAll(ClaimTypes.Role).Select(c => c.Value).ToList();
-        var result = await _leaseService.GetLeaseDocumentsAsync(id, userId, roles);
+        var result = await _leaseService.GetLeaseDocumentsAsync(id, userId, roles, pagination);
         return Ok(result);
     }
 

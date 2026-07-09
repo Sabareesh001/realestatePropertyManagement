@@ -20,13 +20,14 @@ public interface IChargePaymentService
     Task<ChargeResponseDto> ApplyChargeAsync(Guid ownerId, Guid leaseId, CreateChargeDto dto);
 
     /// <summary>
-    /// Retrieves all charges for a specific lease with role-based authorization.
+    /// Retrieves a page of charges for a specific lease with role-based authorization.
     /// </summary>
     /// <param name="leaseId">The unique identifier of the lease.</param>
     /// <param name="userId">The unique identifier of the requesting user.</param>
     /// <param name="roles">The roles of the requesting user.</param>
-    /// <returns>A collection of charge response DTOs.</returns>
-    Task<IEnumerable<ChargeResponseDto>> GetChargesByLeaseIdAsync(Guid leaseId, Guid userId, IEnumerable<string> roles);
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A paged result of charge response DTOs.</returns>
+    Task<PagedResultDto<ChargeResponseDto>> GetChargesByLeaseIdAsync(Guid leaseId, Guid userId, IEnumerable<string> roles, PaginationParams pagination);
 
     /// <summary>
     /// Retrieves a specific charge by its identifier with role-based authorization.
@@ -48,11 +49,12 @@ public interface IChargePaymentService
     Task<PaymentResponseDto> RecordPaymentAsync(Guid tenantId, Guid leaseId, RecordPaymentDto dto);
 
     /// <summary>
-    /// Retrieves all payments for a specific lease with role-based authorization.
+    /// Retrieves a page of payments for a specific lease with role-based authorization.
     /// </summary>
     /// <param name="leaseId">The unique identifier of the lease.</param>
     /// <param name="userId">The unique identifier of the requesting user.</param>
     /// <param name="roles">The roles of the requesting user.</param>
-    /// <returns>A collection of payment response DTOs.</returns>
-    Task<IEnumerable<PaymentResponseDto>> GetPaymentsByLeaseIdAsync(Guid leaseId, Guid userId, IEnumerable<string> roles);
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A paged result of payment response DTOs.</returns>
+    Task<PagedResultDto<PaymentResponseDto>> GetPaymentsByLeaseIdAsync(Guid leaseId, Guid userId, IEnumerable<string> roles, PaginationParams pagination);
 }

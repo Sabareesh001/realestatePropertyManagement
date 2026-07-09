@@ -28,10 +28,11 @@ public interface IPropertyService
     Task<PropertyResponseDto> GetPropertyByIdAsync(int id, Guid? requestingUserId = null);
 
     /// <summary>
-    /// Retrieves all Verified property listings visible to the public.
+    /// Retrieves a page of Verified property listings visible to the public.
     /// </summary>
-    /// <returns>A collection of property response DTOs.</returns>
-    Task<IEnumerable<PropertyResponseDto>> GetAllPropertiesAsync();
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A paged result of property response DTOs.</returns>
+    Task<PagedResultDto<PropertyResponseDto>> GetAllPropertiesAsync(PaginationParams pagination);
 
     /// <summary>
     /// Updates an existing property listing. Requires ownership validation.
@@ -51,11 +52,12 @@ public interface IPropertyService
     Task DeletePropertyAsync(Guid userId, int id);
 
     /// <summary>
-    /// Retrieves all properties owned by a specific owner.
+    /// Retrieves a page of properties owned by a specific owner.
     /// </summary>
     /// <param name="ownerId">The unique identifier of the owner.</param>
-    /// <returns>A collection of property response DTOs.</returns>
-    Task<IEnumerable<PropertyResponseDto>> GetPropertiesByOwnerIdAsync(Guid ownerId);
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A paged result of property response DTOs.</returns>
+    Task<PagedResultDto<PropertyResponseDto>> GetPropertiesByOwnerIdAsync(Guid ownerId, PaginationParams pagination);
 
     /// <summary>
     /// Submits a Draft property for admin verification. Only the owner can submit.
@@ -66,10 +68,11 @@ public interface IPropertyService
     Task<PropertyResponseDto> SubmitForVerificationAsync(Guid ownerId, int propertyId);
 
     /// <summary>
-    /// Retrieves all properties pending admin verification.
+    /// Retrieves a page of properties pending admin verification.
     /// </summary>
-    /// <returns>A collection of property response DTOs with Submitted status.</returns>
-    Task<IEnumerable<PropertyResponseDto>> GetPendingVerificationAsync();
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A paged result of property response DTOs with Submitted status.</returns>
+    Task<PagedResultDto<PropertyResponseDto>> GetPendingVerificationAsync(PaginationParams pagination);
 
     /// <summary>
     /// Approves or rejects a property verification request. Admin only.
@@ -93,12 +96,13 @@ public interface IPropertyService
     Task<DocumentResponseDto> AddDocumentAsync(Guid ownerId, int propertyId, AddPropertyDocumentDto dto);
 
     /// <summary>
-    /// Retrieves all active documents associated with a property.
+    /// Retrieves a page of active documents associated with a property.
     /// </summary>
     /// <param name="propertyId">The unique identifier of the property.</param>
-    /// <returns>A collection of document response DTOs.</returns>
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A paged result of document response DTOs.</returns>
     /// <exception cref="KeyNotFoundException">Thrown when the property is not found.</exception>
-    Task<IEnumerable<DocumentResponseDto>> GetDocumentsAsync(int propertyId);
+    Task<PagedResultDto<DocumentResponseDto>> GetDocumentsAsync(int propertyId, PaginationParams pagination);
 
     /// <summary>
     /// Removes a document from a property and soft-deletes the document record. Requires ownership.

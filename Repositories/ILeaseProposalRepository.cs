@@ -1,4 +1,5 @@
 using System;
+using propertyManagement.DTOs;
 using propertyManagement.Models;
 
 namespace propertyManagement.Repositories;
@@ -9,18 +10,22 @@ namespace propertyManagement.Repositories;
 public interface ILeaseProposalRepository : IRepository<LeaseProposal, Guid>
 {
     /// <summary>
-    /// Retrieves all lease proposals submitted by a specific tenant, eager loading property information.
+    /// Retrieves a page of lease proposals submitted by a specific tenant, eager loading property information.
     /// </summary>
     /// <param name="tenantId">The unique identifier of the tenant.</param>
-    /// <returns>A collection of lease proposals.</returns>
-    Task<IEnumerable<LeaseProposal>> GetProposalsByTenantIdAsync(Guid tenantId);
+    /// <param name="pageNumber">The 1-based page number to retrieve.</param>
+    /// <param name="pageSize">The number of items per page.</param>
+    /// <returns>A paged result of lease proposals.</returns>
+    Task<PagedResultDto<LeaseProposal>> GetProposalsByTenantIdAsync(Guid tenantId, int pageNumber, int pageSize);
 
     /// <summary>
-    /// Retrieves all lease proposals received for properties owned by a specific owner, eager loading tenant user details.
+    /// Retrieves a page of lease proposals received for properties owned by a specific owner, eager loading tenant user details.
     /// </summary>
     /// <param name="ownerId">The unique identifier of the owner.</param>
-    /// <returns>A collection of lease proposals.</returns>
-    Task<IEnumerable<LeaseProposal>> GetProposalsByOwnerIdAsync(Guid ownerId);
+    /// <param name="pageNumber">The 1-based page number to retrieve.</param>
+    /// <param name="pageSize">The number of items per page.</param>
+    /// <returns>A paged result of lease proposals.</returns>
+    Task<PagedResultDto<LeaseProposal>> GetProposalsByOwnerIdAsync(Guid ownerId, int pageNumber, int pageSize);
 
     /// <summary>
     /// Checks if there is any overlapping lease proposal for a given property that is not rejected, cancelled, or expired.

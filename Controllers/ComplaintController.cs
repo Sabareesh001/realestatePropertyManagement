@@ -51,43 +51,46 @@ public class ComplaintController : BaseApiController
     }
 
     /// <summary>
-    /// Retrieves all complaints created by the authenticated user.
+    /// Retrieves a page of complaints created by the authenticated user.
     /// </summary>
-    /// <returns>A list of complaints (empty comment lists).</returns>
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A page of complaints (empty comment lists).</returns>
     /// <response code="200">Complaints retrieved successfully.</response>
     [Authorize]
     [HttpGet("my")]
-    public async Task<ActionResult<IEnumerable<ComplaintResponseDto>>> GetMyComplaints()
+    public async Task<ActionResult<PagedResultDto<ComplaintResponseDto>>> GetMyComplaints([FromQuery] PaginationParams pagination)
     {
         var userId = GetCurrentUserId();
-        var result = await _complaintService.GetMyComplaintsAsync(userId);
+        var result = await _complaintService.GetMyComplaintsAsync(userId, pagination);
         return Ok(result);
     }
 
     /// <summary>
-    /// Retrieves all complaints on properties owned by the authenticated owner.
+    /// Retrieves a page of complaints on properties owned by the authenticated owner.
     /// </summary>
-    /// <returns>A list of complaints (empty comment lists).</returns>
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A page of complaints (empty comment lists).</returns>
     /// <response code="200">Complaints retrieved successfully.</response>
     [Authorize(Roles = "Owner")]
     [HttpGet("received")]
-    public async Task<ActionResult<IEnumerable<ComplaintResponseDto>>> GetReceivedComplaints()
+    public async Task<ActionResult<PagedResultDto<ComplaintResponseDto>>> GetReceivedComplaints([FromQuery] PaginationParams pagination)
     {
         var ownerId = GetCurrentUserId();
-        var result = await _complaintService.GetReceivedComplaintsAsync(ownerId);
+        var result = await _complaintService.GetReceivedComplaintsAsync(ownerId, pagination);
         return Ok(result);
     }
 
     /// <summary>
-    /// Retrieves all complaints in the system. Admin only.
+    /// Retrieves a page of complaints in the system. Admin only.
     /// </summary>
-    /// <returns>A list of all complaints (empty comment lists).</returns>
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A page of all complaints (empty comment lists).</returns>
     /// <response code="200">All complaints retrieved successfully.</response>
     [Authorize(Roles = "Admin")]
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<ComplaintResponseDto>>> GetAllComplaints()
+    public async Task<ActionResult<PagedResultDto<ComplaintResponseDto>>> GetAllComplaints([FromQuery] PaginationParams pagination)
     {
-        var result = await _complaintService.GetAllComplaintsAsync();
+        var result = await _complaintService.GetAllComplaintsAsync(pagination);
         return Ok(result);
     }
 

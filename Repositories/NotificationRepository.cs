@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using propertyManagement.Data;
+using propertyManagement.DTOs;
+using propertyManagement.Extensions;
 using propertyManagement.Models;
 
 namespace propertyManagement.Repositories;
@@ -41,12 +43,12 @@ public class NotificationRepository : INotificationRepository
     }
 
     /// <inheritdoc/>
-    public async Task<IEnumerable<Notification>> GetByRecipientIdAsync(Guid recipientId)
+    public async Task<PagedResultDto<Notification>> GetByRecipientIdAsync(Guid recipientId, int pageNumber, int pageSize)
     {
         return await _context.Notifications
             .Where(n => n.RecipientId == recipientId && n.DeletedAt == null)
             .OrderByDescending(n => n.CreatedAt)
-            .ToListAsync();
+            .ToPagedResultAsync(pageNumber, pageSize);
     }
 
     /// <inheritdoc/>

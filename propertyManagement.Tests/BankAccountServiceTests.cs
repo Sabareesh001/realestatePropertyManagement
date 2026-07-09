@@ -88,10 +88,18 @@ public class BankAccountServiceTests
             new() { Id = Guid.NewGuid(), BankName = "Citi", AccountNumber = "2", AccountHolderName = "John", IfscCode = "CI" }
         };
 
-        _mockBankAccountRepository.Setup(r => r.GetBankAccountsByUserIdAsync(userId)).ReturnsAsync(bankAccounts);
+        var pagedBankAccounts = new PagedResultDto<BankAccount>
+        {
+            Items = bankAccounts,
+            PageNumber = 1,
+            PageSize = 20,
+            TotalCount = bankAccounts.Count,
+            TotalPages = 1
+        };
+        _mockBankAccountRepository.Setup(r => r.GetBankAccountsByUserIdAsync(userId, 1, 20)).ReturnsAsync(pagedBankAccounts);
 
         // Act
-        var result = (await _bankAccountService.GetUserBankAccountsAsync(userId)).ToList();
+        var result = (await _bankAccountService.GetUserBankAccountsAsync(userId, new PaginationParams())).Items.ToList();
 
         // Assert
         Assert.That(result.Count, Is.EqualTo(2));

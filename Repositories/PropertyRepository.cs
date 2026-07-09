@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using propertyManagement.Data;
+using propertyManagement.DTOs;
+using propertyManagement.Extensions;
 using propertyManagement.Models;
 
 namespace propertyManagement.Repositories;
@@ -49,6 +51,21 @@ public class PropertyRepository : IPropertyRepository
     }
 
     /// <summary>
+    /// Retrieves a page of Verified properties visible to the public.
+    /// </summary>
+    /// <param name="pageNumber">The 1-based page number to retrieve.</param>
+    /// <param name="pageSize">The number of items per page.</param>
+    /// <returns>A paged result of properties.</returns>
+    public async Task<PagedResultDto<Property>> GetAllAsync(int pageNumber, int pageSize)
+    {
+        return await _context.Properties
+            .Include(p => p.PropertyImages.Where(pi => pi.DeletedAt == null))
+            .Where(p => p.DeletedAt == null && p.VerificationStatusId == PropertyVerificationStatus.Verified)
+            .OrderByDescending(p => p.CreatedAt)
+            .ToPagedResultAsync(pageNumber, pageSize);
+    }
+
+    /// <summary>
     /// Creates a new property.
     /// </summary>
     /// <param name="entity">The property to create.</param>
@@ -85,29 +102,34 @@ public class PropertyRepository : IPropertyRepository
     }
 
     /// <summary>
-    /// Retrieves all properties owned by a specific owner.
+    /// Retrieves a page of properties owned by a specific owner.
     /// </summary>
     /// <param name="ownerId">The unique identifier of the owner.</param>
-    /// <returns>A collection of properties.</returns>
-    public async Task<IEnumerable<Property>> GetPropertiesByOwnerIdAsync(Guid ownerId)
+    /// <param name="pageNumber">The 1-based page number to retrieve.</param>
+    /// <param name="pageSize">The number of items per page.</param>
+    /// <returns>A paged result of properties.</returns>
+    public async Task<PagedResultDto<Property>> GetPropertiesByOwnerIdAsync(Guid ownerId, int pageNumber, int pageSize)
     {
         return await _context.Properties
             .Include(p => p.PropertyImages.Where(pi => pi.DeletedAt == null))
             .Where(p => p.OwnerId == ownerId && p.DeletedAt == null)
-            .ToListAsync();
+            .OrderByDescending(p => p.CreatedAt)
+            .ToPagedResultAsync(pageNumber, pageSize);
     }
 
     /// <summary>
-    /// Retrieves all properties pending admin verification (status = Submitted).
+    /// Retrieves a page of properties pending admin verification (status = Submitted).
     /// </summary>
-    /// <returns>A collection of properties awaiting verification.</returns>
-    public async Task<IEnumerable<Property>> GetPendingVerificationAsync()
+    /// <param name="pageNumber">The 1-based page number to retrieve.</param>
+    /// <param name="pageSize">The number of items per page.</param>
+    /// <returns>A paged result of properties awaiting verification.</returns>
+    public async Task<PagedResultDto<Property>> GetPendingVerificationAsync(int pageNumber, int pageSize)
     {
         return await _context.Properties
             .Include(p => p.PropertyImages.Where(pi => pi.DeletedAt == null))
             .Where(p => p.VerificationStatusId == PropertyVerificationStatus.Submitted && p.DeletedAt == null)
             .OrderBy(p => p.CreatedAt)
-            .ToListAsync();
+            .ToPagedResultAsync(pageNumber, pageSize);
     }
 
     /// <summary>

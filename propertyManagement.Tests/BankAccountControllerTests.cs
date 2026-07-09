@@ -88,16 +88,24 @@ public class BankAccountControllerTests
         {
             new() { Id = Guid.NewGuid(), BankName = "Chase" }
         };
+        var pagedResult = new PagedResultDto<BankAccountResponseDto>
+        {
+            Items = accounts,
+            PageNumber = 1,
+            PageSize = 20,
+            TotalCount = accounts.Count,
+            TotalPages = 1
+        };
 
-        _mockBankAccountService.Setup(s => s.GetUserBankAccountsAsync(userId)).ReturnsAsync(accounts);
+        _mockBankAccountService.Setup(s => s.GetUserBankAccountsAsync(userId, It.IsAny<PaginationParams>())).ReturnsAsync(pagedResult);
 
         // Act
-        var result = await _controller.GetUserBankAccounts();
+        var result = await _controller.GetUserBankAccounts(new PaginationParams());
 
         // Assert
         var okResult = result.Result as OkObjectResult;
         Assert.That(okResult, Is.Not.Null);
-        Assert.That(okResult.Value, Is.EqualTo(accounts));
+        Assert.That(okResult.Value, Is.EqualTo(pagedResult));
     }
 
     [Test]

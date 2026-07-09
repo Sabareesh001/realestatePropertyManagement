@@ -22,24 +22,27 @@ public interface IComplaintService
     Task<ComplaintResponseDto> CreateComplaintAsync(Guid tenantId, CreateComplaintDto dto);
 
     /// <summary>
-    /// Retrieves all complaints created by the calling user, with an empty comment list.
+    /// Retrieves a page of complaints created by the calling user, with an empty comment list.
     /// </summary>
     /// <param name="userId">The authenticated user identifier.</param>
-    /// <returns>A collection of complaints.</returns>
-    Task<IEnumerable<ComplaintResponseDto>> GetMyComplaintsAsync(Guid userId);
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A paged result of complaints.</returns>
+    Task<PagedResultDto<ComplaintResponseDto>> GetMyComplaintsAsync(Guid userId, PaginationParams pagination);
 
     /// <summary>
-    /// Retrieves all complaints received on properties owned by the calling owner, with empty comment lists.
+    /// Retrieves a page of complaints received on properties owned by the calling owner, with empty comment lists.
     /// </summary>
     /// <param name="ownerId">The authenticated owner's user identifier.</param>
-    /// <returns>A collection of complaints.</returns>
-    Task<IEnumerable<ComplaintResponseDto>> GetReceivedComplaintsAsync(Guid ownerId);
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A paged result of complaints.</returns>
+    Task<PagedResultDto<ComplaintResponseDto>> GetReceivedComplaintsAsync(Guid ownerId, PaginationParams pagination);
 
     /// <summary>
-    /// Retrieves all complaints in the system (admin view), with empty comment lists.
+    /// Retrieves a page of all complaints in the system (admin view), with empty comment lists.
     /// </summary>
-    /// <returns>A collection of all complaints.</returns>
-    Task<IEnumerable<ComplaintResponseDto>> GetAllComplaintsAsync();
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A paged result of complaints.</returns>
+    Task<PagedResultDto<ComplaintResponseDto>> GetAllComplaintsAsync(PaginationParams pagination);
 
     /// <summary>
     /// Retrieves a single complaint with full comment thread. Only accessible to the tenant, owner, or admin.

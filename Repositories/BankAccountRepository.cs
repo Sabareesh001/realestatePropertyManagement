@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using propertyManagement.Data;
+using propertyManagement.DTOs;
+using propertyManagement.Extensions;
 using propertyManagement.Models;
 
 namespace propertyManagement.Repositories;
@@ -62,12 +64,13 @@ public class BankAccountRepository : IBankAccountRepository
     }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<BankAccount>> GetBankAccountsByUserIdAsync(Guid userId)
+    public async Task<PagedResultDto<BankAccount>> GetBankAccountsByUserIdAsync(Guid userId, int pageNumber, int pageSize)
     {
         return await _context.UserBankAccounts
             .Where(uba => uba.UserId == userId && uba.BankAccount.DeletedAt == null)
             .Select(uba => uba.BankAccount)
-            .ToListAsync();
+            .OrderByDescending(ba => ba.CreatedAt)
+            .ToPagedResultAsync(pageNumber, pageSize);
     }
 
     /// <inheritdoc />

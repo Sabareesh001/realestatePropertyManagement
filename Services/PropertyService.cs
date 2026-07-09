@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using propertyManagement.DTOs;
+using propertyManagement.Extensions;
 using propertyManagement.Models;
 using propertyManagement.Repositories;
 
@@ -96,12 +97,10 @@ public class PropertyService : IPropertyService
     }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<PropertyResponseDto>> GetAllPropertiesAsync()
+    public async Task<PagedResultDto<PropertyResponseDto>> GetAllPropertiesAsync(PaginationParams pagination)
     {
-        var properties = await _unitOfWork.Properties.GetAllAsync();
-        return properties
-            .Where(p => p.VerificationStatusId == PropertyVerificationStatus.Verified)
-            .Select(MapToResponseDto);
+        var properties = await _unitOfWork.Properties.GetAllAsync(pagination.PageNumber, pagination.PageSize);
+        return properties.Select(MapToResponseDto);
     }
 
     /// <inheritdoc />
@@ -204,9 +203,9 @@ public class PropertyService : IPropertyService
     }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<PropertyResponseDto>> GetPropertiesByOwnerIdAsync(Guid ownerId)
+    public async Task<PagedResultDto<PropertyResponseDto>> GetPropertiesByOwnerIdAsync(Guid ownerId, PaginationParams pagination)
     {
-        var properties = await _unitOfWork.Properties.GetPropertiesByOwnerIdAsync(ownerId);
+        var properties = await _unitOfWork.Properties.GetPropertiesByOwnerIdAsync(ownerId, pagination.PageNumber, pagination.PageSize);
         return properties.Select(MapToResponseDto);
     }
 
@@ -237,9 +236,9 @@ public class PropertyService : IPropertyService
     }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<PropertyResponseDto>> GetPendingVerificationAsync()
+    public async Task<PagedResultDto<PropertyResponseDto>> GetPendingVerificationAsync(PaginationParams pagination)
     {
-        var properties = await _unitOfWork.Properties.GetPendingVerificationAsync();
+        var properties = await _unitOfWork.Properties.GetPendingVerificationAsync(pagination.PageNumber, pagination.PageSize);
         return properties.Select(MapToResponseDto);
     }
 
@@ -303,12 +302,14 @@ public class PropertyService : IPropertyService
     }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<DocumentResponseDto>> GetDocumentsAsync(int propertyId)
+    public async Task<PagedResultDto<DocumentResponseDto>> GetDocumentsAsync(int propertyId, PaginationParams pagination)
     {
         var property = await _unitOfWork.Properties.GetByIdWithDocumentsAsync(propertyId)
             ?? throw new KeyNotFoundException("Property not found.");
 
-        return property.Documents.Select(MapToDocumentResponseDto);
+        return property.Documents
+            .Select(MapToDocumentResponseDto)
+            .ToPagedResult(pagination.PageNumber, pagination.PageSize);
     }
 
     /// <inheritdoc />

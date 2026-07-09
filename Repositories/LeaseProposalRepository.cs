@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using propertyManagement.Data;
+using propertyManagement.DTOs;
+using propertyManagement.Extensions;
 using propertyManagement.Models;
 
 namespace propertyManagement.Repositories;
@@ -83,13 +85,14 @@ public class LeaseProposalRepository : ILeaseProposalRepository
     /// </summary>
     /// <param name="tenantId">The unique identifier of the tenant.</param>
     /// <returns>A collection of lease proposals.</returns>
-    public async Task<IEnumerable<LeaseProposal>> GetProposalsByTenantIdAsync(Guid tenantId)
+    public async Task<PagedResultDto<LeaseProposal>> GetProposalsByTenantIdAsync(Guid tenantId, int pageNumber, int pageSize)
     {
         return await _context.LeaseProposals
             .Include(p => p.Property)
             .Include(p => p.Status)
             .Where(p => p.TenantId == tenantId && p.DeletedAt == null && (p.Property == null || p.Property.DeletedAt == null))
-            .ToListAsync();
+            .OrderByDescending(p => p.CreatedAt)
+            .ToPagedResultAsync(pageNumber, pageSize);
     }
 
     /// <summary>
@@ -97,7 +100,7 @@ public class LeaseProposalRepository : ILeaseProposalRepository
     /// </summary>
     /// <param name="ownerId">The unique identifier of the owner.</param>
     /// <returns>A collection of lease proposals.</returns>
-    public async Task<IEnumerable<LeaseProposal>> GetProposalsByOwnerIdAsync(Guid ownerId)
+    public async Task<PagedResultDto<LeaseProposal>> GetProposalsByOwnerIdAsync(Guid ownerId, int pageNumber, int pageSize)
     {
         return await _context.LeaseProposals
             .Include(p => p.Property)
@@ -106,7 +109,8 @@ public class LeaseProposalRepository : ILeaseProposalRepository
                 .ThenInclude(t => t!.UserProfile)
                     .ThenInclude(up => up!.TenantProfile)
             .Where(p => p.Property != null && p.Property.OwnerId == ownerId && p.DeletedAt == null && p.Property.DeletedAt == null && p.StatusId != ProposalStatus.Draft)
-            .ToListAsync();
+            .OrderByDescending(p => p.CreatedAt)
+            .ToPagedResultAsync(pageNumber, pageSize);
     }
 
     /// <summary>

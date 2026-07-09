@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using propertyManagement.DTOs;
+using propertyManagement.Extensions;
 using propertyManagement.Models;
 using propertyManagement.Repositories;
 
@@ -440,12 +441,15 @@ public class LeaseService : ILeaseService
     /// <summary>
     /// Retrieves all leases associated with the user based on their role.
     /// </summary>
-    public async Task<IEnumerable<LeaseResponseDto>> GetMyLeasesAsync(Guid userId, IEnumerable<string> roles)
+    public async Task<PagedResultDto<LeaseResponseDto>> GetMyLeasesAsync(Guid userId, IEnumerable<string> roles, PaginationParams pagination)
     {
         if (roles.Contains("Admin"))
         {
             var leases = await _unitOfWork.Leases.GetAllAsync();
-            return leases.Select(MapToResponseDto).ToList();
+            return leases
+                .OrderByDescending(l => l.CreatedAt)
+                .Select(MapToResponseDto)
+                .ToPagedResult(pagination.PageNumber, pagination.PageSize);
         }
 
         var allLeases = await _unitOfWork.Leases.GetAllAsync();
@@ -464,25 +468,28 @@ public class LeaseService : ILeaseService
         }
 
         var distinctLeases = result.GroupBy(l => l.Id).Select(g => g.First());
-        return distinctLeases.Select(MapToResponseDto).ToList();
+        return distinctLeases
+            .OrderByDescending(l => l.CreatedAt)
+            .Select(MapToResponseDto)
+            .ToPagedResult(pagination.PageNumber, pagination.PageSize);
     }
 
     /// <summary>
-    /// Retrieves all lease templates awaiting admin verification (status = Submitted).
+    /// Retrieves a page of lease templates awaiting admin verification (status = Submitted).
     /// </summary>
-    public async Task<IEnumerable<LeaseResponseDto>> GetPendingTemplatesAsync()
+    public async Task<PagedResultDto<LeaseResponseDto>> GetPendingTemplatesAsync(PaginationParams pagination)
     {
-        var leases = await _unitOfWork.Leases.GetPendingTemplatesAsync();
-        return leases.Select(MapToResponseDto).ToList();
+        var leases = await _unitOfWork.Leases.GetPendingTemplatesAsync(pagination.PageNumber, pagination.PageSize);
+        return leases.Select(MapToResponseDto);
     }
 
     /// <summary>
-    /// Retrieves all tenant-signed leases awaiting admin verification (status = TenantSigned).
+    /// Retrieves a page of tenant-signed leases awaiting admin verification (status = TenantSigned).
     /// </summary>
-    public async Task<IEnumerable<LeaseResponseDto>> GetPendingSignedLeasesAsync()
+    public async Task<PagedResultDto<LeaseResponseDto>> GetPendingSignedLeasesAsync(PaginationParams pagination)
     {
-        var leases = await _unitOfWork.Leases.GetPendingSignedLeasesAsync();
-        return leases.Select(MapToResponseDto).ToList();
+        var leases = await _unitOfWork.Leases.GetPendingSignedLeasesAsync(pagination.PageNumber, pagination.PageSize);
+        return leases.Select(MapToResponseDto);
     }
 
     /// <summary>
@@ -513,7 +520,7 @@ public class LeaseService : ILeaseService
     /// <summary>
     /// Retrieves all additional documents associated with a specific lease.
     /// </summary>
-    public async Task<IEnumerable<DocumentResponseDto>> GetLeaseDocumentsAsync(Guid leaseId, Guid userId, IEnumerable<string> roles)
+    public async Task<PagedResultDto<DocumentResponseDto>> GetLeaseDocumentsAsync(Guid leaseId, Guid userId, IEnumerable<string> roles, PaginationParams pagination)
     {
         var lease = await _unitOfWork.Leases.GetByIdWithDocumentsAsync(leaseId);
         if (lease == null)
@@ -583,7 +590,8 @@ public class LeaseService : ILeaseService
                 }));
         }
 
-        return result.GroupBy(d => d.Id).Select(g => g.First()).ToList();
+        return result.GroupBy(d => d.Id).Select(g => g.First())
+            .ToPagedResult(pagination.PageNumber, pagination.PageSize);
     }
 
     /// <summary>

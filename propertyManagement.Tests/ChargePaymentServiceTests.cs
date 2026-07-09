@@ -453,12 +453,19 @@ public class ChargePaymentServiceTests
         var charges = new List<Charge> { new() { Id = Guid.NewGuid(), Amount = 100 } };
 
         _mockLeaseRepository.Setup(r => r.GetByIdAsync(leaseId)).ReturnsAsync(lease);
-        _mockChargeRepository.Setup(r => r.GetByLeaseIdAsync(leaseId)).ReturnsAsync(charges);
+        _mockChargeRepository.Setup(r => r.GetByLeaseIdAsync(leaseId, 1, 20)).ReturnsAsync(new PagedResultDto<Charge>
+        {
+            Items = charges,
+            PageNumber = 1,
+            PageSize = 20,
+            TotalCount = charges.Count,
+            TotalPages = 1
+        });
 
-        var result = await _service.GetChargesByLeaseIdAsync(leaseId, Guid.NewGuid(), new[] { "Admin" });
+        var result = await _service.GetChargesByLeaseIdAsync(leaseId, Guid.NewGuid(), new[] { "Admin" }, new PaginationParams());
 
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.Count(), Is.EqualTo(1));
+        Assert.That(result.Items.Count(), Is.EqualTo(1));
     }
 
     /// <summary>
@@ -477,12 +484,19 @@ public class ChargePaymentServiceTests
         var charges = new List<Charge> { new() { Id = Guid.NewGuid(), Amount = 200 } };
 
         _mockLeaseRepository.Setup(r => r.GetByIdAsync(leaseId)).ReturnsAsync(lease);
-        _mockChargeRepository.Setup(r => r.GetByLeaseIdAsync(leaseId)).ReturnsAsync(charges);
+        _mockChargeRepository.Setup(r => r.GetByLeaseIdAsync(leaseId, 1, 20)).ReturnsAsync(new PagedResultDto<Charge>
+        {
+            Items = charges,
+            PageNumber = 1,
+            PageSize = 20,
+            TotalCount = charges.Count,
+            TotalPages = 1
+        });
 
-        var result = await _service.GetChargesByLeaseIdAsync(leaseId, ownerId, new[] { "Owner" });
+        var result = await _service.GetChargesByLeaseIdAsync(leaseId, ownerId, new[] { "Owner" }, new PaginationParams());
 
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.Count(), Is.EqualTo(1));
+        Assert.That(result.Items.Count(), Is.EqualTo(1));
     }
 
     /// <summary>
@@ -497,12 +511,19 @@ public class ChargePaymentServiceTests
         var charges = new List<Charge> { new() { Id = Guid.NewGuid(), Amount = 300 } };
 
         _mockLeaseRepository.Setup(r => r.GetByIdAsync(leaseId)).ReturnsAsync(lease);
-        _mockChargeRepository.Setup(r => r.GetByLeaseIdAsync(leaseId)).ReturnsAsync(charges);
+        _mockChargeRepository.Setup(r => r.GetByLeaseIdAsync(leaseId, 1, 20)).ReturnsAsync(new PagedResultDto<Charge>
+        {
+            Items = charges,
+            PageNumber = 1,
+            PageSize = 20,
+            TotalCount = charges.Count,
+            TotalPages = 1
+        });
 
-        var result = await _service.GetChargesByLeaseIdAsync(leaseId, tenantId, new[] { "Tenant" });
+        var result = await _service.GetChargesByLeaseIdAsync(leaseId, tenantId, new[] { "Tenant" }, new PaginationParams());
 
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.Count(), Is.EqualTo(1));
+        Assert.That(result.Items.Count(), Is.EqualTo(1));
     }
 
     /// <summary>
@@ -517,7 +538,7 @@ public class ChargePaymentServiceTests
         _mockLeaseRepository.Setup(r => r.GetByIdAsync(leaseId)).ReturnsAsync(lease);
 
         var ex = Assert.ThrowsAsync<UnauthorizedAccessException>(async () =>
-            await _service.GetChargesByLeaseIdAsync(leaseId, Guid.NewGuid(), new[] { "Tenant" }));
+            await _service.GetChargesByLeaseIdAsync(leaseId, Guid.NewGuid(), new[] { "Tenant" }, new PaginationParams()));
         
         Assert.That(ex.Message, Is.EqualTo("You are not authorized to access charges/payments for this lease."));
     }
@@ -583,12 +604,19 @@ public class ChargePaymentServiceTests
         var payments = new List<Payment> { new() { Id = Guid.NewGuid(), Amount = 500 } };
 
         _mockLeaseRepository.Setup(r => r.GetByIdAsync(leaseId)).ReturnsAsync(lease);
-        _mockPaymentRepository.Setup(r => r.GetByLeaseIdAsync(leaseId)).ReturnsAsync(payments);
+        _mockPaymentRepository.Setup(r => r.GetByLeaseIdAsync(leaseId, 1, 20)).ReturnsAsync(new PagedResultDto<Payment>
+        {
+            Items = payments,
+            PageNumber = 1,
+            PageSize = 20,
+            TotalCount = payments.Count,
+            TotalPages = 1
+        });
 
-        var result = await _service.GetPaymentsByLeaseIdAsync(leaseId, tenantId, new[] { "Tenant" });
+        var result = await _service.GetPaymentsByLeaseIdAsync(leaseId, tenantId, new[] { "Tenant" }, new PaginationParams());
 
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.Count(), Is.EqualTo(1));
+        Assert.That(result.Items.Count(), Is.EqualTo(1));
     }
 
     #endregion

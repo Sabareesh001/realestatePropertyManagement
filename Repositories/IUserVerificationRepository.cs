@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using propertyManagement.DTOs;
 using propertyManagement.Models;
 
 namespace propertyManagement.Repositories;
@@ -11,10 +12,12 @@ namespace propertyManagement.Repositories;
 public interface IUserVerificationRepository : IRepository<UserVerification, Guid>
 {
     /// <summary>
-    /// Retrieves all user verification requests with a status of Pending.
+    /// Retrieves a page of user verification requests with a status of Pending.
     /// </summary>
-    /// <returns>A collection of pending user verification requests.</returns>
-    Task<IEnumerable<UserVerification>> GetPendingVerificationsAsync();
+    /// <param name="pageNumber">The 1-based page number to retrieve.</param>
+    /// <param name="pageSize">The number of items per page.</param>
+    /// <returns>A paged result of pending user verification requests.</returns>
+    Task<PagedResultDto<UserVerification>> GetPendingVerificationsAsync(int pageNumber, int pageSize);
 
     /// <summary>
     /// Retrieves the latest verification request submitted by a user.

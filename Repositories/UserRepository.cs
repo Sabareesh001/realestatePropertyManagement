@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using propertyManagement.Data;
+using propertyManagement.DTOs;
+using propertyManagement.Extensions;
 using propertyManagement.Models;
 
 namespace propertyManagement.Repositories;
@@ -44,6 +46,22 @@ public class UserRepository : IUserRepository
                 .ThenInclude(ur => ur.Role)
             .Where(u => u.DeletedAt == null)
             .ToListAsync();
+    }
+
+    /// <summary>
+    /// Retrieves a page of all users.
+    /// </summary>
+    /// <param name="pageNumber">The 1-based page number to retrieve.</param>
+    /// <param name="pageSize">The number of items per page.</param>
+    /// <returns>A paged result of users.</returns>
+    public async Task<PagedResultDto<User>> GetAllAsync(int pageNumber, int pageSize)
+    {
+        return await _context.Users
+            .Include(u => u.UserRoles.Where(ur => ur.DeletedAt == null))
+                .ThenInclude(ur => ur.Role)
+            .Where(u => u.DeletedAt == null)
+            .OrderBy(u => u.CreatedAt)
+            .ToPagedResultAsync(pageNumber, pageSize);
     }
 
     /// <summary>
