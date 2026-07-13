@@ -109,4 +109,8 @@ public partial class User
     /// Gets or sets the notifications addressed to this user.
     /// </summary>
     public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
+
+    public virtual ICollection<SiteVisit> SiteVisitsAsTenant { get; set; } = new List<SiteVisit>();
+
+    public virtual ICollection<SiteVisit> SiteVisitsAsOwner { get; set; } = new List<SiteVisit>();
 }

@@ -44,6 +44,11 @@ public interface IPropertyService
     Task<PropertyResponseDto> UpdatePropertyAsync(Guid userId, int id, UpdatePropertyDto dto);
 
     /// <summary>
+    /// Updates a property's visit preferences. Requires ownership validation.
+    /// </summary>
+    Task<PropertyResponseDto> UpdatePropertyVisitPreferencesAsync(Guid userId, int id, UpdatePropertyVisitPreferencesDto dto);
+
+    /// <summary>
     /// Deletes an existing property listing. Requires ownership validation.
     /// </summary>
     /// <param name="userId">The unique identifier of the authenticated user performing the deletion.</param>

@@ -80,4 +80,14 @@ public partial class Property
     /// Gets or sets the collection of images associated with this property.
     /// </summary>
     public virtual ICollection<PropertyImage> PropertyImages { get; set; } = new List<PropertyImage>();
+
+    public string? VisitPreferences { get; set; }
+
+    public string? SpecificVisitDays { get; set; }
+
+    public TimeSpan? VisitStartTime { get; set; }
+
+    public TimeSpan? VisitEndTime { get; set; }
+
+    public virtual ICollection<SiteVisit> SiteVisits { get; set; } = new List<SiteVisit>();
 }

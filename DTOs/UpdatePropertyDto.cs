@@ -49,4 +49,9 @@ public class UpdatePropertyDto
     /// Gets or sets the list of images associated with the property.
     /// </summary>
     public System.Collections.Generic.List<PropertyImageDto> PropertyImages { get; set; } = new();
+
+    public string? VisitPreferences { get; set; }
+    public string? SpecificVisitDays { get; set; }
+    public System.TimeSpan? VisitStartTime { get; set; }
+    public System.TimeSpan? VisitEndTime { get; set; }
 }

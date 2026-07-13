@@ -115,6 +115,25 @@ public class PropertyController : BaseApiController
     }
 
     /// <summary>
+    /// Updates the site visit preferences for a property. Owner only.
+    /// </summary>
+    /// <param name="id">The unique identifier of the property to update.</param>
+    /// <param name="dto">The updated visit preferences.</param>
+    /// <returns>The updated property details.</returns>
+    /// <response code="200">Returns the updated property details.</response>
+    /// <response code="401">If the user is not authenticated.</response>
+    /// <response code="403">If the user is not the owner of the property.</response>
+    /// <response code="404">If the property is not found.</response>
+    [Authorize(Roles = "Owner")]
+    [HttpPatch("{id:int}/visit-preferences")]
+    public async Task<ActionResult<PropertyResponseDto>> UpdateVisitPreferences(int id, [FromBody] UpdatePropertyVisitPreferencesDto dto)
+    {
+        var userId = GetCurrentUserId();
+        var result = await _propertyService.UpdatePropertyVisitPreferencesAsync(userId, id, dto);
+        return Ok(result);
+    }
+
+    /// <summary>
     /// Deletes an existing property listing. Requires the authenticated user to be the owner.
     /// </summary>
     /// <param name="id">The unique identifier of the property to delete.</param>
