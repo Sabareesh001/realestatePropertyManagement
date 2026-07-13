@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using propertyManagement.Data;
+using propertyManagement.DTOs;
+using propertyManagement.Extensions;
 using propertyManagement.Models;
 
 namespace propertyManagement.Repositories;
@@ -57,7 +59,7 @@ public class ChargeRepository : IChargeRepository
     /// </summary>
     /// <param name="leaseId">The lease identifier.</param>
     /// <returns>A collection of charges for the specified lease.</returns>
-    public async Task<IEnumerable<Charge>> GetByLeaseIdAsync(Guid leaseId)
+    public async Task<PagedResultDto<Charge>> GetByLeaseIdAsync(Guid leaseId, int pageNumber, int pageSize)
     {
         return await _context.Charges
             .Include(c => c.ChargeType)
@@ -65,7 +67,8 @@ public class ChargeRepository : IChargeRepository
             .Include(c => c.ChargePayments)
                 .ThenInclude(cp => cp.Payment)
             .Where(c => c.DeletedAt == null && c.Leases.Any(l => l.Id == leaseId))
-            .ToListAsync();
+            .OrderByDescending(c => c.CreatedAt)
+            .ToPagedResultAsync(pageNumber, pageSize);
     }
 
     /// <summary>
@@ -115,6 +118,37 @@ public class ChargeRepository : IChargeRepository
                         && (toDate == null || c.CreatedAt <= toDate))
             .OrderByDescending(c => c.CreatedAt)
             .ToListAsync();
+    }
+
+    /// <summary>
+    /// Retrieves a page of charges across all leases for the admin dashboard, eager loading lease,
+    /// property, owner and tenant context. Results are ordered newest first.
+    /// </summary>
+    /// <param name="from">Optional inclusive lower bound (UTC) on the charge creation date.</param>
+    /// <param name="to">Optional inclusive upper bound (UTC) on the charge creation date.</param>
+    /// <param name="pageNumber">The 1-based page number to retrieve.</param>
+    /// <param name="pageSize">The number of items per page.</param>
+    /// <returns>A paged result of charges with full context.</returns>
+    public async Task<PagedResultDto<Charge>> GetAllForAdminAsync(DateTime? from, DateTime? to, int pageNumber, int pageSize)
+    {
+        var fromDate = from.HasValue ? DateTime.SpecifyKind(from.Value, DateTimeKind.Unspecified) : (DateTime?)null;
+        var toDate = to.HasValue ? DateTime.SpecifyKind(to.Value, DateTimeKind.Unspecified) : (DateTime?)null;
+
+        return await _context.Charges
+            .Include(c => c.ChargeType)
+            .Include(c => c.Status)
+            .Include(c => c.ChargePayments)
+                .ThenInclude(cp => cp.Payment)
+            .Include(c => c.Leases)
+                .ThenInclude(l => l.PropertyNavigation)
+                    .ThenInclude(pr => pr!.Owner)
+            .Include(c => c.Leases)
+                .ThenInclude(l => l.Tenant)
+            .Where(c => c.DeletedAt == null
+                        && (fromDate == null || c.CreatedAt >= fromDate)
+                        && (toDate == null || c.CreatedAt <= toDate))
+            .OrderByDescending(c => c.CreatedAt)
+            .ToPagedResultAsync(pageNumber, pageSize);
     }
 
     /// <summary>

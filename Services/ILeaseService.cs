@@ -72,33 +72,37 @@ public interface ILeaseService
     Task<LeaseResponseDto> GetLeaseByIdAsync(Guid leaseId, Guid userId, IEnumerable<string> roles);
 
     /// <summary>
-    /// Retrieves all leases associated with the user based on their roles.
+    /// Retrieves a page of leases associated with the user based on their roles.
     /// </summary>
     /// <param name="userId">The unique identifier of the user.</param>
     /// <param name="roles">The roles of the user (Tenant, Owner, Admin).</param>
-    /// <returns>A collection of lease response DTOs.</returns>
-    Task<IEnumerable<LeaseResponseDto>> GetMyLeasesAsync(Guid userId, IEnumerable<string> roles);
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A paged result of lease response DTOs.</returns>
+    Task<PagedResultDto<LeaseResponseDto>> GetMyLeasesAsync(Guid userId, IEnumerable<string> roles, PaginationParams pagination);
 
     /// <summary>
-    /// Retrieves all lease templates awaiting admin verification (status = Submitted).
+    /// Retrieves a page of lease templates awaiting admin verification (status = Submitted).
     /// </summary>
-    /// <returns>A collection of lease response DTOs pending template verification.</returns>
-    Task<IEnumerable<LeaseResponseDto>> GetPendingTemplatesAsync();
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A paged result of lease response DTOs pending template verification.</returns>
+    Task<PagedResultDto<LeaseResponseDto>> GetPendingTemplatesAsync(PaginationParams pagination);
 
     /// <summary>
-    /// Retrieves all tenant-signed leases awaiting admin verification (status = TenantSigned).
+    /// Retrieves a page of tenant-signed leases awaiting admin verification (status = TenantSigned).
     /// </summary>
-    /// <returns>A collection of lease response DTOs pending signed agreement verification.</returns>
-    Task<IEnumerable<LeaseResponseDto>> GetPendingSignedLeasesAsync();
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A paged result of lease response DTOs pending signed agreement verification.</returns>
+    Task<PagedResultDto<LeaseResponseDto>> GetPendingSignedLeasesAsync(PaginationParams pagination);
 
     /// <summary>
-    /// Retrieves all additional documents associated with a specific lease.
+    /// Retrieves a page of additional documents associated with a specific lease.
     /// </summary>
     /// <param name="leaseId">The unique identifier of the lease.</param>
     /// <param name="userId">The unique identifier of the user requesting documents.</param>
     /// <param name="roles">The roles of the requesting user.</param>
-    /// <returns>A collection of document response DTOs.</returns>
-    Task<IEnumerable<DocumentResponseDto>> GetLeaseDocumentsAsync(Guid leaseId, Guid userId, IEnumerable<string> roles);
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A paged result of document response DTOs.</returns>
+    Task<PagedResultDto<DocumentResponseDto>> GetLeaseDocumentsAsync(Guid leaseId, Guid userId, IEnumerable<string> roles, PaginationParams pagination);
 
     /// <summary>
     /// Adds an agreement document to a lease on behalf of the tenant associated with it.

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using propertyManagement.Data;
+using propertyManagement.DTOs;
+using propertyManagement.Extensions;
 using propertyManagement.Models;
 
 namespace propertyManagement.Repositories;
@@ -61,7 +63,22 @@ public class ComplaintRepository : IComplaintRepository
     }
 
     /// <inheritdoc/>
-    public async Task<IEnumerable<Complaint>> GetByCreatedByAsync(Guid userId)
+    public async Task<PagedResultDto<Complaint>> GetAllWithDetailsAsync(int pageNumber, int pageSize)
+    {
+        return await _context.Complaints
+            .Include(c => c.ComplaintType)
+            .Include(c => c.Priority)
+            .Include(c => c.Status)
+            .Include(c => c.Property)
+            .Include(c => c.Tenant)
+            .Include(c => c.Comments)
+            .Where(c => c.DeletedAt == null)
+            .OrderByDescending(c => c.CreatedAt)
+            .ToPagedResultAsync(pageNumber, pageSize);
+    }
+
+    /// <inheritdoc/>
+    public async Task<PagedResultDto<Complaint>> GetByCreatedByAsync(Guid userId, int pageNumber, int pageSize)
     {
         return await _context.Complaints
             .Include(c => c.ComplaintType)
@@ -72,11 +89,11 @@ public class ComplaintRepository : IComplaintRepository
             .Include(c => c.Comments)
             .Where(c => c.CreatedBy == userId && c.DeletedAt == null)
             .OrderByDescending(c => c.CreatedAt)
-            .ToListAsync();
+            .ToPagedResultAsync(pageNumber, pageSize);
     }
 
     /// <inheritdoc/>
-    public async Task<IEnumerable<Complaint>> GetByOwnerIdAsync(Guid ownerId)
+    public async Task<PagedResultDto<Complaint>> GetByOwnerIdAsync(Guid ownerId, int pageNumber, int pageSize)
     {
         return await _context.Complaints
             .Include(c => c.ComplaintType)
@@ -87,7 +104,7 @@ public class ComplaintRepository : IComplaintRepository
             .Include(c => c.Comments)
             .Where(c => c.OwnerId == ownerId && c.DeletedAt == null)
             .OrderByDescending(c => c.CreatedAt)
-            .ToListAsync();
+            .ToPagedResultAsync(pageNumber, pageSize);
     }
 
     /// <inheritdoc/>

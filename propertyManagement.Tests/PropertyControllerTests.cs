@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -168,13 +169,21 @@ public class PropertyControllerTests
             BuildPropertyResponse(1),
             BuildPropertyResponse(2)
         };
-        _mockPropertyService.Setup(s => s.GetAllPropertiesAsync()).ReturnsAsync(properties);
+        var pagedResult = new PagedResultDto<PropertyResponseDto>
+        {
+            Items = properties,
+            PageNumber = 1,
+            PageSize = 20,
+            TotalCount = properties.Count,
+            TotalPages = 1
+        };
+        _mockPropertyService.Setup(s => s.GetAllPropertiesAsync(It.IsAny<PaginationParams>())).ReturnsAsync(pagedResult);
 
-        var result = await _controller.GetAllProperties();
+        var result = await _controller.GetAllProperties(new PaginationParams());
 
         var okResult = result.Result as OkObjectResult;
         Assert.That(okResult, Is.Not.Null);
-        Assert.That(okResult!.Value, Is.EqualTo(properties));
+        Assert.That(okResult!.Value, Is.EqualTo(pagedResult));
     }
 
     /// <summary>
@@ -183,14 +192,22 @@ public class PropertyControllerTests
     [Test]
     public async Task GetAllProperties_NoProperties_ReturnsOkWithEmptyList()
     {
-        _mockPropertyService.Setup(s => s.GetAllPropertiesAsync())
-            .ReturnsAsync(new List<PropertyResponseDto>());
+        var emptyPagedResult = new PagedResultDto<PropertyResponseDto>
+        {
+            Items = new List<PropertyResponseDto>(),
+            PageNumber = 1,
+            PageSize = 20,
+            TotalCount = 0,
+            TotalPages = 0
+        };
+        _mockPropertyService.Setup(s => s.GetAllPropertiesAsync(It.IsAny<PaginationParams>()))
+            .ReturnsAsync(emptyPagedResult);
 
-        var result = await _controller.GetAllProperties();
+        var result = await _controller.GetAllProperties(new PaginationParams());
 
         var okResult = result.Result as OkObjectResult;
         Assert.That(okResult, Is.Not.Null);
-        Assert.That((okResult!.Value as List<PropertyResponseDto>)!.Count, Is.EqualTo(0));
+        Assert.That((okResult!.Value as PagedResultDto<PropertyResponseDto>)!.Items.Count(), Is.EqualTo(0));
     }
 
     // ── GetMyProperties ────────────────────────────────────────────────────────
@@ -209,13 +226,21 @@ public class PropertyControllerTests
             BuildPropertyResponse(1, userId),
             BuildPropertyResponse(2, userId)
         };
-        _mockPropertyService.Setup(s => s.GetPropertiesByOwnerIdAsync(userId)).ReturnsAsync(properties);
+        var pagedResult = new PagedResultDto<PropertyResponseDto>
+        {
+            Items = properties,
+            PageNumber = 1,
+            PageSize = 20,
+            TotalCount = properties.Count,
+            TotalPages = 1
+        };
+        _mockPropertyService.Setup(s => s.GetPropertiesByOwnerIdAsync(userId, It.IsAny<PaginationParams>())).ReturnsAsync(pagedResult);
 
-        var result = await _controller.GetMyProperties();
+        var result = await _controller.GetMyProperties(new PaginationParams());
 
         var okResult = result.Result as OkObjectResult;
         Assert.That(okResult, Is.Not.Null);
-        Assert.That(okResult!.Value, Is.EqualTo(properties));
+        Assert.That(okResult!.Value, Is.EqualTo(pagedResult));
     }
 
     // ── UpdateProperty ─────────────────────────────────────────────────────────

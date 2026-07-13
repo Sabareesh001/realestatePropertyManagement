@@ -1303,6 +1303,15 @@ public partial class PropertyManagementDbContext : DbContext
             entity.Property(e => e.StripeDetailsSubmitted)
                 .HasColumnName("stripe_details_submitted")
                 .HasDefaultValue(false);
+            entity.Property(e => e.EmailVerified)
+                .HasColumnName("email_verified")
+                .HasDefaultValue(false);
+            entity.Property(e => e.EmailVerificationHash)
+                .HasMaxLength(64)
+                .HasColumnName("email_verification_hash");
+            entity.Property(e => e.EmailVerificationHashExpiresAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("email_verification_hash_expires_at");
 
             entity.HasOne(d => d.VerificationStatus).WithMany(p => p.Users)
                 .HasForeignKey(d => d.VerificationStatusId)

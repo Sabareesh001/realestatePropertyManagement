@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using propertyManagement.DTOs;
+using propertyManagement.Extensions;
 using propertyManagement.Models;
 using propertyManagement.Repositories;
 
@@ -63,23 +64,23 @@ public class ComplaintService : IComplaintService
     }
 
     /// <inheritdoc/>
-    public async Task<IEnumerable<ComplaintResponseDto>> GetMyComplaintsAsync(Guid userId)
+    public async Task<PagedResultDto<ComplaintResponseDto>> GetMyComplaintsAsync(Guid userId, PaginationParams pagination)
     {
-        var complaints = await _unitOfWork.Complaints.GetByCreatedByAsync(userId);
+        var complaints = await _unitOfWork.Complaints.GetByCreatedByAsync(userId, pagination.PageNumber, pagination.PageSize);
         return complaints.Select(c => MapToResponseDto(c, includeComments: false, authorMap: new Dictionary<Guid, User>()));
     }
 
     /// <inheritdoc/>
-    public async Task<IEnumerable<ComplaintResponseDto>> GetReceivedComplaintsAsync(Guid ownerId)
+    public async Task<PagedResultDto<ComplaintResponseDto>> GetReceivedComplaintsAsync(Guid ownerId, PaginationParams pagination)
     {
-        var complaints = await _unitOfWork.Complaints.GetByOwnerIdAsync(ownerId);
+        var complaints = await _unitOfWork.Complaints.GetByOwnerIdAsync(ownerId, pagination.PageNumber, pagination.PageSize);
         return complaints.Select(c => MapToResponseDto(c, includeComments: false, authorMap: new Dictionary<Guid, User>()));
     }
 
     /// <inheritdoc/>
-    public async Task<IEnumerable<ComplaintResponseDto>> GetAllComplaintsAsync()
+    public async Task<PagedResultDto<ComplaintResponseDto>> GetAllComplaintsAsync(PaginationParams pagination)
     {
-        var complaints = await _unitOfWork.Complaints.GetAllWithDetailsAsync();
+        var complaints = await _unitOfWork.Complaints.GetAllWithDetailsAsync(pagination.PageNumber, pagination.PageSize);
         return complaints.Select(c => MapToResponseDto(c, includeComments: false, authorMap: new Dictionary<Guid, User>()));
     }
 

@@ -22,10 +22,11 @@ public interface IUserService
     Task<UserResponseDto> LoginAsync(LoginDto loginDto);
 
     /// <summary>
-    /// Retrieves all users from the database.
+    /// Retrieves a page of all users from the database.
     /// </summary>
-    /// <returns>A list of all users.</returns>
-    Task<IEnumerable<UserResponseDto>> GetAllUsersAsync();
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A paged result of users.</returns>
+    Task<PagedResultDto<UserResponseDto>> GetAllUsersAsync(PaginationParams pagination);
 
     /// <summary>
     /// Retrieves a user by their unique identifier.
@@ -54,4 +55,16 @@ public interface IUserService
     /// <param name="userId">The unique identifier of the user.</param>
     /// <returns>The updated user response.</returns>
     Task<UserResponseDto> AssignOwnerRoleAsync(Guid userId);
+
+    /// <summary>
+    /// Confirms a user's email address using the verification hash sent to them.
+    /// </summary>
+    /// <param name="hash">The email verification hash.</param>
+    Task VerifyEmailAsync(string hash);
+
+    /// <summary>
+    /// Regenerates and resends the email verification link for the given email address, if it belongs to an unverified account.
+    /// </summary>
+    /// <param name="email">The email address to resend the verification link to.</param>
+    Task ResendVerificationEmailAsync(string email);
 }

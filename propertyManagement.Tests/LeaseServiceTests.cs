@@ -313,11 +313,11 @@ public class LeaseServiceTests
 
         _mockLeaseRepository.Setup(r => r.GetByIdWithDocumentsAsync(leaseId)).ReturnsAsync(lease);
 
-        var result = await _leaseService.GetLeaseDocumentsAsync(leaseId, userId, new[] { "Tenant" });
+        var result = await _leaseService.GetLeaseDocumentsAsync(leaseId, userId, new[] { "Tenant" }, new PaginationParams());
 
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.Count(), Is.EqualTo(1));
-        Assert.That(result.First().DocumentUrl, Is.EqualTo("http://doc.com"));
+        Assert.That(result.Items.Count(), Is.EqualTo(1));
+        Assert.That(result.Items.First().DocumentUrl, Is.EqualTo("http://doc.com"));
     }
 
     /// <summary>
@@ -339,7 +339,7 @@ public class LeaseServiceTests
         _mockLeaseRepository.Setup(r => r.GetByIdWithDocumentsAsync(leaseId)).ReturnsAsync(lease);
 
         Assert.ThrowsAsync<UnauthorizedAccessException>(async () =>
-            await _leaseService.GetLeaseDocumentsAsync(leaseId, tenantId, new[] { "Tenant" }));
+            await _leaseService.GetLeaseDocumentsAsync(leaseId, tenantId, new[] { "Tenant" }, new PaginationParams()));
     }
 
     /// <summary>
@@ -372,10 +372,10 @@ public class LeaseServiceTests
         _mockLeaseRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(allLeases);
 
         var roles = new[] { "Owner", "Tenant" };
-        var result = await _leaseService.GetMyLeasesAsync(userId, roles);
+        var result = await _leaseService.GetMyLeasesAsync(userId, roles, new PaginationParams());
 
         Assert.That(result, Is.Not.Null);
-        var resultList = result.ToList();
+        var resultList = result.Items.ToList();
         Assert.That(resultList.Count, Is.EqualTo(2));
         Assert.That(resultList.Any(l => l.Id == lease1.Id), Is.True);
         Assert.That(resultList.Any(l => l.Id == lease2.Id), Is.True);
@@ -404,10 +404,10 @@ public class LeaseServiceTests
 
         _mockLeaseRepository.Setup(r => r.GetByIdWithDocumentsAsync(leaseId)).ReturnsAsync(lease);
 
-        var result = await _leaseService.GetLeaseDocumentsAsync(leaseId, userId, new[] { "Tenant" });
+        var result = await _leaseService.GetLeaseDocumentsAsync(leaseId, userId, new[] { "Tenant" }, new PaginationParams());
 
         Assert.That(result, Is.Not.Null);
-        var list = result.ToList();
+        var list = result.Items.ToList();
         Assert.That(list.Count, Is.EqualTo(1));
         Assert.That(list[0].Id, Is.EqualTo(docId));
     }
@@ -441,10 +441,10 @@ public class LeaseServiceTests
 
         _mockLeaseRepository.Setup(r => r.GetByIdWithDocumentsAsync(leaseId)).ReturnsAsync(lease);
 
-        var result = await _leaseService.GetLeaseDocumentsAsync(leaseId, userId, new[] { "Tenant" });
+        var result = await _leaseService.GetLeaseDocumentsAsync(leaseId, userId, new[] { "Tenant" }, new PaginationParams());
 
         Assert.That(result, Is.Not.Null);
-        var list = result.ToList();
+        var list = result.Items.ToList();
         Assert.That(list.Count, Is.EqualTo(1));
         Assert.That(list[0].Id, Is.EqualTo(activeDocId));
     }

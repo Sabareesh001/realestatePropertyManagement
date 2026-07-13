@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using propertyManagement.Data;
+using propertyManagement.DTOs;
+using propertyManagement.Extensions;
 using propertyManagement.Models;
 
 namespace propertyManagement.Repositories;
@@ -113,7 +115,7 @@ public class LeaseRepository : ILeaseRepository
     /// Retrieves all leases in Submitted status whose templates are awaiting admin verification.
     /// </summary>
     /// <returns>A collection of leases pending template verification.</returns>
-    public async Task<IEnumerable<Lease>> GetPendingTemplatesAsync()
+    public async Task<PagedResultDto<Lease>> GetPendingTemplatesAsync(int pageNumber, int pageSize)
     {
         return await _context.Leases
             .Include(l => l.Tenant)
@@ -124,14 +126,15 @@ public class LeaseRepository : ILeaseRepository
             .Where(l => l.StatusId == LeaseStatus.Submitted
                         && l.DeletedAt == null
                         && (l.PropertyNavigation == null || l.PropertyNavigation.DeletedAt == null))
-            .ToListAsync();
+            .OrderBy(l => l.CreatedAt)
+            .ToPagedResultAsync(pageNumber, pageSize);
     }
 
     /// <summary>
     /// Retrieves all leases in TenantSigned status whose signed agreements are awaiting admin verification.
     /// </summary>
     /// <returns>A collection of leases pending signed agreement verification.</returns>
-    public async Task<IEnumerable<Lease>> GetPendingSignedLeasesAsync()
+    public async Task<PagedResultDto<Lease>> GetPendingSignedLeasesAsync(int pageNumber, int pageSize)
     {
         return await _context.Leases
             .Include(l => l.Tenant)
@@ -142,7 +145,8 @@ public class LeaseRepository : ILeaseRepository
             .Where(l => l.StatusId == LeaseStatus.TenantSigned
                         && l.DeletedAt == null
                         && (l.PropertyNavigation == null || l.PropertyNavigation.DeletedAt == null))
-            .ToListAsync();
+            .OrderBy(l => l.CreatedAt)
+            .ToPagedResultAsync(pageNumber, pageSize);
     }
 
     /// <summary>

@@ -64,30 +64,32 @@ public class PropertyController : BaseApiController
     }
 
     /// <summary>
-    /// Retrieves all property listings.
+    /// Retrieves a page of property listings.
     /// </summary>
-    /// <returns>A list of property listings.</returns>
-    /// <response code="200">Returns the list of properties.</response>
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A page of property listings.</returns>
+    /// <response code="200">Returns the page of properties.</response>
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<PropertyResponseDto>>> GetAllProperties()
+    public async Task<ActionResult<PagedResultDto<PropertyResponseDto>>> GetAllProperties([FromQuery] PaginationParams pagination)
     {
-        var result = await _propertyService.GetAllPropertiesAsync();
+        var result = await _propertyService.GetAllPropertiesAsync(pagination);
         return Ok(result);
     }
 
     /// <summary>
-    /// Retrieves all property listings owned by the currently authenticated owner.
+    /// Retrieves a page of property listings owned by the currently authenticated owner.
     /// </summary>
-    /// <returns>A list of property listings owned by the user.</returns>
-    /// <response code="200">Returns the list of owner's properties.</response>
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A page of property listings owned by the user.</returns>
+    /// <response code="200">Returns the page of owner's properties.</response>
     /// <response code="401">If the user is not authenticated.</response>
     /// <response code="403">If the user is not in the Owner role.</response>
     [Authorize(Roles = "Owner")]
     [HttpGet("my")]
-    public async Task<ActionResult<IEnumerable<PropertyResponseDto>>> GetMyProperties()
+    public async Task<ActionResult<PagedResultDto<PropertyResponseDto>>> GetMyProperties([FromQuery] PaginationParams pagination)
     {
         var userId = GetCurrentUserId();
-        var result = await _propertyService.GetPropertiesByOwnerIdAsync(userId);
+        var result = await _propertyService.GetPropertiesByOwnerIdAsync(userId, pagination);
         return Ok(result);
     }
 
@@ -168,15 +170,16 @@ public class PropertyController : BaseApiController
     }
 
     /// <summary>
-    /// Retrieves all properties pending admin verification (status = Submitted). Admin only.
+    /// Retrieves a page of properties pending admin verification (status = Submitted). Admin only.
     /// </summary>
-    /// <returns>A list of properties awaiting verification.</returns>
-    /// <response code="200">Returns the list of pending properties.</response>
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A page of properties awaiting verification.</returns>
+    /// <response code="200">Returns the page of pending properties.</response>
     [Authorize(Roles = "Admin")]
     [HttpGet("pending-verification")]
-    public async Task<ActionResult<IEnumerable<PropertyResponseDto>>> GetPendingVerification()
+    public async Task<ActionResult<PagedResultDto<PropertyResponseDto>>> GetPendingVerification([FromQuery] PaginationParams pagination)
     {
-        var result = await _propertyService.GetPendingVerificationAsync();
+        var result = await _propertyService.GetPendingVerificationAsync(pagination);
         return Ok(result);
     }
 
@@ -257,18 +260,19 @@ public class PropertyController : BaseApiController
     }
 
     /// <summary>
-    /// Retrieves all documents associated with a property.
+    /// Retrieves a page of documents associated with a property.
     /// </summary>
     /// <param name="id">The unique identifier of the property.</param>
-    /// <returns>A list of document details.</returns>
-    /// <response code="200">Returns the list of documents.</response>
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A page of document details.</returns>
+    /// <response code="200">Returns the page of documents.</response>
     /// <response code="401">If the user is not authenticated.</response>
     /// <response code="404">If the property is not found.</response>
     [Authorize]
     [HttpGet("{id:int}/documents")]
-    public async Task<ActionResult<IEnumerable<DocumentResponseDto>>> GetDocuments(int id)
+    public async Task<ActionResult<PagedResultDto<DocumentResponseDto>>> GetDocuments(int id, [FromQuery] PaginationParams pagination)
     {
-        var result = await _propertyService.GetDocumentsAsync(id);
+        var result = await _propertyService.GetDocumentsAsync(id, pagination);
         return Ok(result);
     }
 

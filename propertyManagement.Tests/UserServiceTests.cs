@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Moq;
 using NUnit.Framework;
 using propertyManagement.DTOs;
@@ -20,6 +21,7 @@ public class UserServiceTests
     private Mock<IUnitOfWork> _mockUnitOfWork;
     private Mock<IUserRepository> _mockUserRepository;
     private Mock<IRoleRepository> _mockRoleRepository;
+    private Mock<IEmailService> _mockEmailService;
     private UserService _userService;
 
     /// <summary>
@@ -31,11 +33,14 @@ public class UserServiceTests
         _mockUnitOfWork = new Mock<IUnitOfWork>();
         _mockUserRepository = new Mock<IUserRepository>();
         _mockRoleRepository = new Mock<IRoleRepository>();
+        _mockEmailService = new Mock<IEmailService>();
 
         _mockUnitOfWork.Setup(u => u.Users).Returns(_mockUserRepository.Object);
         _mockUnitOfWork.Setup(u => u.Roles).Returns(_mockRoleRepository.Object);
 
-        _userService = new UserService(_mockUnitOfWork.Object);
+        var configuration = new ConfigurationBuilder().Build();
+
+        _userService = new UserService(_mockUnitOfWork.Object, _mockEmailService.Object, configuration);
     }
 
     /// <summary>
@@ -237,7 +242,8 @@ public class UserServiceTests
             LastName = "Smith",
             Phone = "555-5555",
             DateOfBirth = new DateOnly(1985, 5, 5),
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword("correctpassword")
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("correctpassword"),
+            EmailVerified = true
         };
         user.UserRoles.Add(new UserRole { RoleId = 1, Role = role });
 
@@ -259,6 +265,158 @@ public class UserServiceTests
     }
 
     /// <summary>
+    /// Verifies that LoginAsync throws EmailNotVerifiedException when the user's email is not verified.
+    /// </summary>
+    [Test]
+    public void LoginAsync_EmailNotVerified_ThrowsEmailNotVerifiedException()
+    {
+        // Arrange
+        var loginDto = new LoginDto { Email = "user@example.com", Password = "correctpassword" };
+        var user = new User
+        {
+            Email = "user@example.com",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("correctpassword"),
+            EmailVerified = false
+        };
+        _mockUserRepository.Setup(r => r.GetByEmailAsync(loginDto.Email))
+            .ReturnsAsync(user);
+
+        // Act & Assert
+        Assert.ThrowsAsync<EmailNotVerifiedException>(async () =>
+            await _userService.LoginAsync(loginDto));
+
+        _mockUserRepository.Verify(r => r.GetByEmailAsync(loginDto.Email), Times.Once);
+    }
+
+    /// <summary>
+    /// Verifies that VerifyEmailAsync throws KeyNotFoundException when the hash does not match any user.
+    /// </summary>
+    [Test]
+    public void VerifyEmailAsync_InvalidHash_ThrowsKeyNotFoundException()
+    {
+        // Arrange
+        _mockUserRepository.Setup(r => r.GetByEmailVerificationHashAsync("bad-hash"))
+            .ReturnsAsync((User?)null);
+
+        // Act & Assert
+        Assert.ThrowsAsync<KeyNotFoundException>(async () =>
+            await _userService.VerifyEmailAsync("bad-hash"));
+
+        _mockUnitOfWork.Verify(u => u.SaveChangesAsync(), Times.Never);
+    }
+
+    /// <summary>
+    /// Verifies that VerifyEmailAsync throws InvalidOperationException when the hash has expired.
+    /// </summary>
+    [Test]
+    public void VerifyEmailAsync_ExpiredHash_ThrowsInvalidOperationException()
+    {
+        // Arrange
+        var user = new User
+        {
+            EmailVerificationHash = "expired-hash",
+            EmailVerificationHashExpiresAt = DateTime.UtcNow.AddHours(-1)
+        };
+        _mockUserRepository.Setup(r => r.GetByEmailVerificationHashAsync("expired-hash"))
+            .ReturnsAsync(user);
+
+        // Act & Assert
+        Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            await _userService.VerifyEmailAsync("expired-hash"));
+
+        _mockUnitOfWork.Verify(u => u.SaveChangesAsync(), Times.Never);
+    }
+
+    /// <summary>
+    /// Verifies that VerifyEmailAsync marks the user verified and clears the hash on success.
+    /// </summary>
+    [Test]
+    public async Task VerifyEmailAsync_ValidHash_SetsEmailVerifiedAndSaves()
+    {
+        // Arrange
+        var user = new User
+        {
+            EmailVerificationHash = "good-hash",
+            EmailVerificationHashExpiresAt = DateTime.UtcNow.AddHours(1)
+        };
+        _mockUserRepository.Setup(r => r.GetByEmailVerificationHashAsync("good-hash"))
+            .ReturnsAsync(user);
+        _mockUserRepository.Setup(r => r.UpdateAsync(user)).Returns(Task.CompletedTask);
+        _mockUnitOfWork.Setup(u => u.SaveChangesAsync()).ReturnsAsync(1);
+
+        // Act
+        await _userService.VerifyEmailAsync("good-hash");
+
+        // Assert
+        Assert.That(user.EmailVerified, Is.True);
+        Assert.That(user.EmailVerificationHash, Is.Null);
+        Assert.That(user.EmailVerificationHashExpiresAt, Is.Null);
+
+        _mockUserRepository.Verify(r => r.UpdateAsync(user), Times.Once);
+        _mockUnitOfWork.Verify(u => u.SaveChangesAsync(), Times.Once);
+    }
+
+    /// <summary>
+    /// Verifies that ResendVerificationEmailAsync does nothing when no user matches the email.
+    /// </summary>
+    [Test]
+    public async Task ResendVerificationEmailAsync_UserNotFound_DoesNothing()
+    {
+        // Arrange
+        _mockUserRepository.Setup(r => r.GetByEmailAsync("missing@example.com"))
+            .ReturnsAsync((User?)null);
+
+        // Act
+        await _userService.ResendVerificationEmailAsync("missing@example.com");
+
+        // Assert
+        _mockUnitOfWork.Verify(u => u.SaveChangesAsync(), Times.Never);
+        _mockEmailService.Verify(e => e.SendVerificationEmailAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never);
+    }
+
+    /// <summary>
+    /// Verifies that ResendVerificationEmailAsync does nothing when the user is already verified.
+    /// </summary>
+    [Test]
+    public async Task ResendVerificationEmailAsync_AlreadyVerified_DoesNothing()
+    {
+        // Arrange
+        var user = new User { Email = "verified@example.com", EmailVerified = true };
+        _mockUserRepository.Setup(r => r.GetByEmailAsync(user.Email)).ReturnsAsync(user);
+
+        // Act
+        await _userService.ResendVerificationEmailAsync(user.Email);
+
+        // Assert
+        _mockUnitOfWork.Verify(u => u.SaveChangesAsync(), Times.Never);
+        _mockEmailService.Verify(e => e.SendVerificationEmailAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never);
+    }
+
+    /// <summary>
+    /// Verifies that ResendVerificationEmailAsync regenerates the hash and sends a new email for an unverified user.
+    /// </summary>
+    [Test]
+    public async Task ResendVerificationEmailAsync_UnverifiedUser_RegeneratesHashAndSendsEmail()
+    {
+        // Arrange
+        var user = new User { Email = "unverified@example.com", FirstName = "Jamie", EmailVerified = false };
+        _mockUserRepository.Setup(r => r.GetByEmailAsync(user.Email)).ReturnsAsync(user);
+        _mockUserRepository.Setup(r => r.UpdateAsync(user)).Returns(Task.CompletedTask);
+        _mockUnitOfWork.Setup(u => u.SaveChangesAsync()).ReturnsAsync(1);
+
+        // Act
+        await _userService.ResendVerificationEmailAsync(user.Email);
+
+        // Assert
+        Assert.That(user.EmailVerificationHash, Is.Not.Null.And.Not.Empty);
+        Assert.That(user.EmailVerificationHashExpiresAt, Is.Not.Null);
+
+        _mockUserRepository.Verify(r => r.UpdateAsync(user), Times.Once);
+        _mockUnitOfWork.Verify(u => u.SaveChangesAsync(), Times.Once);
+        _mockEmailService.Verify(e => e.SendVerificationEmailAsync(user.Email, user.FirstName, It.IsAny<string>()), Times.Once);
+    }
+
+    /// <summary>
     /// Verifies that GetAllUsersAsync returns all users mapped correctly.
     /// </summary>
     [Test]
@@ -270,19 +428,26 @@ public class UserServiceTests
             new User { Id = Guid.NewGuid(), Email = "user1@example.com", FirstName = "User1", LastName = "One", UserRoles = null! },
             new User { Id = Guid.NewGuid(), Email = "user2@example.com", FirstName = "User2", LastName = "Two" }
         };
-        _mockUserRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(users);
+        _mockUserRepository.Setup(r => r.GetAllAsync(1, 20)).ReturnsAsync(new PagedResultDto<User>
+        {
+            Items = users,
+            PageNumber = 1,
+            PageSize = 20,
+            TotalCount = users.Count,
+            TotalPages = 1
+        });
 
         // Act
-        var result = await _userService.GetAllUsersAsync();
+        var result = await _userService.GetAllUsersAsync(new PaginationParams());
 
         // Assert
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.Count(), Is.EqualTo(2));
-        var list = result.ToList();
+        Assert.That(result.Items.Count(), Is.EqualTo(2));
+        var list = result.Items.ToList();
         Assert.That(list[0].Email, Is.EqualTo("user1@example.com"));
         Assert.That(list[1].Email, Is.EqualTo("user2@example.com"));
 
-        _mockUserRepository.Verify(r => r.GetAllAsync(), Times.Once);
+        _mockUserRepository.Verify(r => r.GetAllAsync(1, 20), Times.Once);
     }
 
     /// <summary>

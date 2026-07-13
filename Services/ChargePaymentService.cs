@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using propertyManagement.DTOs;
+using propertyManagement.Extensions;
 using propertyManagement.Models;
 using propertyManagement.Repositories;
 
@@ -75,7 +76,7 @@ public class ChargePaymentService : IChargePaymentService
     /// <summary>
     /// Retrieves all charges for a specific lease with role-based authorization.
     /// </summary>
-    public async Task<IEnumerable<ChargeResponseDto>> GetChargesByLeaseIdAsync(Guid leaseId, Guid userId, IEnumerable<string> roles)
+    public async Task<PagedResultDto<ChargeResponseDto>> GetChargesByLeaseIdAsync(Guid leaseId, Guid userId, IEnumerable<string> roles, PaginationParams pagination)
     {
         var lease = await _unitOfWork.Leases.GetByIdAsync(leaseId);
         if (lease == null)
@@ -85,8 +86,8 @@ public class ChargePaymentService : IChargePaymentService
 
         AuthorizeLeaseAccess(lease, userId, roles);
 
-        var charges = await _unitOfWork.Charges.GetByLeaseIdAsync(leaseId);
-        return charges.Select(MapToChargeResponseDto).ToList();
+        var charges = await _unitOfWork.Charges.GetByLeaseIdAsync(leaseId, pagination.PageNumber, pagination.PageSize);
+        return charges.Select(MapToChargeResponseDto);
     }
 
     /// <summary>
@@ -232,7 +233,7 @@ public class ChargePaymentService : IChargePaymentService
     /// <summary>
     /// Retrieves all payments for a specific lease with role-based authorization.
     /// </summary>
-    public async Task<IEnumerable<PaymentResponseDto>> GetPaymentsByLeaseIdAsync(Guid leaseId, Guid userId, IEnumerable<string> roles)
+    public async Task<PagedResultDto<PaymentResponseDto>> GetPaymentsByLeaseIdAsync(Guid leaseId, Guid userId, IEnumerable<string> roles, PaginationParams pagination)
     {
         var lease = await _unitOfWork.Leases.GetByIdAsync(leaseId);
         if (lease == null)
@@ -242,8 +243,8 @@ public class ChargePaymentService : IChargePaymentService
 
         AuthorizeLeaseAccess(lease, userId, roles);
 
-        var payments = await _unitOfWork.Payments.GetByLeaseIdAsync(leaseId);
-        return payments.Select(MapToPaymentResponseDto).ToList();
+        var payments = await _unitOfWork.Payments.GetByLeaseIdAsync(leaseId, pagination.PageNumber, pagination.PageSize);
+        return payments.Select(MapToPaymentResponseDto);
     }
 
     /// <summary>

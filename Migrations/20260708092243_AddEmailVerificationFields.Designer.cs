@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using propertyManagement.Data;
@@ -11,13 +12,15 @@ using propertyManagement.Data;
 namespace propertyManagement.Migrations
 {
     [DbContext(typeof(PropertyManagementDbContext))]
-    partial class PropertyManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260708092243_AddEmailVerificationFields")]
+    partial class AddEmailVerificationFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("ProductVersion", "10.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -2132,10 +2135,6 @@ namespace propertyManagement.Migrations
                         .HasColumnType("numeric(12,2)")
                         .HasColumnName("security_deposit");
 
-                    b.Property<string>("SpecificVisitDays")
-                        .HasColumnType("character varying(200)")
-                        .HasColumnName("specific_visit_days");
-
                     b.Property<string>("ThumbnailImgUrl")
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)")
@@ -2162,18 +2161,6 @@ namespace propertyManagement.Migrations
                     b.Property<Guid?>("VerifiedBy")
                         .HasColumnType("uuid")
                         .HasColumnName("verified_by");
-
-                    b.Property<TimeSpan?>("VisitEndTime")
-                        .HasColumnType("time without time zone")
-                        .HasColumnName("visit_end_time");
-
-                    b.Property<string>("VisitPreferences")
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("visit_preferences");
-
-                    b.Property<TimeSpan?>("VisitStartTime")
-                        .HasColumnType("time without time zone")
-                        .HasColumnName("visit_start_time");
 
                     b.HasKey("Id")
                         .HasName("properties_pkey");
@@ -2480,118 +2467,6 @@ namespace propertyManagement.Migrations
                             Id = 3,
                             CreatedAt = new DateTime(2026, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Admin"
-                        });
-                });
-
-            modelBuilder.Entity("propertyManagement.Models.SiteVisit", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("created_at");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("deleted_at");
-
-                    b.Property<Guid>("OwnerId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("owner_id");
-
-                    b.Property<int>("PropertyId")
-                        .HasColumnType("integer")
-                        .HasColumnName("property_id");
-
-                    b.Property<string>("Remarks")
-                        .HasColumnType("character varying(500)")
-                        .HasColumnName("remarks");
-
-                    b.Property<int>("StatusId")
-                        .HasColumnType("integer")
-                        .HasColumnName("status_id");
-
-                    b.Property<Guid>("TenantId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("tenant_id");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("updated_at");
-
-                    b.Property<DateTime>("VisitDate")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("visit_date");
-
-                    b.HasKey("Id")
-                        .HasName("site_visits_pkey");
-
-                    b.HasIndex("OwnerId");
-
-                    b.HasIndex("PropertyId");
-
-                    b.HasIndex("StatusId");
-
-                    b.HasIndex("TenantId");
-
-                    b.ToTable("site_visits", (string)null);
-                });
-
-            modelBuilder.Entity("propertyManagement.Models.SiteVisitStatus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("created_at");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("deleted_at");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("name");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("updated_at");
-
-                    b.HasKey("Id")
-                        .HasName("site_visit_statuses_pkey");
-
-                    b.HasIndex(new[] { "Name" }, "site_visit_statuses_name_key")
-                        .IsUnique();
-
-                    b.ToTable("site_visit_statuses", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTime(2026, 7, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Pending"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedAt = new DateTime(2026, 7, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Approved"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedAt = new DateTime(2026, 7, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Cancelled"
                         });
                 });
 
@@ -3496,45 +3371,6 @@ namespace propertyManagement.Migrations
                     b.Navigation("Property");
                 });
 
-            modelBuilder.Entity("propertyManagement.Models.SiteVisit", b =>
-                {
-                    b.HasOne("propertyManagement.Models.User", "Owner")
-                        .WithMany("SiteVisitsAsOwner")
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("site_visits_owner_id_fkey");
-
-                    b.HasOne("propertyManagement.Models.Property", "Property")
-                        .WithMany("SiteVisits")
-                        .HasForeignKey("PropertyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("site_visits_property_id_fkey");
-
-                    b.HasOne("propertyManagement.Models.SiteVisitStatus", "Status")
-                        .WithMany("SiteVisits")
-                        .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("site_visits_status_id_fkey");
-
-                    b.HasOne("propertyManagement.Models.User", "Tenant")
-                        .WithMany("SiteVisitsAsTenant")
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("site_visits_tenant_id_fkey");
-
-                    b.Navigation("Owner");
-
-                    b.Navigation("Property");
-
-                    b.Navigation("Status");
-
-                    b.Navigation("Tenant");
-                });
-
             modelBuilder.Entity("propertyManagement.Models.State", b =>
                 {
                     b.HasOne("propertyManagement.Models.Country", "Country")
@@ -3782,8 +3618,6 @@ namespace propertyManagement.Migrations
                     b.Navigation("Leases");
 
                     b.Navigation("PropertyImages");
-
-                    b.Navigation("SiteVisits");
                 });
 
             modelBuilder.Entity("propertyManagement.Models.PropertyAvailabilityStatus", b =>
@@ -3804,11 +3638,6 @@ namespace propertyManagement.Migrations
             modelBuilder.Entity("propertyManagement.Models.Role", b =>
                 {
                     b.Navigation("UserRoles");
-                });
-
-            modelBuilder.Entity("propertyManagement.Models.SiteVisitStatus", b =>
-                {
-                    b.Navigation("SiteVisits");
                 });
 
             modelBuilder.Entity("propertyManagement.Models.State", b =>
@@ -3835,10 +3664,6 @@ namespace propertyManagement.Migrations
                     b.Navigation("Properties");
 
                     b.Navigation("PropertiesVerified");
-
-                    b.Navigation("SiteVisitsAsOwner");
-
-                    b.Navigation("SiteVisitsAsTenant");
 
                     b.Navigation("UserBankAccounts");
 

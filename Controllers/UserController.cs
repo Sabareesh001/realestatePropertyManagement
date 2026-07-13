@@ -71,16 +71,45 @@ public class UserController : BaseApiController
     }
 
     /// <summary>
-    /// Retrieves all users from the database.
+    /// Confirms a user's email address using the verification hash sent to them at registration.
     /// </summary>
-    /// <returns>A list of all users.</returns>
+    /// <param name="hash">The email verification hash from the verification link.</param>
+    /// <returns>A success message and the verification status.</returns>
+    /// <response code="200">Email successfully verified.</response>
+    /// <response code="400">The verification link has expired.</response>
+    /// <response code="404">The verification link is invalid or unknown.</response>
+    [HttpGet("verify-email/{hash}")]
+    public async Task<ActionResult> VerifyEmail(string hash)
+    {
+        await _userService.VerifyEmailAsync(hash);
+        return Ok(new { message = "Email verified successfully.", emailVerified = true });
+    }
+
+    /// <summary>
+    /// Resends the email verification link for an unverified account.
+    /// </summary>
+    /// <param name="resendVerificationDto">The email address to resend the verification link to.</param>
+    /// <returns>A generic success message, regardless of whether the email is registered or already verified.</returns>
+    /// <response code="200">Request processed.</response>
+    [HttpPost("resend-verification")]
+    public async Task<ActionResult> ResendVerification([FromBody] ResendVerificationDto resendVerificationDto)
+    {
+        await _userService.ResendVerificationEmailAsync(resendVerificationDto.Email);
+        return Ok(new { message = "If an account with that email exists and is not yet verified, a new verification link has been sent." });
+    }
+
+    /// <summary>
+    /// Retrieves a page of users from the database.
+    /// </summary>
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A page of users.</returns>
     /// <response code="200">Users retrieved successfully.</response>
     /// <response code="500">An error occurred while processing the request.</response>
     [Authorize]
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<UserResponseDto>>> GetAllUsers()
+    public async Task<ActionResult<PagedResultDto<UserResponseDto>>> GetAllUsers([FromQuery] PaginationParams pagination)
     {
-        var userDtos = await _userService.GetAllUsersAsync();
+        var userDtos = await _userService.GetAllUsersAsync(pagination);
         return Ok(userDtos);
     }
 

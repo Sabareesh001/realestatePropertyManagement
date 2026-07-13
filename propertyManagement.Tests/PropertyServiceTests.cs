@@ -159,10 +159,18 @@ public class PropertyServiceTests
             new() { Id = 1, OwnerId = Guid.NewGuid(), Title = "Prop 1", AddressLine = "Add 1", VerificationStatusId = PropertyVerificationStatus.Verified },
             new() { Id = 2, OwnerId = Guid.NewGuid(), Title = "Prop 2", AddressLine = "Add 2", VerificationStatusId = PropertyVerificationStatus.Verified }
         };
-        _mockPropertyRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(properties);
+        var pagedProperties = new PagedResultDto<Property>
+        {
+            Items = properties,
+            PageNumber = 1,
+            PageSize = 20,
+            TotalCount = properties.Count,
+            TotalPages = 1
+        };
+        _mockPropertyRepository.Setup(r => r.GetAllAsync(1, 20)).ReturnsAsync(pagedProperties);
 
         // Act
-        var result = (await _propertyService.GetAllPropertiesAsync()).ToList();
+        var result = (await _propertyService.GetAllPropertiesAsync(new PaginationParams())).Items.ToList();
 
         // Assert
         Assert.That(result.Count, Is.EqualTo(2));
@@ -344,10 +352,18 @@ public class PropertyServiceTests
             new() { Id = 1, OwnerId = ownerId, Title = "Prop 1" },
             new() { Id = 2, OwnerId = ownerId, Title = "Prop 2" }
         };
-        _mockPropertyRepository.Setup(r => r.GetPropertiesByOwnerIdAsync(ownerId)).ReturnsAsync(properties);
+        var pagedProperties = new PagedResultDto<Property>
+        {
+            Items = properties,
+            PageNumber = 1,
+            PageSize = 20,
+            TotalCount = properties.Count,
+            TotalPages = 1
+        };
+        _mockPropertyRepository.Setup(r => r.GetPropertiesByOwnerIdAsync(ownerId, 1, 20)).ReturnsAsync(pagedProperties);
 
         // Act
-        var result = (await _propertyService.GetPropertiesByOwnerIdAsync(ownerId)).ToList();
+        var result = (await _propertyService.GetPropertiesByOwnerIdAsync(ownerId, new PaginationParams())).Items.ToList();
 
         // Assert
         Assert.That(result.Count, Is.EqualTo(2));

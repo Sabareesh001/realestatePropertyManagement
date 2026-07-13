@@ -11,20 +11,22 @@ namespace propertyManagement.Services;
 public interface IAdminFinanceService
 {
     /// <summary>
-    /// Retrieves every payment across all leases, newest first, enriched with lease/property/owner/tenant context.
+    /// Retrieves a page of payments across all leases, newest first, enriched with lease/property/owner/tenant context.
     /// </summary>
     /// <param name="from">Optional inclusive lower bound on the payment creation date.</param>
     /// <param name="to">Optional inclusive upper bound on the payment creation date.</param>
-    /// <returns>A collection of admin payment DTOs.</returns>
-    Task<IEnumerable<AdminPaymentDto>> GetAllPaymentsAsync(DateTime? from, DateTime? to);
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A paged result of admin payment DTOs.</returns>
+    Task<PagedResultDto<AdminPaymentDto>> GetAllPaymentsAsync(DateTime? from, DateTime? to, PaginationParams pagination);
 
     /// <summary>
-    /// Retrieves every charge across all leases, newest first, enriched with lease/property/owner/tenant context.
+    /// Retrieves a page of charges across all leases, newest first, enriched with lease/property/owner/tenant context.
     /// </summary>
     /// <param name="from">Optional inclusive lower bound on the charge creation date.</param>
     /// <param name="to">Optional inclusive upper bound on the charge creation date.</param>
-    /// <returns>A collection of admin charge DTOs.</returns>
-    Task<IEnumerable<AdminChargeDto>> GetAllChargesAsync(DateTime? from, DateTime? to);
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A paged result of admin charge DTOs.</returns>
+    Task<PagedResultDto<AdminChargeDto>> GetAllChargesAsync(DateTime? from, DateTime? to, PaginationParams pagination);
 
     /// <summary>
     /// Computes aggregate finance figures across all payments for the admin dashboard.

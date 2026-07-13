@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using propertyManagement.DTOs;
 using propertyManagement.Models;
 
 namespace propertyManagement.Repositories;
@@ -17,16 +18,20 @@ public interface ILeaseRepository : IRepository<Lease, Guid>
     Task<Lease?> GetByIdWithDocumentsAsync(Guid id);
 
     /// <summary>
-    /// Retrieves all leases in Submitted status whose templates are awaiting admin verification.
+    /// Retrieves a page of leases in Submitted status whose templates are awaiting admin verification.
     /// </summary>
-    /// <returns>A collection of leases pending template verification.</returns>
-    Task<IEnumerable<Lease>> GetPendingTemplatesAsync();
+    /// <param name="pageNumber">The 1-based page number to retrieve.</param>
+    /// <param name="pageSize">The number of items per page.</param>
+    /// <returns>A paged result of leases pending template verification.</returns>
+    Task<PagedResultDto<Lease>> GetPendingTemplatesAsync(int pageNumber, int pageSize);
 
     /// <summary>
-    /// Retrieves all leases in TenantSigned status whose signed agreements are awaiting admin verification.
+    /// Retrieves a page of leases in TenantSigned status whose signed agreements are awaiting admin verification.
     /// </summary>
-    /// <returns>A collection of leases pending signed agreement verification.</returns>
-    Task<IEnumerable<Lease>> GetPendingSignedLeasesAsync();
+    /// <param name="pageNumber">The 1-based page number to retrieve.</param>
+    /// <param name="pageSize">The number of items per page.</param>
+    /// <returns>A paged result of leases pending signed agreement verification.</returns>
+    Task<PagedResultDto<Lease>> GetPendingSignedLeasesAsync(int pageNumber, int pageSize);
 
     /// <summary>
     /// Returns true when a non-terminal lease already exists for the given proposal.

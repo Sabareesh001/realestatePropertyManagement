@@ -141,33 +141,35 @@ public class LeaseProposalController : BaseApiController
     }
 
     /// <summary>
-    /// Retrieves all lease proposals submitted by the currently logged-in tenant.
+    /// Retrieves a page of lease proposals submitted by the currently logged-in tenant.
     /// </summary>
-    /// <returns>A list of submitted lease proposals.</returns>
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A page of submitted lease proposals.</returns>
     /// <response code="200">Lease proposals retrieved successfully.</response>
     /// <response code="401">If user is unauthorized.</response>
     [Authorize(Roles = "Tenant")]
     [HttpGet("my-requests")]
-    public async Task<ActionResult<IEnumerable<LeaseProposalResponseDto>>> GetMyRequests()
+    public async Task<ActionResult<PagedResultDto<LeaseProposalResponseDto>>> GetMyRequests([FromQuery] PaginationParams pagination)
     {
         var userId = GetCurrentUserId();
-        var result = await _leaseProposalService.GetMyRequestsAsync(userId);
+        var result = await _leaseProposalService.GetMyRequestsAsync(userId, pagination);
         return Ok(result);
     }
 
     /// <summary>
-    /// Retrieves all incoming lease proposals for properties owned by the currently logged-in owner.
+    /// Retrieves a page of incoming lease proposals for properties owned by the currently logged-in owner.
     /// </summary>
-    /// <returns>A list of received lease proposals with tenant details.</returns>
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A page of received lease proposals with tenant details.</returns>
     /// <response code="200">Lease proposals retrieved successfully.</response>
     /// <response code="401">If user is unauthorized.</response>
     /// <response code="403">If user is not in the Owner role.</response>
     [Authorize(Roles = "Owner")]
     [HttpGet("received-requests")]
-    public async Task<ActionResult<IEnumerable<LeaseProposalResponseDto>>> GetReceivedRequests()
+    public async Task<ActionResult<PagedResultDto<LeaseProposalResponseDto>>> GetReceivedRequests([FromQuery] PaginationParams pagination)
     {
         var userId = GetCurrentUserId();
-        var result = await _leaseProposalService.GetReceivedRequestsAsync(userId);
+        var result = await _leaseProposalService.GetReceivedRequestsAsync(userId, pagination);
         return Ok(result);
     }
 }

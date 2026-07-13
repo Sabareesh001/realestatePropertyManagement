@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using propertyManagement.DTOs;
+using propertyManagement.Extensions;
 using propertyManagement.Hubs;
 using propertyManagement.Models;
 using propertyManagement.Repositories;
@@ -72,10 +73,10 @@ public class NotificationService : INotificationService
     }
 
     /// <inheritdoc/>
-    public async Task<IEnumerable<NotificationResponseDto>> GetMyNotificationsAsync(Guid userId)
+    public async Task<PagedResultDto<NotificationResponseDto>> GetMyNotificationsAsync(Guid userId, PaginationParams pagination)
     {
-        var notifications = await _unitOfWork.Notifications.GetByRecipientIdAsync(userId);
-        return notifications.Select(MapToResponseDto).ToList();
+        var notifications = await _unitOfWork.Notifications.GetByRecipientIdAsync(userId, pagination.PageNumber, pagination.PageSize);
+        return notifications.Select(MapToResponseDto);
     }
 
     /// <inheritdoc/>

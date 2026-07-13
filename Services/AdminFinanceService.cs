@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using propertyManagement.DTOs;
+using propertyManagement.Extensions;
 using propertyManagement.Models;
 using propertyManagement.Repositories;
 
@@ -25,17 +26,17 @@ public class AdminFinanceService : IAdminFinanceService
     }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<AdminPaymentDto>> GetAllPaymentsAsync(DateTime? from, DateTime? to)
+    public async Task<PagedResultDto<AdminPaymentDto>> GetAllPaymentsAsync(DateTime? from, DateTime? to, PaginationParams pagination)
     {
-        var payments = await _unitOfWork.Payments.GetAllForAdminAsync(from, to);
-        return payments.Select(MapToAdminPaymentDto).ToList();
+        var payments = await _unitOfWork.Payments.GetAllForAdminAsync(from, to, pagination.PageNumber, pagination.PageSize);
+        return payments.Select(MapToAdminPaymentDto);
     }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<AdminChargeDto>> GetAllChargesAsync(DateTime? from, DateTime? to)
+    public async Task<PagedResultDto<AdminChargeDto>> GetAllChargesAsync(DateTime? from, DateTime? to, PaginationParams pagination)
     {
-        var charges = await _unitOfWork.Charges.GetAllForAdminAsync(from, to);
-        return charges.Select(MapToAdminChargeDto).ToList();
+        var charges = await _unitOfWork.Charges.GetAllForAdminAsync(from, to, pagination.PageNumber, pagination.PageSize);
+        return charges.Select(MapToAdminChargeDto);
     }
 
     /// <inheritdoc />

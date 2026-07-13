@@ -28,34 +28,36 @@ public class AdminFinanceController : BaseApiController
     }
 
     /// <summary>
-    /// Retrieves every payment across all leases, newest first, with lease/property/owner/tenant context.
+    /// Retrieves a page of payments across all leases, newest first, with lease/property/owner/tenant context.
     /// </summary>
     /// <param name="from">Optional inclusive lower bound on the payment creation date.</param>
     /// <param name="to">Optional inclusive upper bound on the payment creation date.</param>
-    /// <returns>A list of platform-wide payments.</returns>
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A page of platform-wide payments.</returns>
     /// <response code="200">Payments retrieved successfully.</response>
     /// <response code="401">If the user is unauthorized.</response>
     /// <response code="403">If the user is not an administrator.</response>
     [HttpGet("payments")]
-    public async Task<ActionResult<IEnumerable<AdminPaymentDto>>> GetPayments([FromQuery] DateTime? from, [FromQuery] DateTime? to)
+    public async Task<ActionResult<PagedResultDto<AdminPaymentDto>>> GetPayments([FromQuery] DateTime? from, [FromQuery] DateTime? to, [FromQuery] PaginationParams pagination)
     {
-        var result = await _adminFinanceService.GetAllPaymentsAsync(from, to);
+        var result = await _adminFinanceService.GetAllPaymentsAsync(from, to, pagination);
         return Ok(result);
     }
 
     /// <summary>
-    /// Retrieves every charge across all leases, newest first, with lease/property/owner/tenant context.
+    /// Retrieves a page of charges across all leases, newest first, with lease/property/owner/tenant context.
     /// </summary>
     /// <param name="from">Optional inclusive lower bound on the charge creation date.</param>
     /// <param name="to">Optional inclusive upper bound on the charge creation date.</param>
-    /// <returns>A list of platform-wide charges.</returns>
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A page of platform-wide charges.</returns>
     /// <response code="200">Charges retrieved successfully.</response>
     /// <response code="401">If the user is unauthorized.</response>
     /// <response code="403">If the user is not an administrator.</response>
     [HttpGet("charges")]
-    public async Task<ActionResult<IEnumerable<AdminChargeDto>>> GetCharges([FromQuery] DateTime? from, [FromQuery] DateTime? to)
+    public async Task<ActionResult<PagedResultDto<AdminChargeDto>>> GetCharges([FromQuery] DateTime? from, [FromQuery] DateTime? to, [FromQuery] PaginationParams pagination)
     {
-        var result = await _adminFinanceService.GetAllChargesAsync(from, to);
+        var result = await _adminFinanceService.GetAllChargesAsync(from, to, pagination);
         return Ok(result);
     }
 

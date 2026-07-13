@@ -53,6 +53,10 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 // Register User Service
 builder.Services.AddScoped<IUserService, UserService>();
 
+// Register Email Service
+builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("Smtp"));
+builder.Services.AddScoped<IEmailService, EmailService>();
+
 // Register User Verification Service
 builder.Services.AddScoped<IUserVerificationService, UserVerificationService>();
 

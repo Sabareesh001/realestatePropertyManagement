@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using propertyManagement.DTOs;
 using propertyManagement.Models;
 
 namespace propertyManagement.Repositories;
@@ -11,11 +12,13 @@ namespace propertyManagement.Repositories;
 public interface IBankAccountRepository : IRepository<BankAccount, Guid>
 {
     /// <summary>
-    /// Gets all bank accounts associated with a specific user.
+    /// Gets a page of bank accounts associated with a specific user.
     /// </summary>
     /// <param name="userId">The unique identifier of the user.</param>
-    /// <returns>A collection of bank accounts.</returns>
-    Task<IEnumerable<BankAccount>> GetBankAccountsByUserIdAsync(Guid userId);
+    /// <param name="pageNumber">The 1-based page number to retrieve.</param>
+    /// <param name="pageSize">The number of items per page.</param>
+    /// <returns>A paged result of bank accounts.</returns>
+    Task<PagedResultDto<BankAccount>> GetBankAccountsByUserIdAsync(Guid userId, int pageNumber, int pageSize);
 
     /// <summary>
     /// Adds a mapping between a user and a bank account.

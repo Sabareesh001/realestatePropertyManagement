@@ -48,21 +48,22 @@ public class ChargePaymentController : BaseApiController
     }
 
     /// <summary>
-    /// Retrieves all charges for a specific lease.
+    /// Retrieves a page of charges for a specific lease.
     /// </summary>
     /// <param name="leaseId">The unique identifier of the lease.</param>
-    /// <returns>A list of charges for the lease.</returns>
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A page of charges for the lease.</returns>
     /// <response code="200">Charges retrieved successfully.</response>
     /// <response code="401">If user is unauthorized.</response>
     /// <response code="403">If user has no access to this lease.</response>
     /// <response code="404">If the lease was not found.</response>
     [Authorize]
     [HttpGet("charges")]
-    public async Task<ActionResult<IEnumerable<ChargeResponseDto>>> GetChargesByLeaseId(Guid leaseId)
+    public async Task<ActionResult<PagedResultDto<ChargeResponseDto>>> GetChargesByLeaseId(Guid leaseId, [FromQuery] PaginationParams pagination)
     {
         var userId = GetCurrentUserId();
         var roles = User.FindAll(ClaimTypes.Role).Select(c => c.Value).ToList();
-        var result = await _chargePaymentService.GetChargesByLeaseIdAsync(leaseId, userId, roles);
+        var result = await _chargePaymentService.GetChargesByLeaseIdAsync(leaseId, userId, roles, pagination);
         return Ok(result);
     }
 
@@ -107,21 +108,22 @@ public class ChargePaymentController : BaseApiController
     }
 
     /// <summary>
-    /// Retrieves all payments for a specific lease.
+    /// Retrieves a page of payments for a specific lease.
     /// </summary>
     /// <param name="leaseId">The unique identifier of the lease.</param>
-    /// <returns>A list of payments for the lease.</returns>
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A page of payments for the lease.</returns>
     /// <response code="200">Payments retrieved successfully.</response>
     /// <response code="401">If user is unauthorized.</response>
     /// <response code="403">If user has no access to this lease.</response>
     /// <response code="404">If the lease was not found.</response>
     [Authorize]
     [HttpGet("payments")]
-    public async Task<ActionResult<IEnumerable<PaymentResponseDto>>> GetPaymentsByLeaseId(Guid leaseId)
+    public async Task<ActionResult<PagedResultDto<PaymentResponseDto>>> GetPaymentsByLeaseId(Guid leaseId, [FromQuery] PaginationParams pagination)
     {
         var userId = GetCurrentUserId();
         var roles = User.FindAll(ClaimTypes.Role).Select(c => c.Value).ToList();
-        var result = await _chargePaymentService.GetPaymentsByLeaseIdAsync(leaseId, userId, roles);
+        var result = await _chargePaymentService.GetPaymentsByLeaseIdAsync(leaseId, userId, roles, pagination);
         return Ok(result);
     }
 }

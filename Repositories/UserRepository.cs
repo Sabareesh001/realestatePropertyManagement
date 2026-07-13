@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using propertyManagement.Data;
+using propertyManagement.DTOs;
+using propertyManagement.Extensions;
 using propertyManagement.Models;
 
 namespace propertyManagement.Repositories;
@@ -47,6 +49,22 @@ public class UserRepository : IUserRepository
     }
 
     /// <summary>
+    /// Retrieves a page of all users.
+    /// </summary>
+    /// <param name="pageNumber">The 1-based page number to retrieve.</param>
+    /// <param name="pageSize">The number of items per page.</param>
+    /// <returns>A paged result of users.</returns>
+    public async Task<PagedResultDto<User>> GetAllAsync(int pageNumber, int pageSize)
+    {
+        return await _context.Users
+            .Include(u => u.UserRoles.Where(ur => ur.DeletedAt == null))
+                .ThenInclude(ur => ur.Role)
+            .Where(u => u.DeletedAt == null)
+            .OrderBy(u => u.CreatedAt)
+            .ToPagedResultAsync(pageNumber, pageSize);
+    }
+
+    /// <summary>
     /// Retrieves a user by their email address.
     /// </summary>
     public async Task<User?> GetByEmailAsync(string email)
@@ -64,6 +82,15 @@ public class UserRepository : IUserRepository
     {
         return await _context.Users
             .FirstOrDefaultAsync(u => u.StripeAccountId == stripeAccountId && u.DeletedAt == null);
+    }
+
+    /// <summary>
+    /// Retrieves a user by their pending email verification hash.
+    /// </summary>
+    public async Task<User?> GetByEmailVerificationHashAsync(string hash)
+    {
+        return await _context.Users
+            .FirstOrDefaultAsync(u => u.EmailVerificationHash == hash && u.DeletedAt == null);
     }
 
     /// <summary>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using propertyManagement.DTOs;
+using propertyManagement.Extensions;
 using propertyManagement.Models;
 using propertyManagement.Repositories;
 
@@ -109,10 +110,10 @@ public class LeaseProposalService : ILeaseProposalService
     /// </summary>
     /// <param name="tenantId">The unique identifier of the tenant.</param>
     /// <returns>A collection of lease proposal response DTOs.</returns>
-    public async Task<IEnumerable<LeaseProposalResponseDto>> GetMyRequestsAsync(Guid tenantId)
+    public async Task<PagedResultDto<LeaseProposalResponseDto>> GetMyRequestsAsync(Guid tenantId, PaginationParams pagination)
     {
-        var proposals = await _unitOfWork.LeaseProposals.GetProposalsByTenantIdAsync(tenantId);
-        return proposals.Select(MapToResponseDto).ToList();
+        var proposals = await _unitOfWork.LeaseProposals.GetProposalsByTenantIdAsync(tenantId, pagination.PageNumber, pagination.PageSize);
+        return proposals.Select(MapToResponseDto);
     }
 
     /// <summary>
@@ -120,10 +121,10 @@ public class LeaseProposalService : ILeaseProposalService
     /// </summary>
     /// <param name="ownerId">The unique identifier of the owner.</param>
     /// <returns>A collection of lease proposal response DTOs containing tenant details.</returns>
-    public async Task<IEnumerable<LeaseProposalResponseDto>> GetReceivedRequestsAsync(Guid ownerId)
+    public async Task<PagedResultDto<LeaseProposalResponseDto>> GetReceivedRequestsAsync(Guid ownerId, PaginationParams pagination)
     {
-        var proposals = await _unitOfWork.LeaseProposals.GetProposalsByOwnerIdAsync(ownerId);
-        return proposals.Select(MapToResponseDto).ToList();
+        var proposals = await _unitOfWork.LeaseProposals.GetProposalsByOwnerIdAsync(ownerId, pagination.PageNumber, pagination.PageSize);
+        return proposals.Select(MapToResponseDto);
     }
 
     /// <summary>

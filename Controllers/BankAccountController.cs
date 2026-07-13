@@ -45,17 +45,18 @@ public class BankAccountController : BaseApiController
     }
 
     /// <summary>
-    /// Retrieves all bank accounts associated with the authenticated user.
+    /// Retrieves a page of bank accounts associated with the authenticated user.
     /// </summary>
-    /// <returns>A list of bank accounts.</returns>
-    /// <response code="200">Returns the list of bank accounts.</response>
+    /// <param name="pagination">The pagination parameters.</param>
+    /// <returns>A page of bank accounts.</returns>
+    /// <response code="200">Returns the page of bank accounts.</response>
     /// <response code="401">If the user is not authenticated.</response>
     [Authorize]
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<BankAccountResponseDto>>> GetUserBankAccounts()
+    public async Task<ActionResult<PagedResultDto<BankAccountResponseDto>>> GetUserBankAccounts([FromQuery] PaginationParams pagination)
     {
         var userId = GetCurrentUserId();
-        var result = await _bankAccountService.GetUserBankAccountsAsync(userId);
+        var result = await _bankAccountService.GetUserBankAccountsAsync(userId, pagination);
         return Ok(result);
     }
 
